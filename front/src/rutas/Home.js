@@ -7,7 +7,7 @@ const Home = () => {
     {
       title: 'Agregar mascota',
       description: 'Explora una lista de mascotas adorables que están buscando un hogar amoroso. Encuentra tu compañero perfecto y comienza una nueva aventura juntos.',
-      image: 'ruta-a-la-imagen-1.jpg', // Reemplaza con la ruta correcta de la imagen
+      image: 'https://static.vecteezy.com/system/resources/previews/006/470/722/non_2x/pet-shop-logo-design-template-modern-animal-icon-label-for-store-veterinary-clinic-hospital-shelter-business-services-flat-illustration-background-with-dog-cat-and-horse-free-vector.jpg', // Reemplaza con la ruta correcta de la imagen
     },
     {
       title: 'Adoptar',
@@ -32,9 +32,9 @@ const Home = () => {
   ];
 
   return (
-    <div className="home-container">
+    <div className="back-container">
       <div className="logo-container">
-        <img src="logo.png" alt="Logo" className="logo" /> {/* Reemplaza con la ruta correcta a tu logo */}
+        <img src="https://static.vecteezy.com/system/resources/previews/006/470/722/non_2x/pet-shop-logo-design-template-modern-animal-icon-label-for-store-veterinary-clinic-hospital-shelter-business-services-flat-illustration-background-with-dog-cat-and-horse-free-vector.jpg" alt="Logo" className="logo" /> {/* Reemplaza con la ruta correcta a tu logo */}
       </div>
       <h1 className="text-center text-white">Home</h1>
       <div className="cards-container">

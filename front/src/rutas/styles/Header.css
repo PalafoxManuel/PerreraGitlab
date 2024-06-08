@@ -1,0 +1,54 @@
+.header-container {
+    background-color: #d35500; /* Color de fondo similar al de tu imagen */
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .navbar-menu {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  .navbar-menu i {
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .navbar-title {
+    flex: 2;
+    text-align: center;
+  }
+  
+  .navbar-title h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #000;
+  }
+  
+  .navbar-title span {
+    display: block;
+    font-size: 12px;
+    color: #000;
+  }
+  
+  .navbar-logo {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .navbar-logo img {
+    width: 50px; /* Ajusta el tamaño de la imagen según sea necesario */
+  }
+  
