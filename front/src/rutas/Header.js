@@ -1,5 +1,5 @@
 import React from 'react';
-import './Header.css';
+import './styles/Header.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Header = () => {
@@ -14,7 +14,7 @@ const Header = () => {
           <span>YOGGN HERE</span>
         </div>
         <div className="navbar-logo">
-          <img src="https://example.com/logo.png" alt="Logo" />
+          <img src="https://static.vecteezy.com/system/resources/previews/006/470/722/non_2x/pet-shop-logo-design-template-modern-animal-icon-label-for-store-veterinary-clinic-hospital-shelter-business-services-flat-illustration-background-with-dog-cat-and-horse-free-vector.jpg" alt="Logo" />
         </div>
       </nav>
     </header>

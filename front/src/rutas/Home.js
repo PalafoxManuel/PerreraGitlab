@@ -1,6 +1,8 @@
 import React from 'react';
 import Card from '../componentes/Card'; // Ajuste de la ruta a '../componentes/Card'
-import './styles/Home.css'; // Ajuste de la ruta a '../styles/Home.css'
+import Header from './Header';
+import './styles/Home.css';
+import './styles/Header.css'; // Ajuste de la ruta a '../styles/Home.css'
 
 const Home = () => {
   const cardsData = [
@@ -32,22 +34,23 @@ const Home = () => {
   ];
 
   return (
+    <div>
+    <Header />
     <div className="back-container">
-      <div className="logo-container">
-        <img src="https://static.vecteezy.com/system/resources/previews/006/470/722/non_2x/pet-shop-logo-design-template-modern-animal-icon-label-for-store-veterinary-clinic-hospital-shelter-business-services-flat-illustration-background-with-dog-cat-and-horse-free-vector.jpg" alt="Logo" className="logo" /> {/* Reemplaza con la ruta correcta a tu logo */}
-      </div>
-      <h1 className="text-center text-white">Home</h1>
-      <div className="cards-container">
-        {cardsData.map((card, index) => (
-          <Card 
-            key={index}
-            title={card.title}
-            description={card.description}
-            image={card.image}
-          />
-        ))}
+      <div className="form-wrapper-2">
+        <div className="cards-container">
+          {cardsData.map((card, index) => (
+            <Card 
+              key={index}
+              title={card.title}
+              description={card.description}
+              image={card.image}
+            />
+          ))}
+        </div>
       </div>
     </div>
+  </div>
   );
 };
 
