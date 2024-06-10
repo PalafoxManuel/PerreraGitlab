@@ -1,0 +1,41 @@
+.agregar-container {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .agregar-button {
+    margin: 20px 0;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .agregar-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .form-buttons button {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .form-buttons button[type="button"] {
+    background-color: #be3131;
+  }
+  
+  .form-buttons button[type="submit"] {
+    background-color: #4CAF50;
+    color: rgb(180, 67, 67);
+  }
+  
