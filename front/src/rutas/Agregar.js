@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from '../componentes/Card'; // Ajuste de la ruta a '../componentes/Card'
-import Header from './Header';
+import Header from '../componentes/Header';
 // import './styles/Agregar.css';
 import './styles/Header.css'; // Ajuste de la ruta a '../styles/Home.css'
 

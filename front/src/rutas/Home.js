@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from '../componentes/Card'; // Ajuste de la ruta a '../componentes/Card'
-import Header from './Header';
+import Header from '../componentes/Header';
 import Agregar from '../img/Agregar.png';
 import Adoptar from '../img/Adoptar.png';
 import Servicios from '../img/Servicios.png';

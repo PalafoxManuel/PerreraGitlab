@@ -32,7 +32,7 @@
   margin-left: 5px; /* Espaciado de 10px desde el lado izquierdo */
   margin-right: 5px; /* Espaciado de 10px desde el lado derecho */
   margin-bottom: 30px; /* Espaciado de 30px desde la parte inferior */
-  margin-top: 40px; /* Espaciado de 30px desde el logo (100px de altura + 30px de margen inferior del logo + 30px de margen superior del formulario) */
+  margin-top: 20px; /* Espaciado de 30px desde el logo (100px de altura + 30px de margen inferior del logo + 30px de margen superior del formulario) */
   display: flex;
   justify-content: center;
   align-items: center;

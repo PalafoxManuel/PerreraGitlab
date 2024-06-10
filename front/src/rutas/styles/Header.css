@@ -1,54 +1,104 @@
+/* Header.css */
+
 .header-container {
-    background-color: #292929; /* Color de fondo similar al de tu imagen */
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-  }
-  
-  .navbar-menu {
-    flex: 1;
-    display: flex;
-    justify-content: flex-start;
-  }
-  
-  .navbar-menu i {
-    font-size: 24px;
-    color: #fff;
-    cursor: pointer;
-  }
-  
-  .navbar-title {
-    flex: 2;
-    text-align: center;
-  }
-  
-  .navbar-title h1 {
-    margin: 0;
-    font-size: 24px;
-    color: #000;
-  }
-  
-  .navbar-title span {
-    display: block;
-    font-size: 12px;
-    color: #000;
-  }
-  
-  .navbar-logo {
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
-  }
-  
-  .navbar-logo img {
-    width: 50px; /* Ajusta el tamaño de la imagen según sea necesario */
-  }
-  
+  position: relative;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-menu {
+  cursor: pointer;
+}
+
+.navbar-title h1 {
+  margin: 0;
+}
+
+.navbar-title span {
+  display: block;
+  font-size: 0.8em;
+  color: #666;
+}
+
+.navbar-logo img {
+  width: 50px;
+}
+
+/* Sidebar styles */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background-color: #343a40;
+  color: #fff;
+  transition: left 0.3s;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.sidebar-links {
+  flex: 1;
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar-links li {
+  padding: 15px;
+  text-align: left;
+}
+
+.sidebar-links li a {
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-links li a i {
+  margin-right: 10px;
+}
+
+.sidebar-links li a:hover {
+  background-color: #495057;
+}
+
+.sidebar-footer {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid #495057;
+}
+
+.sidebar-footer li {
+  padding: 15px;
+  text-align: left;
+}
+
+.sidebar-footer li a {
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-footer li a i {
+  margin-right: 10px;
+}
+
+.sidebar-footer li a:hover {
+  background-color: #495057;
+}
