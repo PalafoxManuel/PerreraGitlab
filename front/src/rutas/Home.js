@@ -1,6 +1,11 @@
 import React from 'react';
 import Card from '../componentes/Card'; // Ajuste de la ruta a '../componentes/Card'
 import Header from './Header';
+import Agregar from '../img/Agregar.png';
+import Adoptar from '../img/Adoptar.png';
+import Servicios from '../img/Servicios.png';
+import Historial from '../img/Historial.png';
+import Reporte from '../img/Reporte.png';
 import './styles/Home.css';
 import './styles/Header.css'; // Ajuste de la ruta a '../styles/Home.css'
 
@@ -9,27 +14,27 @@ const Home = () => {
     {
       title: 'Agregar mascota',
       description: 'Explora una lista de mascotas adorables que están buscando un hogar amoroso. Encuentra tu compañero perfecto y comienza una nueva aventura juntos.',
-      image: 'https://static.vecteezy.com/system/resources/previews/006/470/722/non_2x/pet-shop-logo-design-template-modern-animal-icon-label-for-store-veterinary-clinic-hospital-shelter-business-services-flat-illustration-background-with-dog-cat-and-horse-free-vector.jpg', // Reemplaza con la ruta correcta de la imagen
+      image: Agregar
     },
     {
       title: 'Adoptar',
       description: '¿Necesitas dejar temporalmente a tu mascota en buenas manos? Encuentra cuidadores confiables dispuestos a cuidar de tu amigo peludo mientras estás fuera.',
-      image: 'ruta-a-la-imagen-2.jpg',
+      image: Adoptar,
     },
     {
       title: 'Servicios',
       description: 'Explora una variedad de servicios para mascotas, como paseadores de perros, cuidadores de gatos, servicios de alimentación y más. Encuentra profesionales cerca de ti.',
-      image: 'ruta-a-la-imagen-3.jpg',
+      image: Servicios,
     },
     {
       title: 'Historial',
       description: 'Mantén un registro detallado de todos los servicios que has utilizado, desde paseos hasta visitas al veterinario. Mantén un seguimiento de la salud y el bienestar de tu mascota.',
-      image: 'ruta-a-la-imagen-4.jpg',
+      image: Historial,
     },
     {
       title: 'Generar reporte',
       description: 'Reporta preocupaciones como maltrato animal, extravío o vacunación de tu mascota. Solicita ayuda de profesionales en emergencias.',
-      image: 'ruta-a-la-imagen-5.jpg',
+      image: Reporte,
     },
   ];
 

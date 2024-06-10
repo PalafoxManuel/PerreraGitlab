@@ -1,6 +1,7 @@
 import React from 'react';
 import './styles/Header.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Logo from '../img/Logo.png';
 
 const Header = () => {
   return (
@@ -14,7 +15,7 @@ const Header = () => {
           <span>YOGGN HERE</span>
         </div>
         <div className="navbar-logo">
-          <img src="https://static.vecteezy.com/system/resources/previews/006/470/722/non_2x/pet-shop-logo-design-template-modern-animal-icon-label-for-store-veterinary-clinic-hospital-shelter-business-services-flat-illustration-background-with-dog-cat-and-horse-free-vector.jpg" alt="Logo" />
+          <img src= {Logo} alt="Logo" />
         </div>
       </nav>
     </header>

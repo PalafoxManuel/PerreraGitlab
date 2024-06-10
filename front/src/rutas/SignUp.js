@@ -1,5 +1,6 @@
 // SignUp.js
 import React from 'react';
+import Logo from '../img/Logo.png';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -9,7 +10,7 @@ const SignUp = () => {
   return (
     <div className="back-container">
       <div className="logo-container">
-        <img src="https://static.vecteezy.com/system/resources/previews/006/470/722/non_2x/pet-shop-logo-design-template-modern-animal-icon-label-for-store-veterinary-clinic-hospital-shelter-business-services-flat-illustration-background-with-dog-cat-and-horse-free-vector.jpg" alt="Logo" className="logo" /> {/* Reemplaza con la ruta correcta a tu logo */}
+        <img src={Logo} alt="Logo" className="logo" />
       </div>
       <div className="form-wrapper">
         <div className="form-container">
