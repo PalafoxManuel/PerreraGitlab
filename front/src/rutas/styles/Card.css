@@ -4,6 +4,11 @@
     overflow: hidden;
     margin-bottom: 20px;
   }
+
+  .card-link {
+    text-decoration: none;
+    color: inherit;
+  }
   
   .card-image {
     width: 100%;

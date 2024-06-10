@@ -3,6 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SignUp from './rutas/SignUp';
 import Home from './rutas/Home';
 import LogIn from './rutas/LogIn';
+import Agregar from './rutas/Agregar';
+import Adoptar from './rutas/Adoptar';
+import Servicios from './rutas/Servicios';
+import Historial from './rutas/Historial';
+import Reporte from './rutas/Reporte';
 const Rutas = () => {
     return (
         <Router>
@@ -10,6 +15,11 @@ const Rutas = () => {
             <Route path="/" element={<SignUp />} />
             <Route path="/Home" element={<Home />} />
             <Route path="/LogIn" element={<LogIn />} />
+            <Route path="/Agregar" element={<Agregar />} />
+            <Route path="/Adoptar" element={<Adoptar />} />
+            <Route path="/Servicios" element={<Servicios />} />
+            <Route path="/Historial" element={<Historial />} />
+            <Route path="/Reporte" element={<Reporte />} />
           </Routes>
         </Router>
       );
