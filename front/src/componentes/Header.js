@@ -11,6 +11,10 @@ const Header = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
+  const closeSidebar = () => {
+    setSidebarOpen(false);
+  };
+
   return (
     <header className="header-container">
       <nav className="navbar">
@@ -26,9 +30,11 @@ const Header = () => {
         </div>
       </nav>
 
+      {sidebarOpen && <div className="backdrop" onClick={closeSidebar}></div>}
+
       <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
         <ul className="sidebar-links">
-          <li><Link to="/" onClick={toggleSidebar}><i className="fas fa-home"></i> Inicio</Link></li>
+          <li><Link to="/Home" onClick={toggleSidebar}><i className="fas fa-home"></i> Inicio</Link></li>
           <li><Link to="/Agregar" onClick={toggleSidebar}><i className="fas fa-plus-circle"></i> Agregar mascota</Link></li>
           <li><Link to="/Adoptar" onClick={toggleSidebar}><i className="fas fa-paw"></i> Adoptar</Link></li>
           <li><Link to="/Servicios" onClick={toggleSidebar}><i className="fas fa-concierge-bell"></i> Servicios</Link></li>
