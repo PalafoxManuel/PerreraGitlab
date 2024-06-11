@@ -1,10 +1,9 @@
 import { Sequelize } from "sequelize";
 
-const db = new Sequelize('Perrera','root','',{
+const db = new Sequelize('perreradb','root','',{
     host: 'localhost',
     dialect: 'mysql'
 
 })
-
 
 export default db

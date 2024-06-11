@@ -9,7 +9,7 @@ const app = express()
 
 app.use(cors())
 app.use(express.json())
-app.use('/usuario', UsaRoute)
+app.use('/', UsaRoute)
 
 
 try {
@@ -20,9 +20,6 @@ try {
 }
 
 
-app.get('/',(req,res)=>{
-    res.send('perro')
-})
 
 app.listen(8000, ()=>{
     console.log('Server up running in http://localhost:8000/')
