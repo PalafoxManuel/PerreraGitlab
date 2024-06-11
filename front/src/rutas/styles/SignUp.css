@@ -30,6 +30,17 @@
   align-items: center;
 }
 
+.back-container-admin {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100vh;
+  background-color: #747474; /* Background color similar to the image */
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+
 .logo-container {
   display: flex;
   flex-direction: column;
@@ -52,12 +63,26 @@
   font-family: 'Lobster', cursive; /* Aplica la fuente personalizada */
 }
 
+
+.form-wrapper-SignUp-Admin {
+  margin-left: 5px; /* Espaciado de 5px desde el lado izquierdo */
+  margin-right: 5px; /* Espaciado de 5px desde el lado derecho */
+  margin-bottom: 30px; /* Espaciado de 30px desde la parte inferior */
+  margin-top: 40px; /* Ajusta el margen superior según sea necesario */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: calc(100% - 10px);
+}
+
 .form-wrapper-SignUp {
   margin-left: 5px; /* Espaciado de 5px desde el lado izquierdo */
   margin-right: 5px; /* Espaciado de 5px desde el lado derecho */
   margin-bottom: 30px; /* Espaciado de 30px desde la parte inferior */
   margin-top: 230px; /* Ajusta el margen superior según sea necesario */
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: calc(100% - 10px);

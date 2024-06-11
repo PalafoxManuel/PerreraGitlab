@@ -34,9 +34,11 @@
     margin-bottom: 30px; /* Espaciado de 30px desde la parte inferior */
     margin-top: 0px; /* Ajusta el margen superior según sea necesario */
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: calc(100% - 10px);
   }
+
 
   

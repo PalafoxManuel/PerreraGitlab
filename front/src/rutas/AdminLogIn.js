@@ -5,9 +5,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './styles/LogIn.css';
 
-const Login = () => {
+const AdminLogin = () => {
   return (
-    <div className="back-container">
+    <div className="back-container-admin">
       <div className="logo-container">
         <img src={Logo} alt="Logo" className="logo" />
         <p className="logo-text">Palafox Feliz</p>
@@ -21,7 +21,7 @@ const Login = () => {
                 <div className="input-group-prepend">
                   <span className="input-group-text"><i className="fas fa-user"></i></span>
                 </div>
-                <input type="text" className="form-control" placeholder="Usuario" />
+                <input type="text" className="form-control" id="userId" placeholder="UserId" />
               </div>
             </div>
             <div className="form-group">
@@ -29,20 +29,17 @@ const Login = () => {
                 <div className="input-group-prepend">
                   <span className="input-group-text"><i className="fas fa-lock"></i></span>
                 </div>
-                <input type="password" className="form-control" placeholder="Contraseña" />
+                <input type="password" className="form-control" id="password" placeholder="Contraseña" />
               </div>
             </div>
             <button type="submit" className="btn btn-primary btn-block">Iniciar sesión</button>
-            <p className="text-center mt-3 text-white">¿No tienes cuenta? <Link to="/" className="text-primary">¡Crea una ahora!</Link></p>
-
-            <Link to="/AdminLogIn">
-              <button type="submit" className="btn btn-primary btn-block">LogIn Admin (Temporal)</button>
-            </Link>
+            <p className="text-center mt-3 text-white">¿No tienes cuenta? <Link to="/AdminSignUp" className="text-primary">¡Crea una ahora!</Link></p>
           </form>
         </div>
+        <p className="logo-text">¡MODO ADMIN!</p>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default AdminLogin;
