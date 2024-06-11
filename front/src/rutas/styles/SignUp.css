@@ -1,3 +1,24 @@
+.btn-block {
+  display: block;
+  width: 100%;
+  text-align: center; /* Centra el texto del botón */
+}
+
+.text-primary {
+  color: #007bff; /* Color del texto primario de Bootstrap */
+}
+
+.text-primary:hover {
+  color: #0056b3; /* Azul más oscuro al pasar el cursor */
+}
+
+.text-white {
+  color: #fff;
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
 .back-container {
   display: flex;
   flex-direction: column;
@@ -5,14 +26,18 @@
   min-height: 100vh;
   background-color: #d35500; /* Background color similar to the image */
   position: relative;
+  justify-content: center;
+  align-items: center;
 }
 
 .logo-container {
   display: flex;
-  justify-content: center; 
-  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   top: 25px; /* Adjust the top position as needed */
+  width: 100%;
 }
 
 .logo {
@@ -20,11 +45,18 @@
   height: auto;
 }
 
-.form-wrapper {
+.logo-text {
+  color: #fff;
+  margin-top: 10px; /* Espaciado entre el logo y el texto */
+  font-size: 2rem; /* Ajusta el tamaño del texto */
+  font-family: 'Lobster', cursive; /* Aplica la fuente personalizada */
+}
+
+.form-wrapper-SignUp {
   margin-left: 5px; /* Espaciado de 5px desde el lado izquierdo */
   margin-right: 5px; /* Espaciado de 5px desde el lado derecho */
   margin-bottom: 30px; /* Espaciado de 30px desde la parte inferior */
-  margin-top: 200px; /* Ajusta el margen superior según sea necesario */
+  margin-top: 230px; /* Ajusta el margen superior según sea necesario */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -74,6 +106,12 @@
   border: none;
   font-size: 18px;
   padding: 10px;
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+  text-align: center; /* Centra el texto del botón */
 }
 
 .text-primary {

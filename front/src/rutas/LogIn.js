@@ -10,8 +10,9 @@ const Login = () => {
     <div className="back-container">
       <div className="logo-container">
         <img src={Logo} alt="Logo" className="logo" />
+        <p className="logo-text">Palafox Feliz</p>
       </div>
-      <div className="form-wrapper">
+      <div className="form-wrapper-LogIn">
         <div className="form-container">
           <h1 className="text-center text-white">¡Bienvenido!</h1>
           <form>

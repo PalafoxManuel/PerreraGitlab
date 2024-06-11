@@ -1,7 +1,7 @@
 /* Login.css */
   
   .logo {
-    width: 80px;
+    width: 120px;
     height: auto;
   }
   
@@ -28,13 +28,15 @@
     color: #0056b3; /* Darker blue on hover */
   }
   
-  .form-wrapper-2 {
-  margin-left: 5px; /* Espaciado de 10px desde el lado izquierdo */
-  margin-right: 5px; /* Espaciado de 10px desde el lado derecho */
-  margin-bottom: 30px; /* Espaciado de 30px desde la parte inferior */
-  margin-top: 20px; /* Espaciado de 30px desde el logo (100px de altura + 30px de margen inferior del logo + 30px de margen superior del formulario) */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100% -5px;
+  .form-wrapper-LogIn {
+    margin-left: 5px; /* Espaciado de 5px desde el lado izquierdo */
+    margin-right: 5px; /* Espaciado de 5px desde el lado derecho */
+    margin-bottom: 30px; /* Espaciado de 30px desde la parte inferior */
+    margin-top: 0px; /* Ajusta el margen superior según sea necesario */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% - 10px);
   }
+
+  

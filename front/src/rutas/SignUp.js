@@ -1,4 +1,3 @@
-// SignUp.js
 import React from 'react';
 import Logo from '../img/Logo.png';
 import { Link } from 'react-router-dom';
@@ -11,8 +10,9 @@ const SignUp = () => {
     <div className="back-container">
       <div className="logo-container">
         <img src={Logo} alt="Logo" className="logo" />
+        <p className="logo-text">Palafox Feliz</p>
       </div>
-      <div className="form-wrapper">
+      <div className="form-wrapper-SignUp">
         <div className="form-container">
           <h1 className="text-center text-white">Registro</h1>
           <form>
@@ -29,7 +29,7 @@ const SignUp = () => {
               <label htmlFor="numeroCelular" className="custom-label text-white">Número de Celular *</label>
               <div className="input-group">
                 <div className="input-group-prepend">
-                  <span className="input-group-text"><i className="fas fa-phone"></i></span>
+                  <span className="input-group-text"><i class="fas fa-phone"></i></span>
                 </div>
                 <input type="text" className="form-control" id="numeroCelular" placeholder="Ingresa tu número de celular" />
               </div>
