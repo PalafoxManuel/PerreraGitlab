@@ -1,5 +1,3 @@
-/* SignUp.css */
-
 .back-container {
   display: flex;
   flex-direction: column;
@@ -10,29 +8,28 @@
 }
 
 .logo-container {
-  position: absolute;
   display: flex;
-  justify-content: center;
+  justify-content: center; 
   width: 100%;
   position: absolute;
   top: 25px; /* Adjust the top position as needed */
 }
 
 .logo {
-  width: 100px;
+  width: 120px; /* Ajusta el tamaño del logo */
+  height: auto;
 }
 
 .form-wrapper {
-  margin-left: 5px; /* Espaciado de 10px desde el lado izquierdo */
-  margin-right: 5px; /* Espaciado de 10px desde el lado derecho */
+  margin-left: 5px; /* Espaciado de 5px desde el lado izquierdo */
+  margin-right: 5px; /* Espaciado de 5px desde el lado derecho */
   margin-bottom: 30px; /* Espaciado de 30px desde la parte inferior */
-  margin-top: 160px; /* Espaciado de 30px desde el logo (100px de altura + 30px de margen inferior del logo + 30px de margen superior del formulario) */
+  margin-top: 200px; /* Ajusta el margen superior según sea necesario */
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100% -5px;
+  width: calc(100% - 10px);
 }
-
 
 .form-container {
   background-color: #111;
@@ -47,30 +44,46 @@
   font-weight: bold;
 }
 
-
 .form-control {
   background-color: #333;
   color: #fff;
   border: none;
+  height: 40px; /* Ajusta la altura para que sea proporcional al logo */
+  font-size: 16px;
 }
 
 .form-control::placeholder {
   color: #bbb;
 }
 
+.input-group-prepend .input-group-text {
+  background-color: #ffffff; /* Fondo blanco para los íconos de entrada */
+  width: 40px; /* Ajusta el ancho para igualar el tamaño del logo */
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
 .btn-primary {
-  background-color: #007bff;
+  background-color: #007bff; /* Color del botón primario de Bootstrap */
   border: none;
+  font-size: 18px;
+  padding: 10px;
+}
+
+.text-primary {
+  color: #007bff; /* Color del texto primario de Bootstrap */
+}
+
+.text-primary:hover {
+  color: #0056b3; /* Azul más oscuro al pasar el cursor */
 }
 
 .text-white {
   color: #fff;
-}
-
-.text-primary {
-  color: #007bff;
-}
-
-.text-primary:hover {
-  color: #0056b3; /* Azul más oscuro al pasar el ratón */
 }

@@ -1,4 +1,3 @@
-// Login.js
 import React from 'react';
 import Logo from '../img/Logo.png';
 import { Link } from 'react-router-dom';
@@ -10,7 +9,8 @@ const Login = () => {
   return (
     <div className="back-container">
       <div className="logo-container">
-      <img src={Logo} alt="Logo" className="logo" /> </div>
+        <img src={Logo} alt="Logo" className="logo" />
+      </div>
       <div className="form-wrapper">
         <div className="form-container">
           <h1 className="text-center text-white">¡Bienvenido!</h1>
