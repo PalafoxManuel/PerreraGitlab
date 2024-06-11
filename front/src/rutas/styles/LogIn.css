@@ -1,8 +1,8 @@
 /* Login.css */
   
   .logo {
-    width: 120px;
-    height: auto;
+    width: auto;
+    height: 16vh;
   }
   
   
@@ -32,7 +32,19 @@
     margin-left: 5px; /* Espaciado de 5px desde el lado izquierdo */
     margin-right: 5px; /* Espaciado de 5px desde el lado derecho */
     margin-bottom: 30px; /* Espaciado de 30px desde la parte inferior */
-    margin-top: 0px; /* Ajusta el margen superior según sea necesario */
+    margin-top: 0vh; /* Ajusta el margen superior según sea necesario */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% - 10px);
+  }
+  
+  .form-wrapper-LogIn-Admin {
+    margin-left: 5px; /* Espaciado de 5px desde el lado izquierdo */
+    margin-right: 5px; /* Espaciado de 5px desde el lado derecho */
+    margin-bottom: 30px; /* Espaciado de 30px desde la parte inferior */
+    margin-top: 20vh; /* Ajusta el margen superior según sea necesario */
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -10,9 +10,9 @@ const AdminLogin = () => {
     <div className="back-container-admin">
       <div className="logo-container">
         <img src={Logo} alt="Logo" className="logo" />
-        <p className="logo-text">Palafox Feliz</p>
+        <p className="logo-text">Patitas Felices</p>
       </div>
-      <div className="form-wrapper-LogIn">
+      <div className="form-wrapper-LogIn-Admin">
         <div className="form-container">
           <h1 className="text-center text-white">¡Bienvenido!</h1>
           <form>

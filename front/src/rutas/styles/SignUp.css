@@ -68,7 +68,7 @@
   margin-left: 5px; /* Espaciado de 5px desde el lado izquierdo */
   margin-right: 5px; /* Espaciado de 5px desde el lado derecho */
   margin-bottom: 30px; /* Espaciado de 30px desde la parte inferior */
-  margin-top: 40px; /* Ajusta el margen superior según sea necesario */
+  margin-top: 160px; /* Ajusta el margen superior según sea necesario */
   display: flex;
   flex-direction: column;
   justify-content: center;

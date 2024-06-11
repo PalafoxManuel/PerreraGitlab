@@ -10,7 +10,7 @@ const AdminSignUp = () => {
     <div className="back-container-admin">
       <div className="logo-container">
         <img src={Logo} alt="Logo" className="logo" />
-        <p className="logo-text">Palafox Feliz</p>
+        <p className="logo-text">Patitas Felices</p>
       </div>
       <div className="form-wrapper-SignUp-Admin">
         <div className="form-container">

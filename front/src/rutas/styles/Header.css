@@ -2,6 +2,7 @@
 
 .header-container {
   position: relative;
+  z-index: 1001; /* Ensure the header is always on top */
 }
 
 .navbar {
@@ -11,6 +12,13 @@
   padding: 10px 20px;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo-text-black {
+  color: #000000;
+  margin-top: 10px; /* Espaciado entre el logo y el texto */
+  font-size: 2rem; /* Ajusta el tamaño del texto */
+  font-family: 'Lobster', cursive; /* Aplica la fuente personalizada */
 }
 
 .navbar-menu {
@@ -111,5 +119,15 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999;
+  z-index: 500; /* Lower than the navbar */
+  display: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.backdrop.open {
+  display: block;
+  opacity: 1;
+  pointer-events: auto;
 }

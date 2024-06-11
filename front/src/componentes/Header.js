@@ -22,8 +22,7 @@ const Header = () => {
           <i className="fas fa-bars"></i>
         </div>
         <div className="navbar-title">
-          <h1>LOMNY</h1>
-          <span>YOGGN HERE</span>
+        <p className="logo-text-black">Patitas Felices</p>
         </div>
         <div className="navbar-logo">
           <img src={Logo} alt="Logo" />
