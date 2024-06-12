@@ -9,7 +9,7 @@ const Vacunacion = () => {
         <FormField label="Tipo de Vacuna" type="text" required={true} />
         <FormField label="Dosis" type="number" required={true} />
         <button type="submit">Guardar</button>
-      </form>
+      </form> 
     </div>
   );
 };
