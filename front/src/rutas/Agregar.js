@@ -14,7 +14,7 @@ const Agregar = () => {
 
   return (
     <div>
-      <Header />
+      <Header /> 
       <div className="back-container">
         <div className="form-wrapper-2">
           <div>
@@ -24,11 +24,14 @@ const Agregar = () => {
       </div>
       <Offcanvas isOpen={isOffcanvasOpen} onClose={toggleOffcanvas} title="Agregar Mascota">
         <form className="agregar-form">
-          <FormField label="Agrega nombre de la mascota" type="text" required={true} />
-          <FormField label="Edad" type="select" options={[{ value: '1', label: '1 año' }, { value: '2', label: '2 años' }]} required={true} />
-          <FormField label="Sexo" type="select" options={[{ value: 'macho', label: 'Macho' }, { value: 'hembra', label: 'Hembra' }]} required={true} />
-          <FormField label="Control de vacunación" type="select" options={[{ value: 'si', label: 'Sí' }, { value: 'no', label: 'No' }]} required={true} />
-          <FormField label="Raza" type="text" required={true} />
+          <FormField label="Nombre" type="text" required={true} />
+          <FormField label="Raza" type="text" />
+          <FormField label="Edad" type="number" />
+          <FormField label="Genero" type="select" options={[{ value: 'macho', label: 'Macho' }, { value: 'hembra', label: 'Hembra' }]} />
+          <FormField label="Color" type="text" />
+          <FormField label="Peso" type="number" step="0.1" />
+          <FormField label="Historial Médico" type="textarea" />
+          <FormField label="Rescatado de la Calle" type="checkbox" />
           <div className="form-buttons">
             <button type="button" onClick={toggleOffcanvas}>Cancelar</button>
             <button type="submit">Guardar</button>

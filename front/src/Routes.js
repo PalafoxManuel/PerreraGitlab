@@ -10,6 +10,8 @@ import Historial from './rutas/Historial';
 import Reporte from './rutas/Reporte';
 import AdminLogIn from './rutas/AdminLogIn';
 import AdminSignUp from './rutas/AdminSignUp';
+import Alojamiento from './rutas/Alojamiento';
+import Vacunacion from './rutas/Vacunacion';
 const Rutas = () => {
     return (
         <Router>
@@ -24,6 +26,8 @@ const Rutas = () => {
             <Route path="/Reporte" element={<Reporte />} />
             <Route path="/AdminLogIn" element={<AdminLogIn />} />
             <Route path="/AdminSignUp" element={<AdminSignUp />} />
+            <Route path="/Alojamiento" element={<Alojamiento />} />
+            <Route path="/Vacunacion" element={<Vacunacion />} />
           </Routes>
         </Router>
       );
