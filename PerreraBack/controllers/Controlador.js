@@ -1,4 +1,3 @@
-// Importa los modelos desde el archivo Models.js
 import { 
     Cliente, 
     Mascota, 
@@ -12,9 +11,8 @@ import {
     Vacunacion, 
     ReservaServicio, 
     Adopcion, 
-    DisponibilidadMascotas, 
     DisponibilidadServicios, 
-    Notificacion, 
+    NotificacionReservas, 
     Pago 
 } from "../models/Models.js";
 
@@ -161,55 +159,6 @@ export const deletePerrera = async (req, res) => {
         res.json({ message: error.message });
     }
 };
-
-// Controladores para TipoReporte
-export const getAllTipoReporte = async (req, res) => {
-    try {
-        const tipoReportes = await TipoReporte.findAll();
-        res.json(tipoReportes);
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-export const getTipoReporte = async (req, res) => {
-    try {
-        const tipoReporte = await TipoReporte.findByPk(req.params.id);
-        res.json(tipoReporte);
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-export const createTipoReporte = async (req, res) => {
-    try {
-        const tipoReporte = await TipoReporte.create(req.body);
-        res.json(tipoReporte);
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-export const updateTipoReporte = async (req, res) => {
-    try {
-        const tipoReporte = await TipoReporte.findByPk(req.params.id);
-        await tipoReporte.update(req.body);
-        res.json(tipoReporte);
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-export const deleteTipoReporte = async (req, res) => {
-    try {
-        const tipoReporte = await TipoReporte.findByPk(req.params.id);
-        await tipoReporte.destroy();
-        res.json({ message: "Tipo de reporte eliminado correctamente" });
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
 // Controladores para Usuario
 export const getAllUsuarios = async (req, res) => {
     try {
@@ -253,6 +202,150 @@ export const deleteUsuario = async (req, res) => {
         const usuario = await Usuario.findByPk(req.params.id);
         await usuario.destroy();
         res.json({ message: "Usuario eliminado correctamente" });
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+// Controladores para Adopcion
+export const getAllAdopciones = async (req, res) => {
+    try {
+        const adopciones = await Adopcion.findAll();
+        res.json(adopciones);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+export const getAdopcion = async (req, res) => {
+    try {
+        const adopcion = await Adopcion.findByPk(req.params.id);
+        res.json(adopcion);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+export const createAdopcion = async (req, res) => {
+    try {
+        const adopcion = await Adopcion.create(req.body);
+        res.json(adopcion);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+export const updateAdopcion = async (req, res) => {
+    try {
+        const adopcion = await Adopcion.findByPk(req.params.id);
+        await adopcion.update(req.body);
+        res.json(adopcion);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+export const deleteAdopcion = async (req, res) => {
+    try {
+        const adopcion = await Adopcion.findByPk(req.params.id);
+        await adopcion.destroy();
+        res.json({ message: "Adopción eliminada correctamente" });
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+// Controladores para DisponibilidadServicios
+export const getAllDisponibilidadServicios = async (req, res) => {
+    try {
+        const disponibilidadServicios = await DisponibilidadServicios.findAll();
+        res.json(disponibilidadServicios);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+export const getDisponibilidadServicio = async (req, res) => {
+    try {
+        const disponibilidadServicio = await DisponibilidadServicios.findByPk(req.params.id);
+        res.json(disponibilidadServicio);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+export const createDisponibilidadServicio = async (req, res) => {
+    try {
+        const disponibilidadServicio = await DisponibilidadServicios.create(req.body);
+        res.json(disponibilidadServicio);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+export const updateDisponibilidadServicio = async (req, res) => {
+    try {
+        const disponibilidadServicio = await DisponibilidadServicios.findByPk(req.params.id);
+        await disponibilidadServicio.update(req.body);
+        res.json(disponibilidadServicio);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+export const deleteDisponibilidadServicio = async (req, res) => {
+    try {
+        const disponibilidadServicio = await DisponibilidadServicios.findByPk(req.params.id);
+        await disponibilidadServicio.destroy();
+        res.json({ message: "Disponibilidad de servicio eliminada correctamente" });
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+// Controladores para TipoReporte
+export const getAllTipoReportes = async (req, res) => {
+    try {
+        const tipoReportes = await TipoReporte.findAll();
+        res.json(tipoReportes);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+export const getTipoReporte = async (req, res) => {
+    try {
+        const tipoReporte = await TipoReporte.findByPk(req.params.id);
+        res.json(tipoReporte);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+export const createTipoReporte = async (req, res) => {
+    try {
+        const tipoReporte = await TipoReporte.create(req.body);
+        res.json(tipoReporte);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+export const updateTipoReporte = async (req, res) => {
+    try {
+        const tipoReporte = await TipoReporte.findByPk(req.params.id);
+        await tipoReporte.update(req.body);
+        res.json(tipoReporte);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+export const deleteTipoReporte = async (req, res) => {
+    try {
+        const tipoReporte = await TipoReporte.findByPk(req.params.id);
+        await tipoReporte.destroy();
+        res.json({ message: "Tipo de reporte eliminado correctamente" });
     } catch (error) {
         res.json({ message: error.message });
     }
@@ -354,49 +447,97 @@ export const deleteReserva = async (req, res) => {
     }
 };
 
-// Controladores para Servicio
-export const getAllServicios = async (req, res) => {
+// Controladores para NotificacionReservas
+export const getAllNotificacionesReservas = async (req, res) => {
     try {
-        const servicios = await Servicio.findAll();
-        res.json(servicios);
+        const notificacionesReservas = await NotificacionReservas.findAll();
+        res.json(notificacionesReservas);
     } catch (error) {
         res.json({ message: error.message });
     }
 };
 
-export const getServicio = async (req, res) => {
+export const getNotificacionReserva = async (req, res) => {
     try {
-        const servicio = await Servicio.findByPk(req.params.id);
-        res.json(servicio);
+        const notificacionReserva = await NotificacionReservas.findByPk(req.params.id);
+        res.json(notificacionReserva);
     } catch (error) {
         res.json({ message: error.message });
     }
 };
 
-export const createServicio = async (req, res) => {
+export const createNotificacionReserva = async (req, res) => {
     try {
-        const servicio = await Servicio.create(req.body);
-        res.json(servicio);
+        const notificacionReserva = await NotificacionReservas.create(req.body);
+        res.json(notificacionReserva);
     } catch (error) {
         res.json({ message: error.message });
     }
 };
 
-export const updateServicio = async (req, res) => {
+export const updateNotificacionReserva = async (req, res) => {
     try {
-        const servicio = await Servicio.findByPk(req.params.id);
-        await servicio.update(req.body);
-        res.json(servicio);
+        const notificacionReserva = await NotificacionReservas.findByPk(req.params.id);
+        await notificacionReserva.update(req.body);
+        res.json(notificacionReserva);
     } catch (error) {
         res.json({ message: error.message });
     }
 };
 
-export const deleteServicio = async (req, res) => {
+export const deleteNotificacionReserva = async (req, res) => {
     try {
-        const servicio = await Servicio.findByPk(req.params.id);
-        await servicio.destroy();
-        res.json({ message: "Servicio eliminado correctamente" });
+        const notificacionReserva = await NotificacionReservas.findByPk(req.params.id);
+        await notificacionReserva.destroy();
+        res.json({ message: "Notificación de reserva eliminada correctamente" });
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+// Controladores para Pago
+export const getAllPagos = async (req, res) => {
+    try {
+        const pagos = await Pago.findAll();
+        res.json(pagos);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+export const getPago = async (req, res) => {
+    try {
+        const pago = await Pago.findByPk(req.params.id);
+        res.json(pago);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+export const createPago = async (req, res) => {
+    try {
+        const pago = await Pago.create(req.body);
+        res.json(pago);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+export const updatePago = async (req, res) => {
+    try {
+        const pago = await Pago.findByPk(req.params.id);
+        await pago.update(req.body);
+        res.json(pago);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+export const deletePago = async (req, res) => {
+    try {
+        const pago = await Pago.findByPk(req.params.id);
+        await pago.destroy();
+        res.json({ message: "Pago eliminado correctamente" });
     } catch (error) {
         res.json({ message: error.message });
     }
@@ -498,11 +639,59 @@ export const deleteVacunacion = async (req, res) => {
     }
 };
 
+// Controladores para Servicio
+export const getAllServicios = async (req, res) => {
+    try {
+        const servicios = await Servicio.findAll();
+        res.json(servicios);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+export const getServicio = async (req, res) => {
+    try {
+        const servicio = await Servicio.findByPk(req.params.id);
+        res.json(servicio);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+export const createServicio = async (req, res) => {
+    try {
+        const servicio = await Servicio.create(req.body);
+        res.json(servicio);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+export const updateServicio = async (req, res) => {
+    try {
+        const servicio = await Servicio.findByPk(req.params.id);
+        await servicio.update(req.body);
+        res.json(servicio);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+export const deleteServicio = async (req, res) => {
+    try {
+        const servicio = await Servicio.findByPk(req.params.id);
+        await servicio.destroy();
+        res.json({ message: "Servicio eliminado correctamente" });
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
 // Controladores para ReservaServicio
 export const getAllReservaServicios = async (req, res) => {
     try {
-        const reservasServicios = await ReservaServicio.findAll();
-        res.json(reservasServicios);
+        const reservaServicios = await ReservaServicio.findAll();
+        res.json(reservaServicios);
     } catch (error) {
         res.json({ message: error.message });
     }
@@ -541,246 +730,6 @@ export const deleteReservaServicio = async (req, res) => {
         const reservaServicio = await ReservaServicio.findByPk(req.params.id);
         await reservaServicio.destroy();
         res.json({ message: "Reserva de servicio eliminada correctamente" });
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-// Controladores para Adopcion
-export const getAllAdopciones = async (req, res) => {
-    try {
-        const adopciones = await Adopcion.findAll();
-        res.json(adopciones);
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-export const getAdopcion = async (req, res) => {
-    try {
-        const adopcion = await Adopcion.findByPk(req.params.id);
-        res.json(adopcion);
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-export const createAdopcion = async (req, res) => {
-    try {
-        const adopcion = await Adopcion.create(req.body);
-        res.json(adopcion);
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-export const updateAdopcion = async (req, res) => {
-    try {
-        const adopcion = await Adopcion.findByPk(req.params.id);
-        await adopcion.update(req.body);
-        res.json(adopcion);
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-export const deleteAdopcion = async (req, res) => {
-    try {
-        const adopcion = await Adopcion.findByPk(req.params.id);
-        await adopcion.destroy();
-        res.json({ message: "Adopción eliminada correctamente" });
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-// Controladores para DisponibilidadMascotas
-export const getAllDisponibilidadesMascotas = async (req, res) => {
-    try {
-        const disponibilidadMascotas = await DisponibilidadMascotas.findAll();
-        res.json(disponibilidadMascotas);
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-export const getDisponibilidadMascota = async (req, res) => {
-    try {
-        const disponibilidadMascota = await DisponibilidadMascotas.findByPk(req.params.id);
-        res.json(disponibilidadMascota);
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-export const createDisponibilidadMascota = async (req, res) => {
-    try {
-        const disponibilidadMascota = await DisponibilidadMascotas.create(req.body);
-        res.json(disponibilidadMascota);
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-export const updateDisponibilidadMascota = async (req, res) => {
-    try {
-        const disponibilidadMascota = await DisponibilidadMascotas.findByPk(req.params.id);
-        await disponibilidadMascota.update(req.body);
-        res.json(disponibilidadMascota);
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-export const deleteDisponibilidadMascota = async (req, res) => {
-    try {
-        const disponibilidadMascota = await DisponibilidadMascotas.findByPk(req.params.id);
-        await disponibilidadMascota.destroy();
-        res.json({ message: "Disponibilidad de mascota eliminada correctamente" });
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-// Controladores para DisponibilidadServicios
-export const getAllDisponibilidadesServicios = async (req, res) => {
-    try {
-        const disponibilidadServicios = await DisponibilidadServicios.findAll();
-        res.json(disponibilidadServicios);
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-export const getDisponibilidadServicio = async (req, res) => {
-    try {
-        const disponibilidadServicio = await DisponibilidadServicios.findByPk(req.params.id);
-        res.json(disponibilidadServicio);
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-export const createDisponibilidadServicio = async (req, res) => {
-    try {
-        const disponibilidadServicio = await DisponibilidadServicios.create(req.body);
-        res.json(disponibilidadServicio);
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-export const updateDisponibilidadServicio = async (req, res) => {
-    try {
-        const disponibilidadServicio = await DisponibilidadServicios.findByPk(req.params.id);
-        await disponibilidadServicio.update(req.body);
-        res.json(disponibilidadServicio);
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-export const deleteDisponibilidadServicio = async (req, res) => {
-    try {
-        const disponibilidadServicio = await DisponibilidadServicios.findByPk(req.params.id);
-        await disponibilidadServicio.destroy();
-        res.json({ message: "Disponibilidad de servicio eliminada correctamente" });
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-// Controladores para Notificacion
-export const getAllNotificaciones = async (req, res) => {
-    try {
-        const notificaciones = await Notificacion.findAll();
-        res.json(notificaciones);
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-export const getNotificacion = async (req, res) => {
-    try {
-        const notificacion = await Notificacion.findByPk(req.params.id);
-        res.json(notificacion);
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-export const createNotificacion = async (req, res) => {
-    try {
-        const notificacion = await Notificacion.create(req.body);
-        res.json(notificacion);
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-export const updateNotificacion = async (req, res) => {
-    try {
-        const notificacion = await Notificacion.findByPk(req.params.id);
-        await notificacion.update(req.body);
-        res.json(notificacion);
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-export const deleteNotificacion = async (req, res) => {
-    try {
-        const notificacion = await Notificacion.findByPk(req.params.id);
-        await notificacion.destroy();
-        res.json({ message: "Notificación eliminada correctamente" });
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-// Controladores para Pago
-export const getAllPagos = async (req, res) => {
-    try {
-        const pagos = await Pago.findAll();
-        res.json(pagos);
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-export const getPago = async (req, res) => {
-    try {
-        const pago = await Pago.findByPk(req.params.id);
-        res.json(pago);
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-export const createPago = async (req, res) => {
-    try {
-        const pago = await Pago.create(req.body);
-        res.json(pago);
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-export const updatePago = async (req, res) => {
-    try {
-        const pago = await Pago.findByPk(req.params.id);
-        await pago.update(req.body);
-        res.json(pago);
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-};
-
-export const deletePago = async (req, res) => {
-    try {
-        const pago = await Pago.findByPk(req.params.id);
-        await pago.destroy();
-        res.json({ message: "Pago eliminado correctamente" });
     } catch (error) {
         res.json({ message: error.message });
     }

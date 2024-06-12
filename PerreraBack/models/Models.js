@@ -1,7 +1,140 @@
-import { Sequelize, DataTypes } from 'sequelize';
-import sequelize from '../database/db.js';
+import { DataTypes } from 'sequelize';
+import db from '../database/db.js';
 
-const Adopcion = sequelize.define('adopcion', {
+const Perrera = db.define('perrera', {
+  Id_Perrera: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  Nombre: {
+    type: DataTypes.STRING(100),
+    allowNull: false
+  },
+  Ubicacion: {
+    type: DataTypes.STRING(100),
+    allowNull: false
+  },
+  Tamano_Personal: {
+    type: DataTypes.INTEGER,
+    allowNull: true
+  }
+}, {
+  tableName: 'perrera',
+  timestamps: false
+});
+
+const Usuario = db.define('usuario', {
+  Id_Usuario: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  Nombre_Usuario: {
+    type: DataTypes.STRING(50),
+    allowNull: false
+  },
+  Contrasena: {
+    type: DataTypes.STRING(100),
+    allowNull: false
+  },
+  Id_Perrera: {
+    type: DataTypes.INTEGER,
+    allowNull: true
+  },
+  Id_Cliente: {
+    type: DataTypes.INTEGER,
+    allowNull: true
+  }
+}, {
+  tableName: 'usuario',
+  timestamps: false
+});
+
+const Cliente = db.define('cliente', {
+  Id_Cliente: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  Nombre_Completo: {
+    type: DataTypes.STRING(200),
+    allowNull: false
+  },
+  Numero_Contacto: {
+    type: DataTypes.STRING(20),
+    allowNull: true
+  },
+  Correo_Electronico: {
+    type: DataTypes.STRING(100),
+    allowNull: true
+  },
+  Calle: {
+    type: DataTypes.STRING(100),
+    allowNull: true
+  },
+  Codigo_Postal: {
+    type: DataTypes.STRING(20),
+    allowNull: true
+  },
+  Id_Usuario: {
+    type: DataTypes.INTEGER,
+    allowNull: true
+  }
+}, {
+  tableName: 'cliente',
+  timestamps: false
+});
+
+const Mascota = db.define('mascota', {
+  Id_Mascota: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  Nombre: {
+    type: DataTypes.STRING(100),
+    allowNull: false
+  },
+  Raza: {
+    type: DataTypes.STRING(100),
+    allowNull: true
+  },
+  Edad: {
+    type: DataTypes.INTEGER,
+    allowNull: true
+  },
+  Genero: {
+    type: DataTypes.STRING(10),
+    allowNull: true
+  },
+  Color: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  Peso: {
+    type: DataTypes.FLOAT,
+    allowNull: true
+  },
+  Historial_Medico: {
+    type: DataTypes.TEXT,
+    allowNull: true
+  },
+  Id_Usuario: {
+    type: DataTypes.INTEGER,
+    allowNull: true
+  },
+  RescatadoCalle: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  }
+}, {
+  tableName: 'mascota',
+  timestamps: false
+});
+
+const Adopcion = db.define('adopcion', {
   Id_Adopcion: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -18,59 +151,40 @@ const Adopcion = sequelize.define('adopcion', {
   Fecha_Adopcion: {
     type: DataTypes.DATE,
     allowNull: false
+  },
+  NotasAdicionales: {
+    type: DataTypes.TEXT,
+    allowNull: true
   }
 }, {
   tableName: 'adopcion',
   timestamps: false
 });
 
-const Cliente = sequelize.define('cliente', {
-  Id_Cliente: {
+const Servicio = db.define('servicio', {
+  Id_Servicio: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true
   },
-  Nombre_Completo: {
-    type: DataTypes.STRING(200),
+  Nombre_Servicio: {
+    type: DataTypes.STRING(100),
     allowNull: false
   },
-  Numero_Contacto: {
-    type: DataTypes.STRING(20)
+  Descripcion: {
+    type: DataTypes.TEXT,
+    allowNull: true
   },
-  Correo_Electronico: {
-    type: DataTypes.STRING(100)
-  },
-  Calle: {
-    type: DataTypes.STRING(100)
-  },
-  Codigo_Postal: {
-    type: DataTypes.STRING(20)
-  }
-}, {
-  tableName: 'cliente',
-  timestamps: false
-});
-
-const DisponibilidadMascotas = sequelize.define('disponibilidad_mascotas', {
-  Id_Disponibilidad: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true
-  },
-  Id_Mascota: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  Disponible: {
-    type: DataTypes.BOOLEAN,
+  Tarifa: {
+    type: DataTypes.DECIMAL(10, 2),
     allowNull: false
   }
 }, {
-  tableName: 'disponibilidad_mascotas',
+  tableName: 'servicio',
   timestamps: false
 });
 
-const DisponibilidadServicios = sequelize.define('disponibilidad_servicios', {
+const DisponibilidadServicios = db.define('disponibilidad_servicios', {
   Id_Disponibilidad: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -89,43 +203,88 @@ const DisponibilidadServicios = sequelize.define('disponibilidad_servicios', {
   timestamps: false
 });
 
-const Mascota = sequelize.define('mascota', {
-  Id_Mascota: {
+const TipoReporte = db.define('tipo_reporte', {
+  Id_Tipo_Reporte: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true
   },
   Nombre: {
-    type: DataTypes.STRING(100),
+    type: DataTypes.STRING(200),
     allowNull: false
-  },
-  Raza: {
-    type: DataTypes.STRING(100)
-  },
-  Edad: {
-    type: DataTypes.INTEGER
-  },
-  Genero: {
-    type: DataTypes.STRING(10)
-  },
-  Color: {
-    type: DataTypes.STRING(50)
-  },
-  Peso: {
-    type: DataTypes.FLOAT
-  },
-  Fecha_Ingreso: {
-    type: DataTypes.DATE
-  },
-  Historial_Medico: {
-    type: DataTypes.TEXT
   }
 }, {
-  tableName: 'mascota',
+  tableName: 'tipo_reporte',
   timestamps: false
 });
 
-const Notificacion = sequelize.define('notificacion', {
+const Reporte = db.define('reporte', {
+  Id_Reporte: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  Id_Tipo_Reporte: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  Id_Mascota: {
+    type: DataTypes.INTEGER,
+    allowNull: true
+  },
+  Id_Usuario: {
+    type: DataTypes.INTEGER,
+    allowNull: true
+  },
+  Contenido: {
+    type: DataTypes.TEXT,
+    allowNull: true
+  },
+  Fecha_Reporte: {
+    type: DataTypes.DATE,
+    allowNull: false
+  }
+}, {
+  tableName: 'reporte',
+  timestamps: false
+});
+
+const Reserva = db.define('reserva', {
+  Id_Reserva: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  Fecha_Reserva: {
+    type: DataTypes.DATE,
+    allowNull: false
+  },
+  Duracion_Dias: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  Tipo_Servicio: {
+    type: DataTypes.STRING(100),
+    allowNull: true
+  },
+  Estado: {
+    type: DataTypes.ENUM('Pendiente', 'Confirmada', 'Cancelada'),
+    allowNull: false
+  },
+  Id_Cliente: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  Id_Perrera: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  }
+}, {
+  tableName: 'reserva',
+  timestamps: false
+});
+
+const NotificacionReservas = db.define('notificacionReservas', {
   Id_Notificacion: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -136,21 +295,27 @@ const Notificacion = sequelize.define('notificacion', {
     allowNull: false
   },
   Contenido: {
-    type: DataTypes.TEXT
+    type: DataTypes.TEXT,
+    allowNull: true
   },
   Fecha: {
     type: DataTypes.DATE,
     allowNull: false
   },
-  Id_Perrera: {
-    type: DataTypes.INTEGER
+  Id_Usuario: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  Id_Reserva: {
+    type: DataTypes.INTEGER,
+    allowNull: false
   }
 }, {
-  tableName: 'notificacion',
+  tableName: 'notificacionReservas',
   timestamps: false
 });
 
-const Pago = sequelize.define('pago', {
+const Pago = db.define('pago', {
   Id_Pago: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -173,154 +338,7 @@ const Pago = sequelize.define('pago', {
   timestamps: false
 });
 
-const Perrera = sequelize.define('perrera', {
-  Id_Perrera: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true
-  },
-  Nombre: {
-    type: DataTypes.STRING(100),
-    allowNull: false
-  },
-  Ubicacion: {
-    type: DataTypes.STRING(100),
-    allowNull: false
-  }
-}, {
-  tableName: 'perrera',
-  timestamps: false
-});
-
-const Reporte = sequelize.define('reporte', {
-  Id_Reporte: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true
-  },
-  Id_Tipo_Reporte: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  Id_Mascota: {
-    type: DataTypes.INTEGER
-  },
-  Id_Usuario: {
-    type: DataTypes.INTEGER
-  },
-  Contenido: {
-    type: DataTypes.TEXT
-  }
-}, {
-  tableName: 'reporte',
-  timestamps: false
-});
-
-const Reserva = sequelize.define('reserva', {
-  Id_Reserva: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true
-  },
-  Fecha_Reserva: {
-    type: DataTypes.DATE,
-    allowNull: false
-  },
-  Duracion_Dias: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  Tipo_Servicio: {
-    type: DataTypes.STRING(100)
-  },
-  Estado: {
-    type: DataTypes.STRING(20),
-    allowNull: false,
-    validate: {
-      isIn: [['Pendiente', 'Confirmada', 'Cancelada']]
-    }
-  },
-  Id_Cliente: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  Id_Perrera: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  }
-}, {
-  tableName: 'reserva',
-  timestamps: false,
-  validate: {
-    fechaReservaNoPasada() {
-      if (this.Fecha_Reserva < new Date()) {
-        throw new Error('Fecha de reserva no puede ser en el pasado');
-      }
-    }
-  }
-});
-
-const Servicio = sequelize.define('servicio', {
-  Id_Servicio: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true
-  },
-  Nombre_Servicio: {
-    type: DataTypes.STRING(100),
-    allowNull: false
-  },
-  Descripcion: {
-    type: DataTypes.TEXT
-  },
-  Tarifa: {
-    type: DataTypes.DECIMAL(10, 2),
-    allowNull: false
-  }
-}, {
-  tableName: 'servicio',
-  timestamps: false
-});
-
-
-const TipoReporte = sequelize.define('tipo_reporte', {
-  Id_Tipo_Reporte: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true
-  },
-  Nombre: {
-    type: DataTypes.STRING(200),
-    allowNull: false
-  }
-}, {
-  tableName: 'tipo_reporte',
-  timestamps: false
-});
-
-const Usuario = sequelize.define('usuario', {
-  Id_Usuario: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true
-  },
-  Nombre_Usuario: {
-    type: DataTypes.STRING(50),
-    allowNull: false
-  },
-  Contrasena: {
-    type: DataTypes.STRING(100),
-    allowNull: false
-  },
-  Id_Perrera: {
-    type: DataTypes.INTEGER
-  }
-}, {
-  tableName: 'usuario',
-  timestamps: false
-});
-
-const Vacuna = sequelize.define('vacuna', {
+const Vacuna = db.define('vacuna', {
   Id_Vacuna: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -331,7 +349,8 @@ const Vacuna = sequelize.define('vacuna', {
     allowNull: false
   },
   Descripcion: {
-    type: DataTypes.TEXT
+    type: DataTypes.TEXT,
+    allowNull: true
   },
   Tipo_Mascota: {
     type: DataTypes.STRING(50),
@@ -342,14 +361,15 @@ const Vacuna = sequelize.define('vacuna', {
     allowNull: false
   },
   Sintomas_Adversos: {
-    type: DataTypes.TEXT
+    type: DataTypes.TEXT,
+    allowNull: true
   }
 }, {
   tableName: 'vacuna',
   timestamps: false
 });
 
-const Vacunacion = sequelize.define('vacunacion', {
+const Vacunacion = db.define('vacunacion', {
   Id_Vacunacion: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -380,7 +400,7 @@ const Vacunacion = sequelize.define('vacunacion', {
   timestamps: false
 });
 
-const ReservaServicio = sequelize.define('reserva_servicio', {
+const ReservaServicio = db.define('reserva_servicio', {
   Id_Reserva_Servicio: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -395,28 +415,12 @@ const ReservaServicio = sequelize.define('reserva_servicio', {
     allowNull: false
   },
   Id_Mascota: {
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
+    allowNull: true
   }
 }, {
   tableName: 'reserva_servicio',
   timestamps: false
 });
 
-export {
-  Adopcion,
-  Cliente,
-  DisponibilidadMascotas,
-  DisponibilidadServicios,
-  Mascota,
-  Notificacion,
-  Pago,
-  Perrera,
-  Reporte,
-  Reserva,
-  Servicio,
-  TipoReporte,
-  Usuario,
-  Vacuna,
-  Vacunacion,
-  ReservaServicio
-};
+export { Perrera, Usuario, Cliente, Mascota, Adopcion, Servicio, DisponibilidadServicios, TipoReporte, Reporte, Reserva, NotificacionReservas, Pago, Vacuna, Vacunacion, ReservaServicio };
