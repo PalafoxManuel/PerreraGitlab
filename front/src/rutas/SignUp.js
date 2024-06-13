@@ -46,7 +46,8 @@ const handleUserSubmit = async (clienteId) => {
     const response = await axios.post(URI_USUARIO, {
       Nombre_Usuario: nombreUsuario,
       Contrasena: password,
-      Id_Cliente: clienteId // Asigna el ID del cliente al usuario
+      Id_Cliente: clienteId ,
+      Id_Perrera: 1
     });
     console.log('Usuario creado exitosamente:', response.data);
   } catch (error) {

@@ -222,7 +222,7 @@ const Reporte = db.define('reporte', {
   },
   Id_Tipo_Reporte: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: true
   },
   Id_Mascota: {
     type: DataTypes.INTEGER,
@@ -238,7 +238,7 @@ const Reporte = db.define('reporte', {
   },
   Fecha_Reporte: {
     type: DataTypes.DATE,
-    allowNull: false
+    allowNull: true
   }
 }, {
   tableName: 'reporte',

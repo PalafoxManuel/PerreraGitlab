@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import axios from 'axios'; // Importa Axios para las peticiones HTTP
 import Header from '../componentes/Header';
-import Offcanvas from '../componentes/Offcanvas';
 import FormField from '../componentes/FormField';
 import '../rutas/styles/Header.css'; // Ajuste de la ruta a '../styles/Home.css'
 import '../rutas/styles/Reporte.css'; // Importa los nuevos estilos
 import Logo from '../img/Logo.png'; // Ajusta la ruta según tu estructura de proyecto
+
+const uri_reporte = 'http://localhost:8000/reporte';
+const URI_MASCOTA = 'http://localhost:8000/mascota';
+const URI_USUARIO = 'http://localhost:8000/usuario';
 
 const Agregar = () => {
   const [reportData, setReportData] = useState({
@@ -14,42 +17,23 @@ const Agregar = () => {
     calleNumero: '',
     codigoPostal: '',
     fechaReporte: '',
-    descripcionMaltrato: '',
+    descripcionMaltrato: ''
   });
 
-  const [usuarios, setUsuarios] = useState([]);
-  const [mascotas, setMascotas] = useState([]);
-  const navigate = useNavigate();
-
-  // Simular una solicitud a la base de datos para obtener usuarios y mascotas
-  useEffect(() => {
-    const fetchedUsuarios = [
-      { Id_Usuario: 1, Nombre: "Eduardo Diaz" },
-      { Id_Usuario: 2, Nombre: "Ana Torres" },
-      { Id_Usuario: 3, Nombre: "Luis Ramirez" },
-    ];
-    const fetchedMascotas = [
-      { Id_Mascota: 1, Nombre: "Billy" },
-      { Id_Mascota: 2, Nombre: "Max" },
-      { Id_Mascota: 3, Nombre: "Lola" },
-    ];
-    setUsuarios(fetchedUsuarios);
-    setMascotas(fetchedMascotas);
-  }, []);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setReportData({
-      ...reportData,
-      [name]: value,
-    });
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setReportData({ ...reportData, [name]: value });
   };
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
-    // Handle form submission here, e.g., sending the data to a server.
-    console.log('Reporte enviado:', reportData);
-    navigate('/Home'); // Redirige a /Home después de enviar el formulario
+    try {
+      const response = await axios.post(uri_reporte, reportData);
+      console.log('Reporte guardado exitosamente:', response.data);
+      // Aquí podrías redirigir a una página de éxito o hacer otra acción
+    } catch (error) {
+      console.error('Error al guardar el Reporte:', error);
+    }
   };
 
   return (
@@ -65,58 +49,58 @@ const Agregar = () => {
             </div>
             <hr />
             <form onSubmit={handleFormSubmit}>
-              <FormField 
-                label="Nombre del propietario" 
-                type="select" 
+              <FormField
+                label="Nombre del propietario"
+                type="text"
                 name="nombrePropietario"
-                required={true}
-                options={usuarios.map(usuario => ({ value: usuario.Id_Usuario, label: usuario.Nombre }))}
                 value={reportData.nombrePropietario}
                 onChange={handleChange}
+                required
               />
-              <FormField 
-                label="Nombre de la mascota" 
-                type="select" 
+              <FormField
+                label="Nombre de la mascota"
+                type="text"
                 name="nombreMascota"
-                required={true}
-                options={mascotas.map(mascota => ({ value: mascota.Id_Mascota, label: mascota.Nombre }))}
                 value={reportData.nombreMascota}
                 onChange={handleChange}
+                required
               />
-              <FormField 
-                label="Calle y número" 
-                type="text" 
+              <FormField
+                label="Calle y número"
+                type="text"
                 name="calleNumero"
                 value={reportData.calleNumero}
                 onChange={handleChange}
-                required={true}
+                required
               />
-              <FormField 
-                label="Código Postal" 
-                type="text" 
+              <FormField
+                label="Código Postal"
+                type="text"
                 name="codigoPostal"
                 value={reportData.codigoPostal}
                 onChange={handleChange}
-                required={true}
+                required
               />
-              <FormField 
-                label="Fecha del reporte" 
-                type="date" 
+              <FormField
+                label="Fecha del reporte"
+                type="date"
                 name="fechaReporte"
                 value={reportData.fechaReporte}
                 onChange={handleChange}
-                required={true}
+                required
               />
-              <FormField 
-                label="Descripción del maltrato" 
-                type="textarea" 
+              <FormField
+                label="Descripción del maltrato"
+                type="textarea"
                 name="descripcionMaltrato"
                 value={reportData.descripcionMaltrato}
                 onChange={handleChange}
-                required={true}
+                required
               />
               <div className="form-buttons">
-                <button type="button" onClick={() => console.log('Cancelar')}>Cancelar</button>
+                <button type="button" onClick={() => console.log('Cancelar')}>
+                  Cancelar
+                </button>
                 <button type="submit">Guardar</button>
               </div>
             </form>
@@ -127,4 +111,4 @@ const Agregar = () => {
   );
 };
 
-export default Agregar;
+export default Agregar;
