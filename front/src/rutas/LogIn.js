@@ -89,7 +89,7 @@ const Login = () => {
             </div>
             <button type="submit" className="btn btn-primary btn-block">Iniciar sesión</button>
             {loginError && <p className="text-center text-danger mt-2">{errorMessage}</p>}
-            <p className="text-center mt-3 text-white">¿No tienes cuenta? <Link to="/SingUp" className="text-primary">¡Crea una ahora!</Link></p>
+            <p className="text-center mt-3 text-white">¿No tienes cuenta? <Link to="/SignUp" className="text-primary">¡Crea una ahora!</Link></p>
 
             <button type="button" className="btn btn-primary btn-block" onClick={() => navigate('/AdminLogIn')}>
               LogIn Admin (Temporal)

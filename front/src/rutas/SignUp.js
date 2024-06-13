@@ -255,7 +255,7 @@ const handleFormSubmit = async (e) => {
             <button type="submit" className="btn btn-primary btn-block">Crear cuenta</button>
             <p className="text-center mt-3 text-white">
               ¿Ya tienes cuenta?{' '}
-              <Link to="/LogIn" className="text-primary">
+              <Link to="/" className="text-primary">
                 Ingresa aquí
               </Link>
             </p>

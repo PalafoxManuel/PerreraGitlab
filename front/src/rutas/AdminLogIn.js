@@ -36,7 +36,7 @@ const AdminLogin = () => {
         localStorage.setItem('usuario', JSON.stringify(usuarioEncontrado));
         localStorage.setItem('userId', usuarioEncontrado.Id_Usuario);
 
-        navigate('/Home');
+        navigate('/AdminHome');
       } else {
         setLoginError(true);
         setErrorMessage('Credenciales incorrectas. Por favor, inténtalo de nuevo.');
