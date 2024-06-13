@@ -9,6 +9,7 @@ import './styles/Agregar.css';
 
 const URI_MASCOTAS_DISPONIBLES = 'http://localhost:8000/mascota';
 const URI_CLIENTES = 'http://localhost:8000/cliente';
+const URI_ADOPCION = 'http://localhost:8000/adopcion';
 
 const Adoptar = () => {
   const [isOffcanvasOpen, setOffcanvasOpen] = useState(true);
@@ -20,7 +21,8 @@ const Adoptar = () => {
     const fetchMascotasDisponibles = async () => {
       try {
         const response = await axios.get(URI_MASCOTAS_DISPONIBLES);
-        setMascotasDisponibles(response.data);
+        const mascotasFiltradas = response.data.filter(mascota => mascota.Id_Usuario === null);
+        setMascotasDisponibles(mascotasFiltradas);
       } catch (error) {
         console.error('Error al cargar mascotas disponibles:', error);
       }
@@ -29,10 +31,7 @@ const Adoptar = () => {
     const fetchClientes = async () => {
       try {
         const response = await axios.get(URI_CLIENTES);
-        // Verifica la estructura de la respuesta
         console.log('Clientes obtenidos:', response.data);
-        
-        // Filtra los clientes para excluir los administradores (Id_Cliente null)
         const clientesFiltrados = response.data.filter(cliente => cliente.Id_Cliente !== null);
         setClientes(clientesFiltrados);
       } catch (error) {
@@ -61,11 +60,20 @@ const Adoptar = () => {
     };
 
     try {
-      // Aquí podrías enviar la solicitud para guardar la adopción
-      console.log('Datos de la adopción a enviar:', nuevaAdopcion);
+      const responseAdopcion = await axios.post(URI_ADOPCION, nuevaAdopcion);
+      console.log('Respuesta del servidor:', responseAdopcion.data);
+
+      // Actualizar el Id_Usuario de la mascota
+      const mascotaId = formData.get('mascota');
+      const clienteId = formData.get('cliente');
+      const updateMascota = { Id_Usuario: clienteId };
+
+      const responseMascota = await axios.put(`${URI_MASCOTAS_DISPONIBLES}/${mascotaId}`, updateMascota);
+      console.log('Mascota actualizada:', responseMascota.data);
+
       closeOffcanvasAndNavigateHome();
     } catch (error) {
-      console.error('Error al guardar la adopción:', error);
+      console.error('Error al guardar la adopción o actualizar la mascota:', error);
     }
   };
 
@@ -73,21 +81,21 @@ const Adoptar = () => {
     <div>
       <Header />
       <div className="back-container">
-        <div className="form-wrapper-2">
-          {/* The button to open the offcanvas is removed */}
-        </div>
+        <div className="form-wrapper-2"></div>
       </div>
       <Offcanvas isOpen={isOffcanvasOpen} onClose={closeOffcanvasAndNavigateHome} title="Agregar Adopción">
         <form className="agregar-form" onSubmit={handleFormSubmit}>
           <FormField 
             label="Mascota" 
             type="select" 
+            name="mascota" 
             required={true} 
             options={mascotasDisponibles.map(mascota => ({ value: mascota.Id_Mascota, label: mascota.Nombre }))} 
           />
           <FormField 
             label="Cliente" 
             type="select" 
+            name="cliente" 
             required={true} 
             options={clientes.map(cliente => ({ value: cliente.Id_Cliente, label: cliente.Nombre_Completo }))} 
           />
