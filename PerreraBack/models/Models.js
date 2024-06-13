@@ -419,4 +419,22 @@ const ReservaServicio = db.define('reserva_servicio', {
   timestamps: false
 });
 
-export { Perrera, Usuario, Cliente, Mascota, Adopcion, Servicio, DisponibilidadServicios, TipoReporte, Reporte, Reserva, NotificacionReservas, Pago, Vacuna, Vacunacion, ReservaServicio };
+const TipoMascota = db.define('tipo_mascotas', {
+  Id_TipoMascota: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  Nombre_Tipo: {
+    type: DataTypes.STRING(100),
+    allowNull: false
+  }
+}, {
+  tableName: 'tipo_mascotas',
+  timestamps: false,
+  charset: 'utf8mb4',
+  collate: 'utf8mb4_general_ci'
+});
+
+
+export { Perrera, Usuario, Cliente, Mascota, Adopcion, Servicio, DisponibilidadServicios, TipoReporte, Reporte, Reserva, NotificacionReservas, Pago, Vacuna, Vacunacion, ReservaServicio, TipoMascota };

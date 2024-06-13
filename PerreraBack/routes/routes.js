@@ -14,7 +14,8 @@ import {
     getAllVacunas, getVacuna, createVacuna, updateVacuna, deleteVacuna,
     getAllVacunaciones, getVacunacion, createVacunacion, updateVacunacion, deleteVacunacion,
     getAllServicios, getServicio, createServicio, updateServicio, deleteServicio,
-    getAllReservaServicios, getReservaServicio, createReservaServicio, updateReservaServicio, deleteReservaServicio
+    getAllReservaServicios, getReservaServicio, createReservaServicio, updateReservaServicio, deleteReservaServicio,
+    getAllTipoMascotas, getTipoMascota,createTipoMascota,updateTipoMascota,deleteTipoMascota
 } from '../controllers/Controlador.js';
 
 const router = express.Router();
@@ -123,5 +124,12 @@ router.get('/reserva-servicio/:id', getReservaServicio);
 router.post('/reserva-servicio', createReservaServicio);
 router.put('/reserva-servicio/:id', updateReservaServicio);
 router.delete('/reserva-servicio/:id', deleteReservaServicio);
+
+// rutas para tipo_mascota
+router.get('/tipo_mascotas', getAllTipoMascotas);
+router.get('/tipo_mascotas/:id', getTipoMascota);
+router.post('/tipo_mascotas', createTipoMascota);
+router.put('/tipo_mascotas/:id', updateTipoMascota);
+router.delete('/tipo_mascotas/:id', deleteTipoMascota);
 
 export default router;

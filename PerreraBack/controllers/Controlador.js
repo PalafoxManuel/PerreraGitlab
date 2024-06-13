@@ -13,7 +13,8 @@ import {
     Adopcion, 
     DisponibilidadServicios, 
     NotificacionReservas, 
-    Pago 
+    Pago,
+    TipoMascota
 } from "../models/Models.js";
 
 // Controladores para Cliente
@@ -730,6 +731,61 @@ export const deleteReservaServicio = async (req, res) => {
         const reservaServicio = await ReservaServicio.findByPk(req.params.id);
         await reservaServicio.destroy();
         res.json({ message: "Reserva de servicio eliminada correctamente" });
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+export const getAllTipoMascotas = async (req, res) => {
+    try {
+        const tipoMascotas = await TipoMascota.findAll();
+        res.json(tipoMascotas);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+export const getTipoMascota = async (req, res) => {
+    try {
+        const tipoMascota = await TipoMascota.findByPk(req.params.id);
+        res.json(tipoMascota);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+export const createTipoMascota = async (req, res) => {
+    try {
+        const tipoMascota = await TipoMascota.create(req.body);
+        res.json(tipoMascota);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+export const updateTipoMascota = async (req, res) => {
+    try {
+        const tipoMascota = await TipoMascota.findByPk(req.params.id);
+        if (tipoMascota) {
+            await tipoMascota.update(req.body);
+            res.json(tipoMascota);
+        } else {
+            res.json({ message: "Tipo de Mascota no encontrado" });
+        }
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+export const deleteTipoMascota = async (req, res) => {
+    try {
+        const tipoMascota = await TipoMascota.findByPk(req.params.id);
+        if (tipoMascota) {
+            await tipoMascota.destroy();
+            res.json({ message: "Tipo de Mascota eliminado correctamente" });
+        } else {
+            res.json({ message: "Tipo de Mascota no encontrado" });
+        }
     } catch (error) {
         res.json({ message: error.message });
     }
