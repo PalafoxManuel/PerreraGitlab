@@ -5,6 +5,13 @@
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
+
+  .form-wrapper-reporte-admin{
+    background-color: #747474;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
   
   .comprobante {
     max-width: 800px;

@@ -21,6 +21,8 @@ import AdminAgregarVacuna from './rutas/AdminAgregarVacuna';
 import AdminReporte from './rutas/AdminReporte';
 import AdminReporteVacuna from './rutas/AdminReporteVacuna';
 import AdminReporteAdopcion from './rutas/AdminReporteAdopcion';
+import AdminReporteMaltrato from './rutas/AdminReporteMaltrato';
+import AdminReporteExtravio from './rutas/AdminReporteExtravio';
 const Rutas = () => {
     return (
         <Router>
@@ -46,6 +48,8 @@ const Rutas = () => {
             <Route path="/AdminReporte" element={<AdminReporte />} />
             <Route path="/AdminReporteVacuna" element={<AdminReporteVacuna />} />
             <Route path="/AdminReporteAdopcion" element={<AdminReporteAdopcion />} />
+            <Route path="/AdminReporteMaltrato" element={<AdminReporteMaltrato />} />
+            <Route path="/AdminReporteExtravio" element={<AdminReporteExtravio />} />
           </Routes>
         </Router>
       );

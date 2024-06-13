@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../componentes/Header';
+import Offcanvas from '../componentes/Offcanvas';
 import FormField from '../componentes/FormField';
 import '../rutas/styles/Header.css'; // Ajuste de la ruta a '../styles/Home.css'
 import '../rutas/styles/Reporte.css'; // Importa los nuevos estilos
 import Logo from '../img/Logo.png'; // Ajusta la ruta según tu estructura de proyecto
 
-const AgregarReporteAdopcion = () => {
+const Agregar = () => {
   const [reportData, setReportData] = useState({
-    mascota: '',
-    dueño: '',
-    fechaAdopcion: '',
-    notasAdicionales: '',
+    nombreMascota: '',
+    fechaExtravio: '',
+    fechaActual: '',
+    lugarExtravio: '',
+    informacionAdicional: '',
   });
 
   const [mascotas, setMascotas] = useState([]);
@@ -35,7 +37,7 @@ const AgregarReporteAdopcion = () => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    // Manejar la lógica de envío del formulario aquí, por ejemplo, enviando los datos a un servidor.
+    // Handle form submission here, e.g., sending the data to a server.
     console.log('Reporte enviado:', reportData);
   };
 
@@ -47,7 +49,7 @@ const AgregarReporteAdopcion = () => {
           <div className="comprobante">
             <div className="header">
               <img src={Logo} alt="Logo de la perrera" className="logo" />
-              <h1>Reporte de Adopción de Mascota</h1>
+              <h1>Reporte de Mascota Extraviada</h1>
               <img src={Logo} alt="Logo de huellita" className="logo" />
             </div>
             <hr />
@@ -55,33 +57,41 @@ const AgregarReporteAdopcion = () => {
               <FormField 
                 label="Nombre de la mascota" 
                 type="select" 
-                name="mascota"
+                name="nombreMascota"
                 required={true}
                 options={mascotas.map(mascota => ({ value: mascota.Id_Mascota, label: mascota.Nombre }))}
-                value={reportData.mascota}
+                value={reportData.nombreMascota}
                 onChange={handleChange}
               />
               <FormField 
-                label="Dueño" 
-                type="text" 
-                name="dueño"
-                value={reportData.dueño}
-                onChange={handleChange}
-                required={true}
-              />
-              <FormField 
-                label="Fecha de adopción" 
+                label="Fecha de extravío" 
                 type="date" 
-                name="fechaAdopcion"
-                value={reportData.fechaAdopcion}
+                name="fechaExtravio"
+                value={reportData.fechaExtravio}
                 onChange={handleChange}
                 required={true}
               />
               <FormField 
-                label="Notas adicionales" 
+                label="Fecha actual" 
+                type="date" 
+                name="fechaActual"
+                value={reportData.fechaActual}
+                onChange={handleChange}
+                required={true}
+              />
+              <FormField 
+                label="Lugar de extravío" 
+                type="text" 
+                name="lugarExtravio"
+                value={reportData.lugarExtravio}
+                onChange={handleChange}
+                required={true}
+              />
+              <FormField 
+                label="Información adicional" 
                 type="textarea" 
-                name="notasAdicionales"
-                value={reportData.notasAdicionales}
+                name="informacionAdicional"
+                value={reportData.informacionAdicional}
                 onChange={handleChange}
                 required={true}
               />
@@ -97,4 +107,4 @@ const AgregarReporteAdopcion = () => {
   );
 };
 
-export default AgregarReporteAdopcion;
+export default Agregar;

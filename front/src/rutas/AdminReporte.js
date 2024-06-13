@@ -13,13 +13,13 @@ const Reportes = () => {
       title: 'Reporte de maltrato',
       description: 'Reporta casos de maltrato animal para que podamos tomar acción.',
       image: RMaltrato,
-      link: "/ReporteMaltrato",
+      link: "/AdminReporteMaltrato",
     },
     {
       title: 'Reporte de extravío',
       description: 'Informa sobre mascotas extraviadas para ayudarlas a volver a casa.',
       image: RExtravio,
-      link: "/ReporteExtravio",
+      link: "/AdminReporteExtravio",
     },
     {
       title: 'Reporte de vacuna',
