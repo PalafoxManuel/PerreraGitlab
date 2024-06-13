@@ -22,7 +22,7 @@ const Home = () => {
       title: 'Agregar mascota',
       description: 'Explora una lista de mascotas adorables que están buscando un hogar amoroso. Encuentra tu compañero perfecto y comienza una nueva aventura juntos.',
       image: Agregar,
-      link: "/Agregar"
+      link: "/AdminAgregar"
     },
     {
       title: 'Adoptar',
