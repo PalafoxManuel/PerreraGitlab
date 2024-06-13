@@ -42,8 +42,8 @@ const SignUp = () => {
   const handleUserSubmit = async () => {
     try {
       const response = await axios.post(URI_USUARIO, {
-        nombreUsuario: nombreUsuario,
-        contraseña: password
+        Nombre_Usuario: nombreUsuario,
+        Contrasena: password
       });
       console.log('Usuario creado exitosamente:', response.data);
     } catch (error) {
