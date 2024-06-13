@@ -22,41 +22,57 @@ const SignUp = () => {
   const [confirmarPassword, setConfirmarPassword] = useState('');
   const navigate = useNavigate();
 
-  // Función para guardar el cliente
-  const handleClientSubmit = async () => {
-    try {
-      await axios.post(URI_CLIENTE, {
-        Nombre_Completo: nombreCompleto,
-        Numero_Contacto: numeroCelular,
-        Correo_Electronico: correoElectronico,
-        Calle: calle,
-        Codigo_Postal: codigoPostal
-      });
-      console.log('Cliente guardado exitosamente.');
-    } catch (error) {
-      console.error('Error al guardar el cliente:', error);
-    }
-  };
+// Función para guardar el cliente
+const handleClientSubmit = async () => {
+  try {
+    const response = await axios.post(URI_CLIENTE, {
+      Nombre_Completo: nombreCompleto,
+      Numero_Contacto: numeroCelular,
+      Correo_Electronico: correoElectronico,
+      Calle: calle,
+      Codigo_Postal: codigoPostal
+    });
+    console.log('Cliente guardado exitosamente:', response.data);
+    return response.data.Id_Cliente; // Retorna el ID del cliente recién creado
+  } catch (error) {
+    console.error('Error al guardar el cliente:', error);
+    throw error;
+  }
+};
 
-  // Función para guardar el usuario
-  const handleUserSubmit = async () => {
-    try {
-      const response = await axios.post(URI_USUARIO, {
-        Nombre_Usuario: nombreUsuario,
-        Contrasena: password
-      });
-      console.log('Usuario creado exitosamente:', response.data);
-    } catch (error) {
-      console.error('Error al crear el usuario:', error);
-    }
-  };
+// Función para guardar el usuario
+const handleUserSubmit = async (clienteId) => {
+  try {
+    const response = await axios.post(URI_USUARIO, {
+      Nombre_Usuario: nombreUsuario,
+      Contrasena: password,
+      Id_Cliente: clienteId // Asigna el ID del cliente al usuario
+    });
+    console.log('Usuario creado exitosamente:', response.data);
+  } catch (error) {
+    console.error('Error al crear el usuario:', error);
+    throw error;
+  }
+};
 
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-    await handleClientSubmit();
-    await handleUserSubmit();
-    navigate('/Home');
-  };
+
+// Función para manejar el envío del formulario
+const handleFormSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const clienteId = await handleClientSubmit(); // Obtén el ID del cliente
+
+    if (clienteId) {
+      await handleUserSubmit(clienteId); // Crea el usuario usando el ID del cliente
+      navigate('/Home'); // Redirige a la página Home después de registrar cliente y usuario
+    } else {
+      console.error('No se pudo obtener el ID del cliente.');
+    }
+  } catch (error) {
+    console.error('Error en el registro:', error);
+  }
+};
 
   return (
     <div className="back-container">
