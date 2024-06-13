@@ -42,7 +42,7 @@ const SignUp = () => {
   const handleUserSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(URI_USUARIO, {
+      const response = await axios.post(URI_USUARIO, {
         nombreUsuario: nombreUsuario,
         contraseña: password
       });
