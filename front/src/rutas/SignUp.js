@@ -1,59 +1,62 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import { useState } from 'react';
+
+import React from 'react';
 import Logo from '../img/Logo.png';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './styles/SignUp.css';
 
-const URI = 'http://localhost:8000/cliente';
-const URIU = 'http://localhost:8000/usuario';
+const URI_CLIENTE = 'http://localhost:8000/cliente';
+const URI_USUARIO = 'http://localhost:8000/usuario';
 
 const SignUp = () => {
-  // Estados para los campos del formulario de registro
-  const [Nombre_Completo, setNombre_Completo] = useState('');
-  const [Numero_Contacto, setNumero_Contacto] = useState('');
-  const [Correo_Electronico, setCorreo_Electronico] = useState('');
-  const [Calle, setCalle] = useState('');
-  const [Codigo_Postal, setCodigo_Postal] = useState('');
-
-  // Estados para los campos del formulario de creación de usuario
+  const [nombreCompleto, setNombreCompleto] = useState('');
+  const [numeroCelular, setNumeroCelular] = useState('');
+  const [correoElectronico, setCorreoElectronico] = useState('');
+  const [calle, setCalle] = useState('');
+  const [codigoPostal, setCodigoPostal] = useState('');
   const [nombreUsuario, setNombreUsuario] = useState('');
-  const [contraseña, setContraseña] = useState('');
-  const [confirmarContraseña, setConfirmarContraseña] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmarPassword, setConfirmarPassword] = useState('');
 
-  // Función para manejar el envío del formulario
-  const handleSubmit = async (e) => {
+  // Función para guardar el cliente
+  const handleClientSubmit = async (e) => {
     e.preventDefault();
-    if (contraseña !== confirmarContraseña) {
-      alert('Las contraseñas no coinciden');
-      return;
-    }
     try {
-      // Guardar el cliente
-      await axios.post(URI, {
-        Nombre_Completo,
-        Numero_Contacto,
-        Correo_Electronico,
-        Calle,
-        Codigo_Postal
+      await axios.post(URI_CLIENTE, {
+        Nombre_Completo: nombreCompleto,
+        Numero_Contacto: numeroCelular,
+        Correo_Electronico: correoElectronico,
+        Calle: calle,
+        Codigo_Postal: codigoPostal
       });
-
-      // Crear usuario
-      await axios.post(URIU, {
-        nombreUsuario,
-        contraseña
-      });
-
-      // Redirigir a la página de inicio u otra página después de la creación exitosa del usuario
-      // Aquí puedes usar useHistory o cualquier otra forma de navegación que estés utilizando
-      // Por ejemplo, redirigir a '/Home'
-      // history.push('/Home');
-      alert('Cuenta creada con éxito');
+      console.log('Cliente guardado exitosamente.');
     } catch (error) {
-      console.error('Error al crear cuenta:', error);
-      // Manejar el error aquí, mostrar un mensaje al usuario, etc.
+      console.error('Error al guardar el cliente:', error);
     }
+  };
+
+  // Función para guardar el usuario
+  const handleUserSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post(URI_USUARIO, {
+        nombreUsuario: nombreUsuario,
+        contraseña: password // Considera la seguridad de almacenar la contraseña correctamente
+      });
+      console.log('Usuario creado exitosamente.');
+    } catch (error) {
+      console.error('Error al crear el usuario:', error);
+    }
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    await handleClientSubmit(e);
+    await handleUserSubmit(e);
+    // Puedes agregar aquí lógica adicional después de guardar ambos (si es necesario)
   };
 
   return (
@@ -65,97 +68,121 @@ const SignUp = () => {
       <div className="form-wrapper-SignUp">
         <div className="form-container">
           <h1 className="text-center text-white">Registro</h1>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleFormSubmit}>
             <div className="form-group">
-              <label htmlFor="nombreCompleto" className="custom-label text-white">Nombre Completo *</label>
+              <label htmlFor="nombreCompleto" className="custom-label text-white">
+                Nombre Completo *
+              </label>
               <div className="input-group">
                 <div className="input-group-prepend">
-                  <span className="input-group-text"><i className="fas fa-user"></i></span>
+                  <span className="input-group-text">
+                    <i className="fas fa-user"></i>
+                  </span>
                 </div>
                 <input
                   type="text"
                   className="form-control"
                   id="nombreCompleto"
                   placeholder="Ingresa tu nombre completo"
-                  value={Nombre_Completo}
-                  onChange={(e) => setNombre_Completo(e.target.value)}
+                  value={nombreCompleto}
+                  onChange={(e) => setNombreCompleto(e.target.value)}
                   required
                 />
               </div>
             </div>
             <div className="form-group">
-              <label htmlFor="numeroCelular" className="custom-label text-white">Número de Celular *</label>
+              <label htmlFor="numeroCelular" className="custom-label text-white">
+                Número de Celular *
+              </label>
               <div className="input-group">
                 <div className="input-group-prepend">
-                  <span className="input-group-text"><i className="fas fa-phone"></i></span>
+                  <span className="input-group-text">
+                    <i className="fas fa-phone"></i>
+                  </span>
                 </div>
                 <input
                   type="text"
                   className="form-control"
                   id="numeroCelular"
                   placeholder="Ingresa tu número de celular"
-                  value={Numero_Contacto}
-                  onChange={(e) => setNumero_Contacto(e.target.value)}
+                  value={numeroCelular}
+                  onChange={(e) => setNumeroCelular(e.target.value)}
                   required
                 />
               </div>
             </div>
             <div className="form-group">
-              <label htmlFor="email" className="custom-label text-white">Correo Electrónico *</label>
+              <label htmlFor="email" className="custom-label text-white">
+                Correo Electrónico *
+              </label>
               <div className="input-group">
                 <div className="input-group-prepend">
-                  <span className="input-group-text"><i className="fas fa-envelope"></i></span>
+                  <span className="input-group-text">
+                    <i className="fas fa-envelope"></i>
+                  </span>
                 </div>
                 <input
                   type="email"
                   className="form-control"
                   id="email"
                   placeholder="Ingresa tu correo electrónico"
-                  value={Correo_Electronico}
-                  onChange={(e) => setCorreo_Electronico(e.target.value)}
+                  value={correoElectronico}
+                  onChange={(e) => setCorreoElectronico(e.target.value)}
                   required
                 />
               </div>
             </div>
             <div className="form-group">
-              <label htmlFor="calle" className="custom-label text-white">Calle *</label>
+              <label htmlFor="calle" className="custom-label text-white">
+                Calle *
+              </label>
               <div className="input-group">
                 <div className="input-group-prepend">
-                  <span className="input-group-text"><i className="fas fa-road"></i></span>
+                  <span className="input-group-text">
+                    <i className="fas fa-road"></i>
+                  </span>
                 </div>
                 <input
                   type="text"
                   className="form-control"
                   id="calle"
                   placeholder="Ingresa tu calle"
-                  value={Calle}
+                  value={calle}
                   onChange={(e) => setCalle(e.target.value)}
                   required
                 />
               </div>
             </div>
             <div className="form-group">
-              <label htmlFor="codigoPostal" className="custom-label text-white">Código Postal *</label>
+              <label htmlFor="codigoPostal" className="custom-label text-white">
+                Código Postal *
+              </label>
               <div className="input-group">
                 <div className="input-group-prepend">
-                  <span className="input-group-text"><i className="fas fa-envelope-open-text"></i></span>
+                  <span className="input-group-text">
+                    <i className="fas fa-envelope-open-text"></i>
+                  </span>
                 </div>
                 <input
                   type="text"
                   className="form-control"
                   id="codigoPostal"
                   placeholder="Ingresa tu código postal"
-                  value={Codigo_Postal}
-                  onChange={(e) => setCodigo_Postal(e.target.value)}
+                  value={codigoPostal}
+                  onChange={(e) => setCodigoPostal(e.target.value)}
                   required
                 />
               </div>
             </div>
             <div className="form-group">
-              <label htmlFor="nombreUsuario" className="custom-label text-white">Nombre de Usuario *</label>
+              <label htmlFor="nombreUsuario" className="custom-label text-white">
+                Nombre de Usuario *
+              </label>
               <div className="input-group">
                 <div className="input-group-prepend">
-                  <span className="input-group-text"><i className="fas fa-user-circle"></i></span>
+                  <span className="input-group-text">
+                    <i className="fas fa-user-circle"></i>
+                  </span>
                 </div>
                 <input
                   type="text"
@@ -169,45 +196,57 @@ const SignUp = () => {
               </div>
             </div>
             <div className="form-group">
-              <label htmlFor="password" className="custom-label text-white">Contraseña *</label>
+              <label htmlFor="password" className="custom-label text-white">
+                Contraseña *
+              </label>
               <div className="input-group">
                 <div className="input-group-prepend">
-                  <span className="input-group-text"><i className="fas fa-lock"></i></span>
+                  <span className="input-group-text">
+                    <i className="fas fa-lock"></i>
+                  </span>
                 </div>
                 <input
                   type="password"
                   className="form-control"
                   id="password"
                   placeholder="Ingresa tu contraseña"
-                  value={contraseña}
-                  onChange={(e) => setContraseña(e.target.value)}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                 />
               </div>
             </div>
             <div className="form-group">
-              <label htmlFor="confirmarPassword" className="custom-label text-white">Confirmar Contraseña *</label>
+              <label htmlFor="confirmarPassword" className="custom-label text-white">
+                Confirmar Contraseña *
+              </label>
               <div className="input-group">
                 <div className="input-group-prepend">
-                  <span className="input-group-text"><i className="fas fa-lock"></i></span>
+                  <span className="input-group-text">
+                    <i className="fas fa-lock"></i>
+                  </span>
                 </div>
                 <input
                   type="password"
                   className="form-control"
                   id="confirmarPassword"
                   placeholder="Confirma tu contraseña"
-                  value={confirmarContraseña}
-                  onChange={(e) => setConfirmarContraseña(e.target.value)}
+                  value={confirmarPassword}
+                  onChange={(e) => setConfirmarPassword(e.target.value)}
                   required
                 />
               </div>
             </div>
-            <button type="submit" className="btn btn-primary btn-block">Crear cuenta</button>
+            <button type="submit" className="btn btn-primary btn-block">
+              Crear cuenta
+            </button>
+            <p className="text-center mt-3 text-white">
+              ¿Ya tienes cuenta?{' '}
+              <Link to="/LogIn" className="text-primary">
+                Ingresa aquí
+              </Link>
+            </p>
           </form>
-          <p className="text-center mt-3 text-white">¿Ya tienes cuenta? <Link to="/LogIn" className="text-primary">Ingresa aquí</Link></p>
-          <Link to="/AdminSignUp">
-            <button type="button" className="btn btn-primary btn-block">SignUp Admin (Temporal)</button>
-          </Link>
         </div>
       </div>
     </div>
