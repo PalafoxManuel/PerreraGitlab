@@ -1,29 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../componentes/Header';
 import Offcanvas from '../componentes/Offcanvas';
 import FormField from '../componentes/FormField';
-import './styles/Header.css'; // Ajuste de la ruta a '../styles/Home.css'
-import './styles/Agregar.css'; // Asegúrate de que este archivo exista y tenga los estilos necesarios
+import './styles/Header.css';
+import './styles/Agregar.css';
 
 const Agregar = () => {
-  const [isOffcanvasOpen, setOffcanvasOpen] = useState(false);
+  const [isOffcanvasOpen, setOffcanvasOpen] = useState(true);
+  const navigate = useNavigate();
 
-  const toggleOffcanvas = () => {
-    setOffcanvasOpen(!isOffcanvasOpen);
+  const closeOffcanvasAndNavigateHome = () => {
+    setOffcanvasOpen(false);
+    navigate('/Home');
   };
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    // You would typically handle form submission here, e.g., sending the data to a server.
+    closeOffcanvasAndNavigateHome();
+  };
+
+  useEffect(() => {
+    setOffcanvasOpen(true); // Automatically show the offcanvas when the component loads
+  }, []);
 
   return (
     <div>
-      <Header /> 
+      <Header />
       <div className="back-container">
         <div className="form-wrapper-2">
-          <div>
-            <button className="agregar-button" onClick={toggleOffcanvas}>Agregar Mascota</button>
-          </div>
+          {/* The button to open the offcanvas is removed */}
         </div>
       </div>
-      <Offcanvas isOpen={isOffcanvasOpen} onClose={toggleOffcanvas} title="Agregar Mascota">
-        <form className="agregar-form">
+      <Offcanvas isOpen={isOffcanvasOpen} onClose={closeOffcanvasAndNavigateHome} title="Agregar Mascota">
+        <form className="agregar-form" onSubmit={handleFormSubmit}>
           <FormField label="Nombre" type="text" required={true} />
           <FormField label="Raza" type="text" />
           <FormField label="Edad" type="number" />
@@ -33,7 +44,7 @@ const Agregar = () => {
           <FormField label="Historial Médico" type="textarea" />
           <FormField label="Rescatado de la Calle" type="checkbox" />
           <div className="form-buttons">
-            <button type="button" onClick={toggleOffcanvas}>Cancelar</button>
+            <button type="button" onClick={closeOffcanvasAndNavigateHome}>Cancelar</button>
             <button type="submit">Guardar</button>
           </div>
         </form>
