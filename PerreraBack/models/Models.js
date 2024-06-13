@@ -348,9 +348,9 @@ const Vacuna = db.define('vacuna', {
     type: DataTypes.TEXT,
     allowNull: true
   },
-  Tipo_Mascota: {
-    type: DataTypes.STRING(50),
-    allowNull: false
+  Id_TipoMascota: {
+    type: DataTypes.INTEGER,
+    allowNull: true
   },
   Fabricante: {
     type: DataTypes.STRING(100),
