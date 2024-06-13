@@ -39,21 +39,18 @@ const SignUp = () => {
   };
 
   // Función para guardar el usuario
-  const handleUserSubmit = async () => {
+  const handleUserSubmit = async (e) => {
+    e.preventDefault();
     try {
-      const response = await axios.post(URI_USUARIO, {
-        Nombre_Usuario: nombreUsuario,
-        Contrasena: password
+      await axios.post(URI_USUARIO, {
+        nombreUsuario: nombreUsuario,
+        contraseña: password
       });
-      
       console.log('Usuario creado exitosamente:', response.data);
-      return response.data; // Retornar los datos del usuario si es necesario
     } catch (error) {
-      console.error('Error al crear el usuario:', error.response ? error.response.data : error.message);
-      throw error; // Lanzar error para manejarlo en la llamada principal
+      console.error('Error al crear el usuario:', error);
     }
   };
-  
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -240,13 +237,11 @@ const SignUp = () => {
                 />
               </div>
             </div>
-            <button type="submit" className="btn btn-primary btn-block">
-              Crear cuenta
-            </button>
-            <p className="text-center mt-3 text-white">
             <Link to="/Home">
               <button type="submit" className="btn btn-primary btn-block">Crear cuenta</button>
             </Link>
+            <p className="text-center mt-3 text-white">
+              ¿Ya tienes cuenta?{' '}
               <Link to="/LogIn" className="text-primary">
                 Ingresa aquí
               </Link>

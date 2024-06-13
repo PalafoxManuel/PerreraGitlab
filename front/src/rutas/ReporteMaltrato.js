@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../componentes/Header';
+import Offcanvas from '../componentes/Offcanvas';
+import FormField from '../componentes/FormField';
 import '../rutas/styles/Header.css'; // Ajuste de la ruta a '../styles/Home.css'
 import '../rutas/styles/Reporte.css'; // Importa los nuevos estilos
-
 import Logo from '../img/Logo.png'; // Ajusta la ruta según tu estructura de proyecto
 
 const Agregar = () => {
@@ -15,19 +16,38 @@ const Agregar = () => {
     descripcionMaltrato: '',
   });
 
-  // Simular una solicitud a la base de datos
+  const [usuarios, setUsuarios] = useState([]);
+  const [mascotas, setMascotas] = useState([]);
+
+  // Simular una solicitud a la base de datos para obtener usuarios y mascotas
   useEffect(() => {
-    // Ejemplo de datos obtenidos de una API o base de datos
-    const fetchedData = {
-      nombrePropietario: 'EDUARDO DIAZ',
-      nombreMascota: 'BILLY',
-      calleNumero: 'CALLE BANDERITAS 123',
-      codigoPostal: '23000',
-      fechaReporte: '2024-06-12',
-      descripcionMaltrato: 'La mascota se encuentra en mal estado y con signos de abuso físico.',
-    };
-    setReportData(fetchedData);
+    const fetchedUsuarios = [
+      { Id_Usuario: 1, Nombre: "Eduardo Diaz" },
+      { Id_Usuario: 2, Nombre: "Ana Torres" },
+      { Id_Usuario: 3, Nombre: "Luis Ramirez" },
+    ];
+    const fetchedMascotas = [
+      { Id_Mascota: 1, Nombre: "Billy" },
+      { Id_Mascota: 2, Nombre: "Max" },
+      { Id_Mascota: 3, Nombre: "Lola" },
+    ];
+    setUsuarios(fetchedUsuarios);
+    setMascotas(fetchedMascotas);
   }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setReportData({
+      ...reportData,
+      [name]: value,
+    });
+  };
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    // Handle form submission here, e.g., sending the data to a server.
+    console.log('Reporte enviado:', reportData);
+  };
 
   return (
     <div>
@@ -41,12 +61,62 @@ const Agregar = () => {
               <img src={Logo} alt="Logo de huellita" className="logo" />
             </div>
             <hr />
-            <p><strong>Nombre del propietario:</strong> {reportData.nombrePropietario}</p>
-            <p><strong>Nombre de la mascota:</strong> {reportData.nombreMascota}</p>
-            <p><strong>Calle y número:</strong> {reportData.calleNumero}</p>
-            <p><strong>Código Postal:</strong> {reportData.codigoPostal}</p>
-            <p><strong>Fecha del reporte:</strong> {reportData.fechaReporte}</p>
-            <p><strong>Descripción del maltrato:</strong> {reportData.descripcionMaltrato}</p>
+            <form onSubmit={handleFormSubmit}>
+              <FormField 
+                label="Nombre del propietario" 
+                type="select" 
+                name="nombrePropietario"
+                required={true}
+                options={usuarios.map(usuario => ({ value: usuario.Id_Usuario, label: usuario.Nombre }))}
+                value={reportData.nombrePropietario}
+                onChange={handleChange}
+              />
+              <FormField 
+                label="Nombre de la mascota" 
+                type="select" 
+                name="nombreMascota"
+                required={true}
+                options={mascotas.map(mascota => ({ value: mascota.Id_Mascota, label: mascota.Nombre }))}
+                value={reportData.nombreMascota}
+                onChange={handleChange}
+              />
+              <FormField 
+                label="Calle y número" 
+                type="text" 
+                name="calleNumero"
+                value={reportData.calleNumero}
+                onChange={handleChange}
+                required={true}
+              />
+              <FormField 
+                label="Código Postal" 
+                type="text" 
+                name="codigoPostal"
+                value={reportData.codigoPostal}
+                onChange={handleChange}
+                required={true}
+              />
+              <FormField 
+                label="Fecha del reporte" 
+                type="date" 
+                name="fechaReporte"
+                value={reportData.fechaReporte}
+                onChange={handleChange}
+                required={true}
+              />
+              <FormField 
+                label="Descripción del maltrato" 
+                type="textarea" 
+                name="descripcionMaltrato"
+                value={reportData.descripcionMaltrato}
+                onChange={handleChange}
+                required={true}
+              />
+              <div className="form-buttons">
+                <button type="button" onClick={() => console.log('Cancelar')}>Cancelar</button>
+                <button type="submit">Guardar</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
