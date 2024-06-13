@@ -35,7 +35,7 @@ const AdminSignUp = () => {
               </div>
             </div>
             <button type="submit" className="btn btn-primary btn-block">Crear cuenta</button>
-            <p className="text-center mt-3 text-white">¿Ya tienes cuenta? <Link to="/AdminLogIn" className="text-primary">Ingresa aquí</Link></p>
+            <p className="text-center mt-3 text-white">¿No eres admin? <Link to="/LogIn" className="text-primary">¡Regresa a la TodosSantos!</Link></p>
           </form>
         </div>
         <p className="logo-text">¡MODO ADMIN!</p>
