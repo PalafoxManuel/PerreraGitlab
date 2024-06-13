@@ -10,7 +10,8 @@
 .form-field-input[type="text"],
 .form-field-input[type="number"],
 .form-field-select,
-.form-field-textarea {
+.form-field-textarea,
+.form-field-date {
   width: 100%;
   padding: 8px;
   margin-top: 5px;

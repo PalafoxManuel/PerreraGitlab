@@ -20,6 +20,8 @@ const FormField = ({ label, type, required, options, ...props }) => {
           <input type="checkbox" id={label} className="custom-checkbox-input" {...props} required={required} />
           <label htmlFor={label} className="custom-checkbox-label"></label>
         </div>
+      ) : type === 'date' ? (
+        <input type="date" className="form-field-date" {...props} required={required} />
       ) : (
         <input type={type} className="form-field-input" {...props} required={required} />
       )}
