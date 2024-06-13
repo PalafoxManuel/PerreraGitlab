@@ -23,7 +23,7 @@ const Header = () => {
         </div>
         <div className="navbar-title">
         <Link to="/Home" className='logo-text-black-link' onClick={toggleSidebar}>
-          <p className="logo-text-black">Patitas Felices</p>
+          <p className="logo-text-black">huellitas Felices</p>
         </Link>
         </div>
         <div className="navbar-logo">
