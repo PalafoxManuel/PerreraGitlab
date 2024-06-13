@@ -1,0 +1,63 @@
+/* Ajusta estos estilos según la estructura de tu proyecto */
+
+.back-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f9f9f9;
+  }
+  
+  .form-wrapper-2 {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .comprobante {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .logo {
+    height: 50px;
+    width: auto;
+  }
+  
+  .comprobante h1 {
+    font-size: 1.5em;
+    margin: 0;
+    text-align: center;
+  }
+  
+  .comprobante p {
+    font-size: 1em;
+    margin: 10px 0;
+  }
+  
+  .comprobante input[type="checkbox"] {
+    margin: 0 5px;
+  }
+  
+  .comprobante strong {
+    display: inline-block;
+    width: 200px;
+  }
+  
+  hr {
+    border: 0;
+    border-top: 1px solid #ddd;
+    margin: 20px 0;
+  }
+  
