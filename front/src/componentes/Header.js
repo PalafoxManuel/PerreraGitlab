@@ -47,7 +47,7 @@ const Header = () => {
           <li><Link to="/Reporte" onClick={toggleSidebar}><i className="fas fa-file-alt"></i> Generar reporte</Link></li>
         </ul>
         <ul className="sidebar-footer">
-          <li><Link to="/LogIn" onClick={toggleSidebar}><i className="fas fa-sign-out-alt"></i> Cerrar sesión</Link></li>
+          <li><Link to="/" onClick={toggleSidebar}><i className="fas fa-sign-out-alt"></i> Cerrar sesión</Link></li>
         </ul>
       </div>
     </header>

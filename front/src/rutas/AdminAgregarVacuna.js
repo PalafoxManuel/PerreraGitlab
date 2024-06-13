@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AdminHeader from '../componentes/AdminHeader';
+import axios from 'axios';
 import Offcanvas from '../componentes/Offcanvas';
 import FormField from '../componentes/FormField';
 import '../rutas/styles/Header.css'; // Asegúrate de importar los estilos necesarios
 import '../rutas/styles/Servicios.css'; // Asegúrate de importar los estilos necesarios
 
+const uri_vacuna = 'http://localhost:8000/vacuna';
+
 const AgregarVacuna = () => {
   const [isOffcanvasOpen, setOffcanvasOpen] = useState(true);
-  const [nombreMascota, setNombreMascota] = useState('');
+  const [nombreVacuna, setNombreVacuna] = useState('');
   const [descripcionVacuna, setDescripcionVacuna] = useState('');
-  const [tipoMascota, setTipoMascota] = useState('Perro');
+  const [tipoMascota, setTipoMascota] = useState('Perro'); // Valor por defecto
   const [fabricanteVacuna, setFabricanteVacuna] = useState('');
   const [sintomasAdversos, setSintomasAdversos] = useState('');
+
   const navigate = useNavigate();
 
   const closeOffcanvasAndNavigateHome = () => {
@@ -20,16 +24,27 @@ const AgregarVacuna = () => {
     navigate('/AdminHome');
   };
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
-    // Aquí manejarías la lógica para enviar los datos a un servidor, etc.
-    console.log({
-      nombreMascota,
-      descripcionVacuna,
-      tipoMascota,
-      fabricanteVacuna,
-      sintomasAdversos,
-    });
+    try {
+      let idTipoMascota = 1; // Por defecto para perro
+      if (tipoMascota === 'Gato') {
+        idTipoMascota = 2;
+      }
+
+      const response = await axios.post(uri_vacuna, {
+        Nombre: nombreVacuna,
+        Descripcion: descripcionVacuna,
+        Id_TipoMascota: idTipoMascota, // Enviar el ID correspondiente
+        Fabricante: fabricanteVacuna,
+        Sintomas_Adversos: sintomasAdversos
+      });
+      console.log('Vacuna guardada:', response.data); // Puedes mostrar la respuesta del servidor si lo deseas
+    } catch (error) {
+      console.error('Error al guardar la vacuna:', error);
+      // Puedes manejar el error de forma adecuada aquí, por ejemplo, mostrando un mensaje al usuario
+    }
+
     closeOffcanvasAndNavigateHome();
   };
 
@@ -44,10 +59,10 @@ const AgregarVacuna = () => {
       <Offcanvas isOpen={isOffcanvasOpen} onClose={closeOffcanvasAndNavigateHome} title="Agregar Vacuna">
         <form className="vacuna-form" onSubmit={handleFormSubmit}>
           <FormField 
-            label="Nombre de la Mascota" 
+            label="Nombre de la vacuna" 
             type="text" 
-            value={nombreMascota} 
-            onChange={(e) => setNombreMascota(e.target.value)} 
+            value={nombreVacuna} 
+            onChange={(e) => setNombreVacuna(e.target.value)} 
             required={true} 
           />
           <FormField 
@@ -68,7 +83,6 @@ const AgregarVacuna = () => {
             >
               <option value="Perro">Perro</option>
               <option value="Gato">Gato</option>
-              <option value="Pajaro">Pájaro</option>
             </select>
           </div>
           <FormField 
@@ -96,3 +110,5 @@ const AgregarVacuna = () => {
 };
 
 export default AgregarVacuna;
+
+
