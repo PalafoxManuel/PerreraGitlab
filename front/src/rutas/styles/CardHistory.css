@@ -1,0 +1,37 @@
+.card-history {
+    display: flex;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    flex-direction: column;
+  }
+  
+  .card-history-image {
+    max-width: 80vw;
+    width: auto;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .card-history-details {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  
+  .card-history-title {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    color: #333;
+    text-align: left; /* Asegura que el título esté alineado a la izquierda */
+  }
+  
+  .card-history-details p {
+    margin: 5px 0;
+    text-align: left; /* Alinea los párrafos a la izquierda */
+  }
+  

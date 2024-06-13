@@ -25,12 +25,6 @@ const AdminSignUp = () => {
               </div>
             </div>
             <div className="form-group">
-              <div className="input-group">
-                <div className="input-group-prepend">
-                  <span className="input-group-text"><i className="fas fa-envelope"></i></span>
-                </div>
-                <input type="email" className="form-control" placeholder="Correo Electrónico" />
-              </div>
             </div>
             <div className="form-group">
               <div className="input-group">
