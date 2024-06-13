@@ -9,6 +9,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import './styles/SignUp.css';
 
 const URI_CLIENTE = 'http://localhost:8000/cliente';
+
 const URI_USUARIO = 'http://localhost:8000/usuario';
 
 const SignUp = () => {
