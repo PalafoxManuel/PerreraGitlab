@@ -244,7 +244,9 @@ const SignUp = () => {
               Crear cuenta
             </button>
             <p className="text-center mt-3 text-white">
-              ¿Ya tienes cuenta?{' '}
+            <Link to="/Home">
+              <button type="submit" className="btn btn-primary btn-block">Crear cuenta</button>
+            </Link>
               <Link to="/LogIn" className="text-primary">
                 Ingresa aquí
               </Link>

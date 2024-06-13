@@ -1,13 +1,54 @@
-import React from 'react';
-import Card from '../componentes/Card'; // Ajuste de la ruta a '../componentes/Card'
+import React, { useState, useEffect } from 'react';
 import Header from '../componentes/Header';
+import Offcanvas from '../componentes/Offcanvas';
+import FormField from '../componentes/FormField';
 import '../rutas/styles/Header.css'; // Ajuste de la ruta a '../styles/Home.css'
 import '../rutas/styles/Reporte.css'; // Importa los nuevos estilos
-
 import Logo from '../img/Logo.png'; // Ajusta la ruta según tu estructura de proyecto
-// import huellitaLogo from '../assets/images/huellita_logo.png'; // Ajusta la ruta según tu estructura de proyecto
 
 const Agregar = () => {
+  const [reportData, setReportData] = useState({
+    nombrePropietario: '',
+    nombreMascota: '',
+    calleNumero: '',
+    codigoPostal: '',
+    fechaReporte: '',
+    descripcionMaltrato: '',
+  });
+
+  const [usuarios, setUsuarios] = useState([]);
+  const [mascotas, setMascotas] = useState([]);
+
+  // Simular una solicitud a la base de datos para obtener usuarios y mascotas
+  useEffect(() => {
+    const fetchedUsuarios = [
+      { Id_Usuario: 1, Nombre: "Eduardo Diaz" },
+      { Id_Usuario: 2, Nombre: "Ana Torres" },
+      { Id_Usuario: 3, Nombre: "Luis Ramirez" },
+    ];
+    const fetchedMascotas = [
+      { Id_Mascota: 1, Nombre: "Billy" },
+      { Id_Mascota: 2, Nombre: "Max" },
+      { Id_Mascota: 3, Nombre: "Lola" },
+    ];
+    setUsuarios(fetchedUsuarios);
+    setMascotas(fetchedMascotas);
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setReportData({
+      ...reportData,
+      [name]: value,
+    });
+  };
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    // Handle form submission here, e.g., sending the data to a server.
+    console.log('Reporte enviado:', reportData);
+  };
+
   return (
     <div>
       <Header />
@@ -16,30 +57,66 @@ const Agregar = () => {
           <div className="comprobante">
             <div className="header">
               <img src={Logo} alt="Logo de la perrera" className="logo" />
-              <h1>Certificado de Vacunación Antirrábica Canina y Felina</h1>
+              <h1>Reporte de Maltrato</h1>
               <img src={Logo} alt="Logo de huellita" className="logo" />
             </div>
             <hr />
-            <p><strong>Jurisdicción Sanitaria:</strong> 03</p>
-            <p><strong>Nombre del propietario:</strong> EDUARDO DIAZ</p>
-            <p><strong>Domicilio:</strong> CALLE BANDERITAS</p>
-            <hr />
-            <p><strong>Sector:</strong> 23</p>
-            <p><strong>Municipio:</strong> LA PAZ</p>
-            <p><strong>Colonia:</strong> PARAISO DEL SOL</p>
-            <p><strong>Fraccionamiento:</strong> ___________ <strong>Manzana:</strong> 222</p>
-            <hr />
-            <p><strong>Especie:</strong> Perro <input type="checkbox" checked readOnly /> Gato <input type="checkbox" readOnly /></p>
-            <p><strong>Nombre:</strong> BILLY</p>
-            <p><strong>Color:</strong> CAFÉ</p>
-            <p><strong>Edad:</strong> 1 AÑO</p>
-            <p><strong>Sexo:</strong> Macho <input type="checkbox" readOnly /> Hembra <input type="checkbox" checked readOnly /></p>
-            <hr />
-            <p><strong>Fecha de vacunación:</strong> 27/8/22</p>
-            <p><strong>Próxima vacuna:</strong> 27/8/23</p>
-            <p><strong>1ra. Dosis:</strong> <input type="checkbox" readOnly /> 2da. Dosis: <input type="checkbox" readOnly /></p>
-            <p><strong>Lote del biológico:</strong> ___________</p>
-            <p><strong>Nombre del vacunador:</strong> ___________</p>
+            <form onSubmit={handleFormSubmit}>
+              <FormField 
+                label="Nombre del propietario" 
+                type="select" 
+                name="nombrePropietario"
+                required={true}
+                options={usuarios.map(usuario => ({ value: usuario.Id_Usuario, label: usuario.Nombre }))}
+                value={reportData.nombrePropietario}
+                onChange={handleChange}
+              />
+              <FormField 
+                label="Nombre de la mascota" 
+                type="select" 
+                name="nombreMascota"
+                required={true}
+                options={mascotas.map(mascota => ({ value: mascota.Id_Mascota, label: mascota.Nombre }))}
+                value={reportData.nombreMascota}
+                onChange={handleChange}
+              />
+              <FormField 
+                label="Calle y número" 
+                type="text" 
+                name="calleNumero"
+                value={reportData.calleNumero}
+                onChange={handleChange}
+                required={true}
+              />
+              <FormField 
+                label="Código Postal" 
+                type="text" 
+                name="codigoPostal"
+                value={reportData.codigoPostal}
+                onChange={handleChange}
+                required={true}
+              />
+              <FormField 
+                label="Fecha del reporte" 
+                type="date" 
+                name="fechaReporte"
+                value={reportData.fechaReporte}
+                onChange={handleChange}
+                required={true}
+              />
+              <FormField 
+                label="Descripción del maltrato" 
+                type="textarea" 
+                name="descripcionMaltrato"
+                value={reportData.descripcionMaltrato}
+                onChange={handleChange}
+                required={true}
+              />
+              <div className="form-buttons">
+                <button type="button" onClick={() => console.log('Cancelar')}>Cancelar</button>
+                <button type="submit">Guardar</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
