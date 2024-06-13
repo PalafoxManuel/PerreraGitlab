@@ -44,9 +44,9 @@ const SignUp = () => {
     try {
       await axios.post(URI_USUARIO, {
         nombreUsuario: nombreUsuario,
-        contraseña: password // Considera la seguridad de almacenar la contraseña correctamente
+        contraseña: password
       });
-      console.log('Usuario creado exitosamente.');
+      console.log('Usuario creado exitosamente:', response.data);
     } catch (error) {
       console.error('Error al crear el usuario:', error);
     }
