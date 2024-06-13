@@ -20,11 +20,17 @@ const SignUp = () => {
   // Estados para los campos del formulario de creación de usuario
   const [nombreUsuario, setNombreUsuario] = useState('');
   const [contraseña, setContraseña] = useState('');
+  const [confirmarContraseña, setConfirmarContraseña] = useState('');
 
-  // Función para guardar el cliente
-  const storeClient = async (e) => {
+  // Función para manejar el envío del formulario
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (contraseña !== confirmarContraseña) {
+      alert('Las contraseñas no coinciden');
+      return;
+    }
     try {
+      // Guardar el cliente
       await axios.post(URI, {
         Nombre_Completo,
         Numero_Contacto,
@@ -33,24 +39,19 @@ const SignUp = () => {
         Codigo_Postal
       });
 
-    } catch (error) {
-      console.error('Error al guardar cliente:', error);
-    }
-  };
-
-  // Función para crear usuario
-  const storeUser = async (e) => {
-    e.preventDefault();
-    try {
+      // Crear usuario
       await axios.post(URIU, {
         nombreUsuario,
         contraseña
       });
+
       // Redirigir a la página de inicio u otra página después de la creación exitosa del usuario
       // Aquí puedes usar useHistory o cualquier otra forma de navegación que estés utilizando
       // Por ejemplo, redirigir a '/Home'
+      // history.push('/Home');
+      alert('Cuenta creada con éxito');
     } catch (error) {
-      console.error('Error al crear usuario:', error);
+      console.error('Error al crear cuenta:', error);
       // Manejar el error aquí, mostrar un mensaje al usuario, etc.
     }
   };
@@ -64,7 +65,7 @@ const SignUp = () => {
       <div className="form-wrapper-SignUp">
         <div className="form-container">
           <h1 className="text-center text-white">Registro</h1>
-          <form onSubmit={storeClient}>
+          <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="nombreCompleto" className="custom-label text-white">Nombre Completo *</label>
               <div className="input-group">
@@ -190,7 +191,15 @@ const SignUp = () => {
                 <div className="input-group-prepend">
                   <span className="input-group-text"><i className="fas fa-lock"></i></span>
                 </div>
-                <input type="password" className="form-control" id="confirmarPassword" placeholder="Confirma tu contraseña" />
+                <input
+                  type="password"
+                  className="form-control"
+                  id="confirmarPassword"
+                  placeholder="Confirma tu contraseña"
+                  value={confirmarContraseña}
+                  onChange={(e) => setConfirmarContraseña(e.target.value)}
+                  required
+                />
               </div>
             </div>
             <button type="submit" className="btn btn-primary btn-block">Crear cuenta</button>
@@ -206,3 +215,4 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
