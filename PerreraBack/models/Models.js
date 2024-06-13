@@ -76,10 +76,6 @@ const Cliente = db.define('cliente', {
   Codigo_Postal: {
     type: DataTypes.STRING(20),
     allowNull: true
-  },
-  Id_Usuario: {
-    type: DataTypes.INTEGER,
-    allowNull: true
   }
 }, {
   tableName: 'cliente',
