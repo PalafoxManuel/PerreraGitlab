@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from '../componentes/Card'; // Adjusted path to '../componentes/Card'
-import Header from '../componentes/Header';
+import AdminHeader from '../componentes/AdminHeader';
 import Agregar from '../img/Agregar.png';
 import Adoptar from '../img/Adoptar.png';
 import Alojamiento from '../img/Alojamiento.png';
@@ -28,43 +28,43 @@ const Home = () => {
       title: 'Adoptar',
       description: '¿Necesitas dejar temporalmente a tu mascota en buenas manos? Encuentra cuidadores confiables dispuestos a cuidar de tu amigo peludo mientras estás fuera.',
       image: Adoptar,
-      link: "/Adoptar"
+      link: "/AdminAdoptar"
     },
     {
       title: 'Alojamiento',
       description: 'Encuentra alojamiento temporal para tu mascota con cuidadores confiables.',
       image: Alojamiento,
-      link: "/Alojamiento"
+      link: "/AdminAlojamiento"
     },
     {
       title: 'Vacunación',
       description: 'Consulta servicios de vacunación para mantener la salud de tu mascota al día.',
       image: Vacunacion,
-      link: "/Vacunacion"
+      link: "/AdminVacunacion"
     },
     {
       title: 'Baño',
       description: 'Busca servicios de baño para mantener a tu mascota limpia y fresca.',
       image: Baño,
-      link: "/Baño"
+      link: "/AdminBaño"
     },
     {
       title: 'Corte de Pelo',
       description: 'Encuentra profesionales para el corte de pelo de tu mascota.',
       image: CortePelo,
-      link: "/CortePelo"
+      link: "/AdminCortePelo"
     },
     {
       title: 'Corte de Uñas',
       description: 'Accede a servicios de corte de uñas para tu mascota.',
       image: CorteUñas,
-      link: "/CorteUñas"
+      link: "/AdminCorteUñas"
     },
     {
       title: 'Historial',
       description: 'Mantén un registro detallado de todos los servicios que has utilizado, desde paseos hasta visitas al veterinario. Mantén un seguimiento de la salud y el bienestar de tu mascota.',
       image: Historial,
-      link: "/Historial"
+      link: "/AdminHistorial"
     },
     {
       title: 'Generar reporte',
@@ -88,7 +88,7 @@ const Home = () => {
 
   return (
     <div>
-      <Header />
+      <AdminHeader />
       <div className="back-container-admin">
         <div className="form-wrapper-2">
           <div className="cards-container">

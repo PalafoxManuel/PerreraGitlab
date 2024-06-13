@@ -24,6 +24,13 @@ import AdminReporteAdopcion from './rutas/AdminReporteAdopcion';
 import AdminReporteMaltrato from './rutas/AdminReporteMaltrato';
 import AdminReporteExtravio from './rutas/AdminReporteExtravio';
 import AdminAgregar from './rutas/AdminAgregar';
+import AdminAdoptar from './rutas/AdminAdoptar';
+import AdminAlojamiento from './rutas/AdminAlojamiento';
+import AdminVacunacion from './rutas/AdminVacunacion';
+import AdminBaño from './rutas/AdminBaño';
+import AdminCortePelo from './rutas/AdminCortePelo';
+import AdminCorteUñas from './rutas/AdminCorteUñas';
+import AdminHistorial from './rutas/AdminHistorial';
 const Rutas = () => {
     return (
         <Router>
@@ -52,6 +59,13 @@ const Rutas = () => {
             <Route path="/AdminReporteMaltrato" element={<AdminReporteMaltrato />} />
             <Route path="/AdminReporteExtravio" element={<AdminReporteExtravio />} />
             <Route path="/AdminAgregar" element={<AdminAgregar />} />
+            <Route path="/AdminAdoptar" element={<AdminAdoptar />} />
+            <Route path="/AdminAlojamiento" element={<AdminAlojamiento />} />
+            <Route path="/AdminVacunacion" element={<AdminVacunacion />} />
+            <Route path="/AdminBaño" element={<AdminBaño />} />
+            <Route path="/AdminCortePelo" element={<AdminCortePelo />} />
+            <Route path="/AdminCorteUñas" element={<AdminCorteUñas />} />
+            <Route path="/AdminHistorial" element={<AdminHistorial />} />
           </Routes>
         </Router>
       );

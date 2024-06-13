@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../componentes/Header';
+import AdminHeader from '../componentes/AdminHeader';
 import Offcanvas from '../componentes/Offcanvas';
 import FormField from '../componentes/FormField';
 import '../rutas/styles/Header.css'; // Ajuste de la ruta a '../styles/Home.css'
@@ -51,7 +51,7 @@ const Agregar = () => {
 
   return (
     <div>
-      <Header />
+      <AdminHeader />
       <div className="back-container-admin">
         <div className="form-wrapper-reporte-admin">
           <div className="comprobante">

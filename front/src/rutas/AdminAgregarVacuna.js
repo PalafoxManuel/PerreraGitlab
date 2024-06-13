@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from '../componentes/Header';
+import AdminHeader from '../componentes/AdminHeader';
 import Offcanvas from '../componentes/Offcanvas';
 import FormField from '../componentes/FormField';
 import '../rutas/styles/Header.css'; // Asegúrate de importar los estilos necesarios
@@ -35,7 +35,7 @@ const AgregarVacuna = () => {
 
   return (
     <div>
-      <Header />
+      <AdminHeader />
       <div className="back-container-admin">
         <div className="form-wrapper">
           {/* No se muestra ningún botón para abrir el offcanvas */}

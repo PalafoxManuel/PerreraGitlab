@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from '../componentes/Header';
+import AdminHeader from '../componentes/AdminHeader';
 import Offcanvas from '../componentes/Offcanvas';
 import FormField from '../componentes/FormField';
 import './styles/Header.css';
@@ -12,7 +12,7 @@ const AdminAgregar = () => {
 
   const closeOffcanvasAndNavigateHome = () => {
     setOffcanvasOpen(false);
-    navigate('/Home');
+    navigate('/AdminHome');
   };
 
   const handleFormSubmit = (event) => {
@@ -27,7 +27,7 @@ const AdminAgregar = () => {
 
   return (
     <div>
-      <Header />
+      <AdminHeader />
       <div className="back-container-admin">
         <div className="form-wrapper-2">
         </div>

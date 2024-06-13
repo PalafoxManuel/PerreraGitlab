@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from '../componentes/Card';
-import Header from '../componentes/Header';
+import AdminHeader from '../componentes/AdminHeader';
 import RMaltrato from '../img/ReporteMaltrato.png'; // Asegúrate de tener estas imágenes
 import RExtravio from '../img/ReporteExtravio.png'; // Asegúrate de tener estas imágenes
 import RVacuna from '../img/AdminReporteVacuna.png'; // Asegúrate de tener estas imágenes
@@ -37,7 +37,7 @@ const Reportes = () => {
 
   return (
     <div>
-      <Header />
+      <AdminHeader />
       <div className="back-container-admin">
         <div className="form-wrapper-2">
           <div className="cards-container">
