@@ -1,12 +1,16 @@
 import React from 'react';
-import Card from '../componentes/Card'; // Ajuste de la ruta a '../componentes/Card'
+import Card from '../componentes/Card'; // Adjusted path to '../componentes/Card'
 import Header from '../componentes/Header';
 import Agregar from '../img/Agregar.png';
 import Adoptar from '../img/Adoptar.png';
-import Servicios from '../img/Servicios.png';
+import Alojamiento from '../img/Alojamiento.png';
+import Vacunacion from '../img/Vacunacion.png';
+import Baño from '../img/Baño.png';
+import CortePelo from '../img/CortePelo.png';
+import CorteUñas from '../img/CorteUñas.png';
 import Historial from '../img/Historial.png';
 import Reporte from '../img/Reporte.png';
-import './styles/Home.css'; // Ajuste de la ruta a './styles/Home.css'
+import './styles/Home.css'; // Adjusted path to './styles/Home.css'
 import './styles/Header.css';
 import { Link } from 'react-router-dom';
 
@@ -25,10 +29,34 @@ const Home = () => {
       link: "/Adoptar"
     },
     {
-      title: 'Servicios',
-      description: 'Explora una variedad de servicios para mascotas, como paseadores de perros, cuidadores de gatos, servicios de alimentación y más. Encuentra profesionales cerca de ti.',
-      image: Servicios,
-      link: "/Servicios"
+      title: 'Alojamiento',
+      description: 'Encuentra alojamiento temporal para tu mascota con cuidadores confiables.',
+      image: Alojamiento,
+      link: "/Alojamiento"
+    },
+    {
+      title: 'Vacunación',
+      description: 'Consulta servicios de vacunación para mantener la salud de tu mascota al día.',
+      image: Vacunacion,
+      link: "/Vacunacion"
+    },
+    {
+      title: 'Baño',
+      description: 'Busca servicios de baño para mantener a tu mascota limpia y fresca.',
+      image: Baño,
+      link: "/Baño"
+    },
+    {
+      title: 'Corte de Pelo',
+      description: 'Encuentra profesionales para el corte de pelo de tu mascota.',
+      image: CortePelo,
+      link: "/CortePelo"
+    },
+    {
+      title: 'Corte de Uñas',
+      description: 'Accede a servicios de corte de uñas para tu mascota.',
+      image: CorteUñas,
+      link: "/CorteUñas"
     },
     {
       title: 'Historial',
@@ -56,7 +84,7 @@ const Home = () => {
                 title={card.title}
                 description={card.description}
                 image={card.image}
-                link={card.link} // Añadir la prop 'link' aquí
+                link={card.link} // Added 'link' prop here
               />
             ))}
           </div>

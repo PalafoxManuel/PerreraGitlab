@@ -21,6 +21,10 @@
   font-family: 'Lobster', cursive; /* Aplica la fuente personalizada */
 }
 
+.logo-text-black-link{
+  text-decoration: none;
+}
+
 .navbar-menu {
   cursor: pointer;
 }
