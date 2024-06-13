@@ -1,9 +1,9 @@
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import Logo from '../img/Logo.png';
-import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './styles/SignUp.css';
@@ -20,10 +20,10 @@ const SignUp = () => {
   const [nombreUsuario, setNombreUsuario] = useState('');
   const [password, setPassword] = useState('');
   const [confirmarPassword, setConfirmarPassword] = useState('');
+  const navigate = useNavigate();
 
   // Función para guardar el cliente
-  const handleClientSubmit = async (e) => {
-    e.preventDefault();
+  const handleClientSubmit = async () => {
     try {
       await axios.post(URI_CLIENTE, {
         Nombre_Completo: nombreCompleto,
@@ -39,8 +39,7 @@ const SignUp = () => {
   };
 
   // Función para guardar el usuario
-  const handleUserSubmit = async (e) => {
-    e.preventDefault();
+  const handleUserSubmit = async () => {
     try {
       const response = await axios.post(URI_USUARIO, {
         nombreUsuario: nombreUsuario,
@@ -54,9 +53,9 @@ const SignUp = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    await handleClientSubmit(e);
-    await handleUserSubmit(e);
-    // Puedes agregar aquí lógica adicional después de guardar ambos (si es necesario)
+    await handleClientSubmit();
+    await handleUserSubmit();
+    navigate('/Home');
   };
 
   return (
@@ -237,9 +236,7 @@ const SignUp = () => {
                 />
               </div>
             </div>
-            <Link to="/Home">
-              <button type="submit" className="btn btn-primary btn-block">Crear cuenta</button>
-            </Link>
+            <button type="submit" className="btn btn-primary btn-block">Crear cuenta</button>
             <p className="text-center mt-3 text-white">
               ¿Ya tienes cuenta?{' '}
               <Link to="/LogIn" className="text-primary">
@@ -254,4 +251,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-
