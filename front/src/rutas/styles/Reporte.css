@@ -1,16 +1,7 @@
-/* Ajusta estos estilos según la estructura de tu proyecto */
 
-.back-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f9f9f9;
-  }
-  
-  .form-wrapper-2 {
-    background-color: white;
-    padding: 20px;
+  .form-wrapper-reporte {
+    background-color: #d35500;
+    padding: 50px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
@@ -19,6 +10,7 @@
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
+    background-color: white;
     border: 1px solid #ddd;
     border-radius: 10px;
   }

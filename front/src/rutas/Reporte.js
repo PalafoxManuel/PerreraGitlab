@@ -2,9 +2,9 @@ import React from 'react';
 import Card from '../componentes/Card'; // Ajuste de la ruta a '../componentes/Card'
 import Header from '../componentes/Header';
 import '../rutas/styles/Header.css'; // Ajuste de la ruta a '../styles/Home.css'
-import '../styles/Reportes.css'; // Importa los nuevos estilos
+import '../rutas/styles/Reporte.css'; // Importa los nuevos estilos
 
-import perreraLogo from '../assets/images/perrera_logo.png'; // Ajusta la ruta según tu estructura de proyecto
+import Logo from '../img/Logo.png'; // Ajusta la ruta según tu estructura de proyecto
 // import huellitaLogo from '../assets/images/huellita_logo.png'; // Ajusta la ruta según tu estructura de proyecto
 
 const Agregar = () => {
@@ -12,12 +12,12 @@ const Agregar = () => {
     <div>
       <Header />
       <div className="back-container">
-        <div className="form-wrapper-2">
+        <div className="form-wrapper-reporte">
           <div className="comprobante">
             <div className="header">
-              <img src={perreraLogo} alt="Logo de la perrera" className="logo" />
+              <img src={Logo} alt="Logo de la perrera" className="logo" />
               <h1>Certificado de Vacunación Antirrábica Canina y Felina</h1>
-              <img src={huellitaLogo} alt="Logo de huellita" className="logo" />
+              <img src={Logo} alt="Logo de huellita" className="logo" />
             </div>
             <hr />
             <p><strong>Jurisdicción Sanitaria:</strong> 03</p>
