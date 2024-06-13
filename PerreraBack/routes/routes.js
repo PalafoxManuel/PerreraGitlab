@@ -20,108 +20,108 @@ import {
 const router = express.Router();
 
 // Rutas para Cliente
-router.get('/clientes', getAllClientes);
-router.get('/clientes/:id', getCliente);
-router.post('/clientes', createCliente);
-router.put('/clientes/:id', updateCliente);
-router.delete('/clientes/:id', deleteCliente);
+router.get('/cliente', getAllClientes);
+router.get('/cliente/:id', getCliente);
+router.post('/cliente', createCliente);
+router.put('/cliente/:id', updateCliente);
+router.delete('/cliente/:id', deleteCliente);
 
 // Rutas para Mascota
-router.get('/mascotas', getAllMascotas);
-router.get('/mascotas/:id', getMascota);
-router.post('/mascotas', createMascota);
-router.put('/mascotas/:id', updateMascota);
-router.delete('/mascotas/:id', deleteMascota);
+router.get('/mascota', getAllMascotas);
+router.get('/mascota/:id', getMascota);
+router.post('/mascota', createMascota);
+router.put('/mascota/:id', updateMascota);
+router.delete('/mascota/:id', deleteMascota);
 
 // Rutas para Perrera
-router.get('/perreras', getAllPerreras);
-router.get('/perreras/:id', getPerrera);
-router.post('/perreras', createPerrera);
-router.put('/perreras/:id', updatePerrera);
-router.delete('/perreras/:id', deletePerrera);
+router.get('/perrera', getAllPerreras);
+router.get('/perrera/:id', getPerrera);
+router.post('/perrera', createPerrera);
+router.put('/perrera/:id', updatePerrera);
+router.delete('/perrera/:id', deletePerrera);
 
 // Rutas para Usuario
-router.get('/usuarios', getAllUsuarios);
-router.get('/usuarios/:id', getUsuario);
-router.post('/usuarios', createUsuario);
-router.put('/usuarios/:id', updateUsuario);
-router.delete('/usuarios/:id', deleteUsuario);
+router.get('/usuario', getAllUsuarios);
+router.get('/usuario/:id', getUsuario);
+router.post('/usuario', createUsuario);
+router.put('/usuario/:id', updateUsuario);
+router.delete('/usuario/:id', deleteUsuario);
 
 // Rutas para Adopcion
-router.get('/adopciones', getAllAdopciones);
-router.get('/adopciones/:id', getAdopcion);
-router.post('/adopciones', createAdopcion);
-router.put('/adopciones/:id', updateAdopcion);
-router.delete('/adopciones/:id', deleteAdopcion);
+router.get('/adopcion', getAllAdopciones);
+router.get('/adopcion/:id', getAdopcion);
+router.post('/adopcion', createAdopcion);
+router.put('/adopcion/:id', updateAdopcion);
+router.delete('/adopcion/:id', deleteAdopcion);
 
 // Rutas para DisponibilidadServicios
-router.get('/disponibilidad-servicios', getAllDisponibilidadServicios);
-router.get('/disponibilidad-servicios/:id', getDisponibilidadServicio);
-router.post('/disponibilidad-servicios', createDisponibilidadServicio);
-router.put('/disponibilidad-servicios/:id', updateDisponibilidadServicio);
-router.delete('/disponibilidad-servicios/:id', deleteDisponibilidadServicio);
+router.get('/disponibilidad-servicio', getAllDisponibilidadServicios);
+router.get('/disponibilidad-servicio/:id', getDisponibilidadServicio);
+router.post('/disponibilidad-servicio', createDisponibilidadServicio);
+router.put('/disponibilidad-servicio/:id', updateDisponibilidadServicio);
+router.delete('/disponibilidad-servicio/:id', deleteDisponibilidadServicio);
 
 // Rutas para TipoReporte
-router.get('/tipos-reporte', getAllTipoReportes);
-router.get('/tipos-reporte/:id', getTipoReporte);
-router.post('/tipos-reporte', createTipoReporte);
-router.put('/tipos-reporte/:id', updateTipoReporte);
-router.delete('/tipos-reporte/:id', deleteTipoReporte);
+router.get('/tipo-reporte', getAllTipoReportes);
+router.get('/tipo-reporte/:id', getTipoReporte);
+router.post('/tipo-reporte', createTipoReporte);
+router.put('/tipo-reporte/:id', updateTipoReporte);
+router.delete('/tipo-reporte/:id', deleteTipoReporte);
 
 // Rutas para Reporte
-router.get('/reportes', getAllReportes);
-router.get('/reportes/:id', getReporte);
-router.post('/reportes', createReporte);
-router.put('/reportes/:id', updateReporte);
-router.delete('/reportes/:id', deleteReporte);
+router.get('/reporte', getAllReportes);
+router.get('/reporte/:id', getReporte);
+router.post('/reporte', createReporte);
+router.put('/reporte/:id', updateReporte);
+router.delete('/reporte/:id', deleteReporte);
 
 // Rutas para Reserva
-router.get('/reservas', getAllReservas);
-router.get('/reservas/:id', getReserva);
-router.post('/reservas', createReserva);
-router.put('/reservas/:id', updateReserva);
-router.delete('/reservas/:id', deleteReserva);
+router.get('/reserva', getAllReservas);
+router.get('/reserva/:id', getReserva);
+router.post('/reserva', createReserva);
+router.put('/reservas:id', updateReserva);
+router.delete('/reserva/:id', deleteReserva);
 
 // Rutas para NotificacionReservas
-router.get('/notificaciones-reservas', getAllNotificacionesReservas);
-router.get('/notificaciones-reservas/:id', getNotificacionReserva);
-router.post('/notificaciones-reservas', createNotificacionReserva);
-router.put('/notificaciones-reservas/:id', updateNotificacionReserva);
-router.delete('/notificaciones-reservas/:id', deleteNotificacionReserva);
+router.get('/notificacion-reserva', getAllNotificacionesReservas);
+router.get('/notificacion-reserva/:id', getNotificacionReserva);
+router.post('/notificacion-reserva', createNotificacionReserva);
+router.put('/notificacion-reserva/:id', updateNotificacionReserva);
+router.delete('/notificacion-reserva/:id', deleteNotificacionReserva);
 
 // Rutas para Pago
-router.get('/pagos', getAllPagos);
-router.get('/pagos/:id', getPago);
-router.post('/pagos', createPago);
-router.put('/pagos/:id', updatePago);
-router.delete('/pagos/:id', deletePago);
+router.get('/pago', getAllPagos);
+router.get('/pago/:id', getPago);
+router.post('/pago', createPago);
+router.put('/pago/:id', updatePago);
+router.delete('/pago/:id', deletePago);
 
 // Rutas para Vacuna
-router.get('/vacunas', getAllVacunas);
-router.get('/vacunas/:id', getVacuna);
-router.post('/vacunas', createVacuna);
-router.put('/vacunas/:id', updateVacuna);
-router.delete('/vacunas/:id', deleteVacuna);
+router.get('/vacuna', getAllVacunas);
+router.get('/vacuna/:id', getVacuna);
+router.post('/vacuna', createVacuna);
+router.put('/vacuna/:id', updateVacuna);
+router.delete('/vacuna/:id', deleteVacuna);
 
 // Rutas para Vacunacion
-router.get('/vacunaciones', getAllVacunaciones);
-router.get('/vacunaciones/:id', getVacunacion);
-router.post('/vacunaciones', createVacunacion);
-router.put('/vacunaciones/:id', updateVacunacion);
-router.delete('/vacunaciones/:id', deleteVacunacion);
+router.get('/vacunacion', getAllVacunaciones);
+router.get('/vacunacion/:id', getVacunacion);
+router.post('/vacunacion', createVacunacion);
+router.put('/vacunacion/:id', updateVacunacion);
+router.delete('/vacunacion/:id', deleteVacunacion);
 
 // Rutas para Servicio
-router.get('/servicios', getAllServicios);
-router.get('/servicios/:id', getServicio);
-router.post('/servicios', createServicio);
-router.put('/servicios/:id', updateServicio);
-router.delete('/servicios/:id', deleteServicio);
+router.get('/servicio', getAllServicios);
+router.get('/servicio/:id', getServicio);
+router.post('/servicio', createServicio);
+router.put('/servicio/:id', updateServicio);
+router.delete('/servicio/:id', deleteServicio);
 
 // Rutas para ReservaServicio
-router.get('/reservas-servicio', getAllReservaServicios);
-router.get('/reservas-servicio/:id', getReservaServicio);
-router.post('/reservas-servicio', createReservaServicio);
-router.put('/reservas-servicio/:id', updateReservaServicio);
-router.delete('/reservas-servicio/:id', deleteReservaServicio);
+router.get('/reserva-servicio', getAllReservaServicios);
+router.get('/reserva-servicio/:id', getReservaServicio);
+router.post('/reserva-servicio', createReservaServicio);
+router.put('/reserva-servicio/:id', updateReservaServicio);
+router.delete('/reserva-servicio/:id', deleteReservaServicio);
 
 export default router;
