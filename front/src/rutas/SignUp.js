@@ -65,7 +65,7 @@ const handleFormSubmit = async (e) => {
 
     if (clienteId) {
       await handleUserSubmit(clienteId); // Crea el usuario usando el ID del cliente
-      navigate('/Home'); // Redirige a la página Home después de registrar cliente y usuario
+      navigate('/LogIn'); // Redirige a la página Home después de registrar cliente y usuario
     } else {
       console.error('No se pudo obtener el ID del cliente.');
     }
