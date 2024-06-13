@@ -62,7 +62,7 @@ const SignUp = () => {
     <div className="back-container">
       <div className="logo-container">
         <img src={Logo} alt="Logo" className="logo" />
-        <p className="logo-text">Patitas Felices</p>
+        <p className="logo-text">Huellitas Felices</p>
       </div>
       <div className="form-wrapper-SignUp">
         <div className="form-container">
