@@ -14,6 +14,8 @@ import Vacunacion from './rutas/Vacunacion';
 import Baño from './rutas/Baño';
 import CortePelo from './rutas/CortePelo';
 import CorteUñas from './rutas/CorteUñas';
+import ReporteExtravio from './rutas/ReporteExtravio';
+import ReporteMaltrato from './rutas/ReporteMaltrato';
 const Rutas = () => {
     return (
         <Router>
@@ -32,6 +34,8 @@ const Rutas = () => {
             <Route path="/Baño" element={<Baño />} />
             <Route path="/CortePelo" element={<CortePelo />} />
             <Route path="/CorteUñas" element={<CorteUñas />} />
+            <Route path="/ReporteExtravio" element={<ReporteExtravio />} />
+            <Route path="/ReporteMaltrato" element={<ReporteMaltrato />} />
           </Routes>
         </Router>
       );

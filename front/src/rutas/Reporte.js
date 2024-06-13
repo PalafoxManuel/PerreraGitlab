@@ -1,8 +1,8 @@
 import React from 'react';
 import Card from '../componentes/Card';
 import Header from '../componentes/Header';
-import RMaltrato from '../img/Logo.png'; // Asegúrate de tener estas imágenes
-import RExtravio from '../img/Logo.png'; // Asegúrate de tener estas imágenes
+import RMaltrato from '../img/ReporteMaltrato.png'; // Asegúrate de tener estas imágenes
+import RExtravio from '../img/ReporteExtravio.png'; // Asegúrate de tener estas imágenes
 import '../rutas/styles/Reporte.css';
 
 const Reportes = () => {
@@ -11,13 +11,13 @@ const Reportes = () => {
       title: 'Reporte de maltrato',
       description: 'Reporta casos de maltrato animal para que podamos tomar acción.',
       image: RMaltrato,
-      link: "/ReporteMaltrato" // Define las rutas adecuadas
+      link: "/ReporteMaltrato",
     },
     {
       title: 'Reporte de extravío',
       description: 'Informa sobre mascotas extraviadas para ayudarlas a volver a casa.',
       image: RExtravio,
-      link: "/ReporteExtravío" // Define las rutas adecuadas
+      link: "/ReporteExtravio",
     }
   ];
 
@@ -34,6 +34,7 @@ const Reportes = () => {
                 description={reporte.description}
                 image={reporte.image}
                 link={reporte.link}
+                tipo="reporte" // Agregando el tipo "reporte" aquí
               />
             ))}
           </div>

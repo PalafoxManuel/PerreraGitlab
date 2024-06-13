@@ -15,6 +15,11 @@
     height: 150px;
     object-fit: cover;
   }
+  .card-image-reporte {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
   
   .card-body {
     padding: 15px;

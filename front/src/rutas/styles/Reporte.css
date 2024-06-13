@@ -53,3 +53,8 @@
     margin: 20px 0;
   }
   
+  .card-image-reporte {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
