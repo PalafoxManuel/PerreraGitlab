@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // Importa Axios para las peticiones HTTP
 import Header from '../componentes/Header';
 import Offcanvas from '../componentes/Offcanvas';
 import FormField from '../componentes/FormField';
 import '../rutas/styles/Header.css'; // Ajuste de la ruta a '../styles/Home.css'
 import '../rutas/styles/Reporte.css'; // Importa los nuevos estilos
 import Logo from '../img/Logo.png'; // Ajusta la ruta según tu estructura de proyecto
+
+const uri_reporte = 'http://localhost:8000/reporte_extravio';
+const URI_MASCOTA = 'http://localhost:8000/mascota';
 
 const Agregar = () => {
   const [reportData, setReportData] = useState({
@@ -17,16 +20,18 @@ const Agregar = () => {
   });
 
   const [mascotas, setMascotas] = useState([]);
-  const navigate = useNavigate();
 
-  // Simular una solicitud a la base de datos para obtener mascotas
   useEffect(() => {
-    const fetchedMascotas = [
-      { Id_Mascota: 1, Nombre: "Billy" },
-      { Id_Mascota: 2, Nombre: "Max" },
-      { Id_Mascota: 3, Nombre: "Lola" },
-    ];
-    setMascotas(fetchedMascotas);
+    const fetchMascotas = async () => {
+      try {
+        const response = await axios.get(URI_MASCOTA);
+        setMascotas(response.data);
+      } catch (error) {
+        console.error('Error fetching mascotas:', error);
+      }
+    };
+
+    fetchMascotas();
   }, []);
 
   const handleChange = (e) => {
@@ -37,11 +42,15 @@ const Agregar = () => {
     });
   };
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
-    // Handle form submission here, e.g., sending the data to a server.
-    console.log('Reporte enviado:', reportData);
-    navigate('/Home'); // Redirige a /Home después de enviar el formulario
+    try {
+      const response = await axios.post(uri_reporte, reportData);
+      console.log('Reporte de extravío guardado exitosamente:', response.data);
+      // Aquí podrías redirigir a una página de éxito o hacer otra acción
+    } catch (error) {
+      console.error('Error al guardar el reporte de extravío:', error);
+    }
   };
 
   return (

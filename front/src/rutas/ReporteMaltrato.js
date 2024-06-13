@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'; // Importa Axios para las peticiones HTTP
 import Header from '../componentes/Header';
+import Offcanvas from '../componentes/Offcanvas';
 import FormField from '../componentes/FormField';
 import '../rutas/styles/Header.css'; // Ajuste de la ruta a '../styles/Home.css'
 import '../rutas/styles/Reporte.css'; // Importa los nuevos estilos
@@ -17,12 +19,42 @@ const Agregar = () => {
     calleNumero: '',
     codigoPostal: '',
     fechaReporte: '',
-    descripcionMaltrato: ''
+    descripcionMaltrato: '',
   });
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setReportData({ ...reportData, [name]: value });
+  const [usuarios, setUsuarios] = useState([]);
+  const [mascotas, setMascotas] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUsuarios = async () => {
+      try {
+        const response = await axios.get(URI_USUARIO);
+        setUsuarios(response.data);
+      } catch (error) {
+        console.error('Error fetching usuarios:', error);
+      }
+    };
+
+    const fetchMascotas = async () => {
+      try {
+        const response = await axios.get(URI_MASCOTA);
+        setMascotas(response.data);
+      } catch (error) {
+        console.error('Error fetching mascotas:', error);
+      }
+    };
+
+    fetchUsuarios();
+    fetchMascotas();
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setReportData({
+      ...reportData,
+      [name]: value,
+    });
   };
 
   const handleFormSubmit = async (event) => {
@@ -30,7 +62,7 @@ const Agregar = () => {
     try {
       const response = await axios.post(uri_reporte, reportData);
       console.log('Reporte guardado exitosamente:', response.data);
-      // Aquí podrías redirigir a una página de éxito o hacer otra acción
+      navigate('/Home'); // Redirige a /Home después de enviar el formulario
     } catch (error) {
       console.error('Error al guardar el Reporte:', error);
     }
@@ -49,58 +81,58 @@ const Agregar = () => {
             </div>
             <hr />
             <form onSubmit={handleFormSubmit}>
-              <FormField
-                label="Nombre del propietario"
-                type="text"
+              <FormField 
+                label="Nombre del propietario" 
+                type="select" 
                 name="nombrePropietario"
+                required={true}
+                options={usuarios.map(usuario => ({ value: usuario.Id_Usuario, label: usuario.Nombre }))}
                 value={reportData.nombrePropietario}
                 onChange={handleChange}
-                required
               />
-              <FormField
-                label="Nombre de la mascota"
-                type="text"
+              <FormField 
+                label="Nombre de la mascota" 
+                type="select" 
                 name="nombreMascota"
+                required={true}
+                options={mascotas.map(mascota => ({ value: mascota.Id_Mascota, label: mascota.Nombre }))}
                 value={reportData.nombreMascota}
                 onChange={handleChange}
-                required
               />
-              <FormField
-                label="Calle y número"
-                type="text"
+              <FormField 
+                label="Calle y número" 
+                type="text" 
                 name="calleNumero"
                 value={reportData.calleNumero}
                 onChange={handleChange}
-                required
+                required={true}
               />
-              <FormField
-                label="Código Postal"
-                type="text"
+              <FormField 
+                label="Código Postal" 
+                type="text" 
                 name="codigoPostal"
                 value={reportData.codigoPostal}
                 onChange={handleChange}
-                required
+                required={true}
               />
-              <FormField
-                label="Fecha del reporte"
-                type="date"
+              <FormField 
+                label="Fecha del reporte" 
+                type="date" 
                 name="fechaReporte"
                 value={reportData.fechaReporte}
                 onChange={handleChange}
-                required
+                required={true}
               />
-              <FormField
-                label="Descripción del maltrato"
-                type="textarea"
+              <FormField 
+                label="Descripción del maltrato" 
+                type="textarea" 
                 name="descripcionMaltrato"
                 value={reportData.descripcionMaltrato}
                 onChange={handleChange}
-                required
+                required={true}
               />
               <div className="form-buttons">
-                <button type="button" onClick={() => console.log('Cancelar')}>
-                  Cancelar
-                </button>
+                <button type="button" onClick={() => navigate('/Home')}>Cancelar</button>
                 <button type="submit">Guardar</button>
               </div>
             </form>
@@ -111,4 +143,4 @@ const Agregar = () => {
   );
 };
 
-export default Agregar;
+export default Agregar;
