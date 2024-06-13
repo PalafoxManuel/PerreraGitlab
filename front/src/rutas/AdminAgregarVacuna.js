@@ -36,7 +36,7 @@ const AgregarVacuna = () => {
   return (
     <div>
       <Header />
-      <div className="back-container">
+      <div className="back-container-admin">
         <div className="form-wrapper">
           {/* No se muestra ningún botón para abrir el offcanvas */}
         </div>

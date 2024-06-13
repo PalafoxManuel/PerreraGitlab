@@ -92,7 +92,7 @@ const AdminLogin = () => {
             <button type="submit" className="btn btn-primary btn-block">Iniciar sesión</button>
           </form>
           {loginError && <p className="text-danger mt-2">{errorMessage}</p>}
-          <p className="text-center mt-3 text-white">¿No eres admin? <Link to="/LogIn" className="text-primary">¡Regresa a la TodosSantos!</Link></p>
+          <p className="text-center mt-3 text-white">¿No eres admin? <Link to="/LogIn" className="text-primary">¡Regresa al modo Usuario!</Link></p>
         </div>
         <p className="logo-text">¡MODO ADMIN!</p>
       </div>
