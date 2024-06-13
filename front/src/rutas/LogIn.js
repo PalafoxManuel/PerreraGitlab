@@ -92,7 +92,7 @@ const Login = () => {
             <p className="text-center mt-3 text-white">¿No tienes cuenta? <Link to="/SignUp" className="text-primary">¡Crea una ahora!</Link></p>
 
             <button type="button" className="btn btn-primary btn-block" onClick={() => navigate('/AdminLogIn')}>
-              LogIn Admin (Temporal)
+              LogIn Admin
             </button>
           </form>
         </div>
