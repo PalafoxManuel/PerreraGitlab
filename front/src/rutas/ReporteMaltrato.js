@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../componentes/Header';
 import Offcanvas from '../componentes/Offcanvas';
 import FormField from '../componentes/FormField';
@@ -18,6 +19,7 @@ const Agregar = () => {
 
   const [usuarios, setUsuarios] = useState([]);
   const [mascotas, setMascotas] = useState([]);
+  const navigate = useNavigate();
 
   // Simular una solicitud a la base de datos para obtener usuarios y mascotas
   useEffect(() => {
@@ -47,6 +49,7 @@ const Agregar = () => {
     event.preventDefault();
     // Handle form submission here, e.g., sending the data to a server.
     console.log('Reporte enviado:', reportData);
+    navigate('/Home'); // Redirige a /Home después de enviar el formulario
   };
 
   return (
