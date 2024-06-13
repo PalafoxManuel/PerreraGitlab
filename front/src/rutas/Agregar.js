@@ -35,7 +35,8 @@ const Agregar = () => {
       <Offcanvas isOpen={isOffcanvasOpen} onClose={closeOffcanvasAndNavigateHome} title="Agregar Mascota">
         <form className="agregar-form" onSubmit={handleFormSubmit}>
           <FormField label="Nombre" type="text" required={true} />
-          <FormField label="Raza" type="text" required={true}/>
+          <FormField label="Tipo de Mascota" type="select" options={[{ value: 'perro', label: 'Perro' }, { value: 'gato', label: 'Gato' }, { value: 'pajaro', label: 'Pájaro' }]} required={true} />
+          <FormField label="Raza" type="text" required={true} />
           <FormField label="Edad" type="number" required={true}/>
           <FormField label="Genero" type="select" options={[{ value: 'macho', label: 'Macho' }, { value: 'hembra', label: 'Hembra' }]} required={true}/>
           <FormField label="Color" type="text" required={true}/>
