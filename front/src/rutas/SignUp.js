@@ -237,9 +237,9 @@ const SignUp = () => {
                 />
               </div>
             </div>
-            <button type="submit" className="btn btn-primary btn-block">
-              Crear cuenta
-            </button>
+            <Link to="/Home">
+              <button type="submit" className="btn btn-primary btn-block">Crear cuenta</button>
+            </Link>
             <p className="text-center mt-3 text-white">
               ¿Ya tienes cuenta?{' '}
               <Link to="/LogIn" className="text-primary">
