@@ -23,6 +23,7 @@ import AdminReporteVacuna from './rutas/AdminReporteVacuna';
 import AdminReporteAdopcion from './rutas/AdminReporteAdopcion';
 import AdminReporteMaltrato from './rutas/AdminReporteMaltrato';
 import AdminReporteExtravio from './rutas/AdminReporteExtravio';
+import AdminAgregar from './rutas/AdminAgregar';
 const Rutas = () => {
     return (
         <Router>
@@ -50,6 +51,7 @@ const Rutas = () => {
             <Route path="/AdminReporteAdopcion" element={<AdminReporteAdopcion />} />
             <Route path="/AdminReporteMaltrato" element={<AdminReporteMaltrato />} />
             <Route path="/AdminReporteExtravio" element={<AdminReporteExtravio />} />
+            <Route path="/AdminAgregar" element={<AdminAgregar />} />
           </Routes>
         </Router>
       );
