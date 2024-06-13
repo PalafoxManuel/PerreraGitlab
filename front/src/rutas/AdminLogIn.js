@@ -32,7 +32,7 @@ const AdminLogin = () => {
                 <input type="password" className="form-control" id="password" placeholder="Contraseña" />
               </div>
             </div>
-            <Link to="/AdminLogIn" className="text-primary">
+            <Link to="/AdminHome" className="text-primary">
             <button type="submit" className="btn btn-primary btn-block">Iniciar sesión</button>
             </Link>
             <p className="text-center mt-3 text-white">¿No eres admin? <Link to="/LogIn" className="text-primary">¡Regresa a la TodosSantos!</Link></p>

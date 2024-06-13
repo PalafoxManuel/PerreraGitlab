@@ -70,19 +70,19 @@ const Home = () => {
       title: 'Generar reporte',
       description: 'Reporta preocupaciones como maltrato animal, extravío o vacunación de tu mascota. Solicita ayuda de profesionales en emergencias.',
       image: Reporte,
-      link: "/Reporte"
+      link: "/AdminReporte"
     },
     {
       title: 'Agregar Admin',
       description: 'Añade nuevos administradores al sistema para gestionar las operaciones.',
       image: AgregarAdmin,
-      link: "/AgregarAdmin"
+      link: "/AdminSignUp"
     },
     {
       title: 'Agregar Vacuna',
       description: 'Registra nuevas vacunas disponibles para mantener a las mascotas saludables.',
       image: AgregarVacuna,
-      link: "/AgregarVacuna"
+      link: "/AdminAgregarVacuna"
     },
   ];
 

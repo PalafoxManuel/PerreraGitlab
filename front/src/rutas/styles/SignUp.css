@@ -102,9 +102,9 @@
 }
 
 .form-control {
-  background-color: #333;
-  color: #fff;
-  border: none;
+  background-color: #fefefe;
+  color: #000000;
+  border: 1px solid #ccc;
   height: 40px; /* Ajusta la altura para que sea proporcional al logo */
   font-size: 16px;
 }

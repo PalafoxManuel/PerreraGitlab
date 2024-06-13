@@ -16,13 +16,18 @@ import CortePelo from './rutas/CortePelo';
 import CorteUñas from './rutas/CorteUñas';
 import ReporteExtravio from './rutas/ReporteExtravio';
 import ReporteMaltrato from './rutas/ReporteMaltrato';
+import AdminHome from './rutas/AdminHome';
+import AdminAgregarVacuna from './rutas/AdminAgregarVacuna';
+import AdminReporte from './rutas/AdminReporte';
+import AdminReporteVacuna from './rutas/AdminReporteVacuna';
+import AdminReporteAdopcion from './rutas/AdminReporteAdopcion';
 const Rutas = () => {
     return (
         <Router>
           <Routes>
-            <Route path="/" element={<SignUp />} />
+            <Route path="/" element={<LogIn />} />
             <Route path="/Home" element={<Home />} />
-            <Route path="/LogIn" element={<LogIn />} />
+            <Route path="/SignUp" element={<SignUp />} />
             <Route path="/Agregar" element={<Agregar />} />
             <Route path="/Adoptar" element={<Adoptar />} />
             <Route path="/Historial" element={<Historial />} />
@@ -36,6 +41,11 @@ const Rutas = () => {
             <Route path="/CorteUñas" element={<CorteUñas />} />
             <Route path="/ReporteExtravio" element={<ReporteExtravio />} />
             <Route path="/ReporteMaltrato" element={<ReporteMaltrato />} />
+            <Route path="/AdminHome" element={<AdminHome />} />
+            <Route path="/AdminAgregarVacuna" element={<AdminAgregarVacuna />} />
+            <Route path="/AdminReporte" element={<AdminReporte />} />
+            <Route path="/AdminReporteVacuna" element={<AdminReporteVacuna />} />
+            <Route path="/AdminReporteAdopcion" element={<AdminReporteAdopcion />} />
           </Routes>
         </Router>
       );
