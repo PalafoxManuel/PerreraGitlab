@@ -1,7 +1,7 @@
 {
   "scripts": {
     "postinstall": "npm install --prefix front && npm install --prefix PerreraBack",
-    "start": "npm run start:back & npm run start:front",
+    "start": "npm run start:PerreraBack & npm run start:front",
     "start:front": "npm --prefix front start",
     "start:back": "npm --prefix PerreraBack start"
   },
