@@ -12,12 +12,12 @@ app.use(express.json())
 app.use('/', UsaRoute)
 
 try {
-   await db.authenticate
-   console.log('conexion exitosa a la DB')
+ await db.authenticate
+ console.log('conexion exitosa a la DB')
 } catch (error) {
-    console.log('conexion fallida a la DB')
+ console.log('conexion fallida a la DB')
 }
 
-app.listen(8000, ()=>{
-    console.log('Server up running in http://localhost:8000/')
+app.listen(4000, () => {
+ console.log('Server up running in http://localhost:4000/')
 })
