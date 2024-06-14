@@ -1,65 +1,104 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // Asegúrate de importar axios
 import Header from '../componentes/Header';
 import Offcanvas from '../componentes/Offcanvas';
 import FormField from '../componentes/FormField';
-import './styles/Header.css';
-import './styles/Agregar.css';
+import '../rutas/styles/Header.css'; // Asegúrate de importar los estilos necesarios
+import '../rutas/styles/Servicios.css'; // Asegúrate de importar los estilos necesarios
 
-const Vacunacion = () => {
+const uri_vacuna = 'http://uri.proyectounipedro.com/Vacuna';
+
+const AgregarVacuna = () => {
   const [isOffcanvasOpen, setOffcanvasOpen] = useState(true);
-
-  // Hardcoded arrays for mascotas and vacunas
-  const mascotas = [
-    { Id_Mascota: 1, Nombre: "Firulais" },
-    { Id_Mascota: 2, Nombre: "Max" },
-    { Id_Mascota: 3, Nombre: "Bella" }
-  ];
-
-  const vacunas = [
-    { Id_Vacuna: 1, Nombre: "Rabia" },
-    { Id_Vacuna: 2, Nombre: "Moquillo" },
-    { Id_Vacuna: 3, Nombre: "Parvovirus" }
-  ];
+  const [nombreVacuna, setNombreVacuna] = useState('');
+  const [descripcionVacuna, setDescripcionVacuna] = useState('');
+  const [tipoMascota, setTipoMascota] = useState('Perro'); // Valor por defecto
+  const [fabricanteVacuna, setFabricanteVacuna] = useState('');
+  const [sintomasAdversos, setSintomasAdversos] = useState('');
 
   const navigate = useNavigate();
 
   const closeOffcanvasAndNavigateHome = () => {
     setOffcanvasOpen(false);
-    navigate('/Home');
+    navigate('/AdminHome');
   };
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
-    // Handle form submission here, e.g., sending the data to a server.
+    try {
+      let idTipoMascota = 1; // Por defecto para perro
+      if (tipoMascota === 'Gato') {
+        idTipoMascota = 2;
+      }
+
+      const response = await axios.post(uri_vacuna, {
+        Nombre: nombreVacuna,
+        Descripcion: descripcionVacuna,
+        Id_Tipo_Mascota: idTipoMascota, // Enviar el ID correspondiente
+        Fabricante: fabricanteVacuna,
+        Sintomas_Adversos: sintomasAdversos
+      });
+      console.log('Vacuna guardada:', response.data); // Puedes mostrar la respuesta del servidor si lo deseas
+    } catch (error) {
+      console.error('Error al guardar la vacuna:', error);
+      // Puedes manejar el error de forma adecuada aquí, por ejemplo, mostrando un mensaje al usuario
+    }
+
     closeOffcanvasAndNavigateHome();
   };
 
   return (
     <div>
       <Header />
-      <div className="back-container">
-        <div className="form-wrapper-2">
-          {/* The button to open the offcanvas is removed */}
+      <div className="back-container-admin">
+        <div className="form-wrapper">
+          {/* No se muestra ningún botón para abrir el offcanvas */}
         </div>
       </div>
-      <Offcanvas isOpen={isOffcanvasOpen} onClose={closeOffcanvasAndNavigateHome} title="Agregar Vacunación">
-        <form className="agregar-form" onSubmit={handleFormSubmit}>
-          <FormField
-            label="Mascota"
-            type="select"
-            required={true}
-            options={mascotas.map(mascota => ({ value: mascota.Id_Mascota, label: mascota.Nombre }))}
+      <Offcanvas isOpen={isOffcanvasOpen} onClose={closeOffcanvasAndNavigateHome} title="Agregar Vacuna">
+        <form className="vacuna-form" onSubmit={handleFormSubmit}>
+          <FormField 
+            label="Nombre de la vacuna" 
+            type="text" 
+            value={nombreVacuna} 
+            onChange={(e) => setNombreVacuna(e.target.value)} 
+            required={true} 
           />
-          <FormField
-            label="Vacuna"
-            type="select"
-            required={true}
-            options={vacunas.map(vacuna => ({ value: vacuna.Id_Vacuna, label: vacuna.Nombre }))}
+          <FormField 
+            label="Descripción de la Vacuna" 
+            type="textarea" 
+            value={descripcionVacuna} 
+            onChange={(e) => setDescripcionVacuna(e.target.value)} 
+            required={true} 
           />
-          <FormField label="Fecha de Vacunación" type="date" required={true} />
-          <FormField label="Número de Lote" type="text" required={true} disabled={true} />
-          <FormField label="Dosis" type="text" required={true} disabled={true} />
+          <div className="form-group">
+            <label htmlFor="tipoMascota" className="custom-label">Tipo de Mascota *</label>
+            <select
+              id="tipoMascota"
+              className="form-control"
+              value={tipoMascota}
+              onChange={(e) => setTipoMascota(e.target.value)}
+              required
+            >
+              <option value="Perro">Perro</option>
+              <option value="Gato">Gato</option>
+            </select>
+          </div>
+          <FormField 
+            label="Fabricante de la Vacuna" 
+            type="text" 
+            value={fabricanteVacuna} 
+            onChange={(e) => setFabricanteVacuna(e.target.value)} 
+            required={true} 
+          />
+          <FormField 
+            label="Síntomas Adversos" 
+            type="textarea" 
+            value={sintomasAdversos} 
+            onChange={(e) => setSintomasAdversos(e.target.value)} 
+            required={true} 
+          />
           <div className="form-buttons">
             <button type="button" onClick={closeOffcanvasAndNavigateHome}>Cancelar</button>
             <button type="submit">Guardar</button>
@@ -70,4 +109,4 @@ const Vacunacion = () => {
   );
 };
 
-export default Vacunacion;
+export default AgregarVacuna;
