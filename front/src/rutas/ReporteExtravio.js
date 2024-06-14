@@ -7,8 +7,8 @@ import '../rutas/styles/Header.css'; // Ajuste de la ruta a '../styles/Home.css'
 import '../rutas/styles/Reporte.css'; // Importa los nuevos estilos
 import Logo from '../img/Logo.png'; // Ajusta la ruta según tu estructura de proyecto
 
-const uri_reporte = 'http://localhost:8000/reporte_extravio';
-const URI_MASCOTA = 'http://localhost:8000/mascota';
+const uri_reporte = 'http://uri.proyectounipedro.com/reporte_extravio';
+const URI_MASCOTA = 'http://uri.proyectounipedro.com/mascota';
 
 const Agregar = () => {
   const [reportData, setReportData] = useState({

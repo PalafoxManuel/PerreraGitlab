@@ -7,9 +7,9 @@ import FormField from '../componentes/FormField';
 import './styles/Header.css';
 import './styles/Agregar.css';
 
-const URI_MASCOTAS_DISPONIBLES = 'http://localhost:8000/mascota';
-const URI_CLIENTES = 'http://localhost:8000/cliente';
-const URI_ADOPCION = 'http://localhost:8000/adopcion';
+const URI_MASCOTAS_DISPONIBLES = 'http://uri.proyectounipedro.com/mascota';
+const URI_CLIENTES = 'http://uri.proyectounipedro.com/cliente';
+const URI_ADOPCION = 'http://uri.proyectounipedro.com/adopcion';
 
 const Adoptar = () => {
   const [isOffcanvasOpen, setOffcanvasOpen] = useState(true);

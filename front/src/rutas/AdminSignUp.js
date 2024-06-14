@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './styles/LogIn.css';
 
-const URI_USUARIO = 'http://localhost:8000/usuario';
+const URI_USUARIO = 'http://uri.proyectounipedro.com/usuario';
 
 const AdminSignUp = () => {
   const [nombreUsuario, setNombreUsuario] = useState('');
