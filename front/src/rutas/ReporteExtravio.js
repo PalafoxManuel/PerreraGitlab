@@ -7,7 +7,7 @@ import '../rutas/styles/Header.css'; // Ajuste de la ruta a '../styles/Home.css'
 import '../rutas/styles/Reporte.css'; // Importa los nuevos estilos
 import Logo from '../img/Logo.png'; // Ajusta la ruta según tu estructura de proyecto
 
-const uri_reporte = 'http://api.proyectounipedro.com/reporte_extravio';
+const uri_reporte = 'http://api.proyectounipedro.com/reporte';
 const URI_MASCOTA = 'http://api.proyectounipedro.com/mascota';
 
 const Agregar = () => {
@@ -52,7 +52,6 @@ const Agregar = () => {
       console.error('Error al guardar el reporte de extravío:', error);
     }
   };
-
   return (
     <div>
       <Header />
