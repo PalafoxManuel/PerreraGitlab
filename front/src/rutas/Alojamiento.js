@@ -7,9 +7,9 @@ import FormField from '../componentes/FormField';
 import './styles/Header.css';
 import './styles/Agregar.css';
 
-const URI_RESERVA = 'http://uri.proyectounipedro.com/reserva';
-const URI_DISPONIBILIDAD_SERVICIOS = 'http://uri.proyectounipedro.com/disponibilidad-servicio';
-const URI_MASCOTAS_USUARIO = 'http://uri.proyectounipedro.com/mascota'; // Ruta para obtener mascotas del usuario
+const URI_RESERVA = 'http://api.proyectounipedro.com/reserva';
+const URI_DISPONIBILIDAD_SERVICIOS = 'http://api.proyectounipedro.com/disponibilidad-servicio';
+const URI_MASCOTAS_USUARIO = 'http://api.proyectounipedro.com/mascota'; // Ruta para obtener mascotas del usuario
 
 const Alojamiento = () => {
   const [isOffcanvasOpen, setOffcanvasOpen] = useState(true);

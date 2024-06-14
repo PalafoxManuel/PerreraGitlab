@@ -7,7 +7,7 @@ import FormField from '../componentes/FormField';
 import '../rutas/styles/Header.css'; // Asegúrate de importar los estilos necesarios
 import '../rutas/styles/Servicios.css'; // Asegúrate de importar los estilos necesarios
 
-const uri_vacuna = 'http://uri.proyectounipedro.com/Vacuna';
+const uri_vacuna = 'http://api.proyectounipedro.com/Vacuna';
 
 const AgregarVacuna = () => {
   const [isOffcanvasOpen, setOffcanvasOpen] = useState(true);
