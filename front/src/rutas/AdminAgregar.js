@@ -7,8 +7,8 @@ import FormField from '../componentes/FormField';
 import './styles/Header.css';
 import './styles/Agregar.css';
 
-const URI_MASCOTA = 'http://proyectounipedro.com/mascota';
-const URI_TIPOS_MASCOTA = 'http://proyectounipedro.com/tipo_mascotas';
+const URI_MASCOTA = 'http://api.proyectounipedro.com/mascota';
+const URI_TIPOS_MASCOTA = 'http://api.proyectounipedro.com/tipo_mascotas';
 
 const AdminAgregar = () => {
   const [isOffcanvasOpen, setOffcanvasOpen] = useState(true);
