@@ -4,10 +4,10 @@ import { Sequelize } from "sequelize";
 const db = new Sequelize(
     'perrera',  // Nombre de la base de datos
     'root',     // Usuario de la base de datos
-    'VPrTZTNNTidNZaAflzqVQFfYCwKWOSPd', // Contraseña del usuario de la base de datos
+    '', // Contraseña del usuario de la base de datos
     {
-        host:'viaduct.proxy.rlwy.net', // Host de la base de datos
-        port: 24764,  // Nuevo puerto configurado en MySQL
+        host:'127.0.0.1', // Host de la base de datos
+        port: 3306,  // Nuevo puerto configurado en MySQL
         dialect: 'mysql',
         logging: false, // Puedes habilitar el logging si lo necesitas
     }

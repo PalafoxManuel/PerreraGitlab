@@ -7,8 +7,8 @@ import FormField from '../componentes/FormField';
 import './styles/Header.css';
 import './styles/Agregar.css';
 
-const URI_MASCOTA = 'http://uri.proyectounipedro.com/';
-const URI_TIPOS_MASCOTA = 'http://uri.proyectounipedro.com/';
+const URI_MASCOTA = 'http://localhost:8000/mascota';
+const URI_TIPOS_MASCOTA = 'http://localhost:8000/tipo_mascotas';
 
 const Agregar = () => {
   const [isOffcanvasOpen, setOffcanvasOpen] = useState(true);
@@ -51,18 +51,17 @@ const Agregar = () => {
     event.preventDefault();
     const formData = new FormData(event.target);
 
-    const tipoMascotaId = formData.get('tipoMascota');
-    const tipoSeleccionado = tiposMascota.find(tipo => tipo.Id_TipoMascota.toString() === tipoMascotaId);
-
-    if (!tipoSeleccionado) {
-      console.error('Tipo de mascota seleccionado no encontrado.');
+    // Convertir el valor seleccionado a número antes de enviarlo
+    const tipoMascotaId = parseInt(formData.get('tipoMascota'), 10);
+    if (isNaN(tipoMascotaId)) {
+      console.error('Tipo de mascota inválido');
       return;
     }
 
     const newMascota = {
       Nombre: formData.get('nombre'),
-      Id_TipoMascota: tipoSeleccionado.Id_TipoMascota,
-      Id_Usuario: userId, // Incluir el Id_Usuario obtenido del localStorage
+      Id_TipoMascota: tipoMascotaId, // Envío correcto de la ID
+      Id_Usuario: userId,
       Raza: formData.get('raza'),
       Edad: parseInt(formData.get('edad'), 10),
       Genero: formData.get('genero'),

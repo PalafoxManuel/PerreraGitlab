@@ -8,8 +8,8 @@ import './styles/Header.css';
 import './styles/Agregar.css';
 
 const URI_RESERVA = 'http://localhost:8000/reserva';
-const URI_DISPONIBILIDAD_SERVICIOS = 'http://localhost:8000/disponibilidad-servicio';
-const URI_MASCOTAS_USUARIO = 'http://localhost:8000/mascota'; // Ruta para obtener mascotas del usuario
+const URI_DISPONIBILIDAD_SERVICIOS = 'http://localhost:8000/disponibilidad-servicios';
+const URI_MASCOTAS_USUARIO = 'http://localhost:8000/mascota'; 
 
 const Alojamiento = () => {
   const [isOffcanvasOpen, setOffcanvasOpen] = useState(true);

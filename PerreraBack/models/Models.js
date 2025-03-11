@@ -124,7 +124,18 @@ const Mascota = db.define('mascota', {
     type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: false
-  }
+  },
+
+  Id_TipoMascota: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    field: 'Id_TipoMascota',  
+    references: {
+      model: 'tipo_mascotas',
+      key: 'Id_TipoMascota'
+    }
+  },
+
 }, {
   tableName: 'mascota',
   timestamps: false
