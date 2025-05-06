@@ -3,31 +3,46 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
-// AUTH
-Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/', [AuthController::class, 'login'])->name('login.post');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+// Rutas de autenticación para invitados
+Route::middleware('guest')->group(function () {
+    // Mostrar formulario de login
+    Route::get('/login', [AuthController::class, 'showLoginForm'])
+        ->name('login');
 
-Route::get('/Home', function () {
-    return view('welcome');
-})->name('home');
+    // Procesar el POST del login
+    Route::post('/login', [AuthController::class, 'login'])
+        ->name('login.post');
+});
 
-Route::get('/adoptar', function () {
-    return view('adoptar');
-})->name('adoptar');
+// Cerrar sesión (solo usuarios autenticados)
+Route::post('/logout', [AuthController::class, 'logout'])
+    ->name('logout')
+    ->middleware('auth');
 
-Route::get('/vacunacion', function () {
-    return view('vacunacion');
-})->name('vacunacion');
+// Redirigir la raíz al login
+Route::get('/', function () {
+    return redirect()->route('login');
+});
 
-Route::get('/contacto', function () {
-    return view('contacto');
-})->name('contacto');
+// Rutas protegidas (solo para usuarios autenticados)
+Route::middleware('auth')->group(function () {
+    Route::get('/home', function () {
+        return view('welcome');
+    })->name('home');
 
-Route::get('/donaciones', function () {
-    return view('donaciones');
-})->name('donaciones');
+    Route::get('/adoptar', function () {
+        return view('adoptar');
+    })->name('adoptar');
 
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login');
+    Route::get('/vacunacion', function () {
+        return view('vacunacion');
+    })->name('vacunacion');
+
+    Route::get('/contacto', function () {
+        return view('contacto');
+    })->name('contacto');
+
+    Route::get('/donaciones', function () {
+        return view('donaciones');
+    })->name('donaciones');
+});
