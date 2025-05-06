@@ -11,9 +11,9 @@
 
 <body class="back-container">
 
-    <div class="logo-container text-center">
+    <div class="logo-container">
         <img class="logo-img" src="{{ Vite::asset('resources/images/Logo.png') }}" alt="Logo">
-        <p class="logo-text">Patitas Felices</p>
+        <p class="logo-text-login">Patitas Felices</p>
     </div>
 
     <div class="form-wrapper-LogIn d-flex justify-content-center align-items-center">
