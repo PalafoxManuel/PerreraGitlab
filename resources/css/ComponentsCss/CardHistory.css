@@ -1,0 +1,69 @@
+.card-history {
+    flex: 1 1 300px;
+    max-width: 400px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fefefe;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+.seccion-historial {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: start;
+    padding: 2rem;
+}
+
+
+.history-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.history-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1rem;
+    border: 2px solid #ccc;
+}
+
+.history-info {
+    flex: 1;
+}
+
+.history-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.history-fecha {
+    color: #777;
+    font-size: 0.9rem;
+}
+
+.history-body {
+    padding-top: 1rem;
+    border-top: 1px solid #e0e0e0;
+}
+
+.history-description {
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
+.mascota-detalles {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.mascota-detalles li {
+    padding: 0.3rem 0;
+    font-size: 0.95rem;
+}
