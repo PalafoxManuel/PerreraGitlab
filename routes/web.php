@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RegisterController;
 
 // Rutas de autenticación para invitados
 Route::middleware('guest')->group(function () {
@@ -12,6 +13,14 @@ Route::middleware('guest')->group(function () {
     // Procesar el POST del login
     Route::post('/login', [AuthController::class, 'login'])
         ->name('login.post');
+
+    // Mostrar formulario de registro
+    Route::get('/register', [RegisterController::class, 'showRegistrationForm'])
+        ->name('register');
+
+    // Procesar el POST del registro
+    Route::post('/register', [RegisterController::class, 'register'])
+        ->name('register.post');
 });
 
 // Cerrar sesión (solo usuarios autenticados)

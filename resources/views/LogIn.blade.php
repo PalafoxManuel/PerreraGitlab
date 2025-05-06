@@ -13,7 +13,7 @@
 
     <div class="logo-container">
         <img class="logo-img" src="{{ Vite::asset('resources/images/Logo.png') }}" alt="Logo">
-        <p class="logo-text-login">Patitas Felices</p>
+        <p class="logo-text-login">Huellitas Felices</p>
     </div>
 
     <div class="form-wrapper-LogIn d-flex justify-content-center align-items-center">
@@ -46,7 +46,7 @@
                 <button type="submit" class="btn btn-primary btn-block w-100">Iniciar sesión</button>
 
                 <p class="text-center mt-3 text-white">¿No tienes cuenta?
-                    <a href="" class="text-primary">¡Crea una ahora!</a>
+                    <a href="register" class="text-primary">¡Crea una ahora!</a>
                 </p>
 
                 <a href="" class="btn btn-secondary btn-block w-100 mt-2">Login Admin</a>

@@ -23,7 +23,7 @@ class RegisterController extends Controller
         }
 
         // La vista auth.register debe manejar condicionalmente el campo Id_Perrera o Id_Cliente
-        return view('auth.register', compact('perreras'));
+        return view('register', compact('perreras'));
     }
 
     /**
