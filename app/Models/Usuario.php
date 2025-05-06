@@ -2,20 +2,40 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Usuario extends Model
+class Usuario extends Authenticatable
 {
     protected $table = 'usuario';
     protected $primaryKey = 'Id_Usuario';
     public $timestamps = false;
+
+    // Campos “fillables”, incluyendo el nuevo rol
     protected $fillable = [
         'Nombre_Usuario',
         'Contrasena',
         'Id_Perrera',
         'Id_Cliente',
+        'rol',
     ];
 
+    // Ocultamos la contraseña en arrays/JSON
+    protected $hidden = [
+        'Contrasena',
+    ];
+
+    // Casting de atributos
+    protected $casts = [
+        'rol' => 'string',
+    ];
+
+    // Mutator para que al asignar Contrasena se encripte automáticamente
+    public function setContrasenaAttribute($value)
+    {
+        $this->attributes['Contrasena'] = bcrypt($value);
+    }
+
+    // Relaciones (igual que antes)…
     public function perrera()
     {
         return $this->belongsTo(Perrera::class, 'Id_Perrera', 'Id_Perrera');
@@ -26,18 +46,16 @@ class Usuario extends Model
         return $this->belongsTo(Cliente::class, 'Id_Cliente', 'Id_Cliente');
     }
 
-    public function mascotas()
+    // …
+
+    // Helpers para el rol
+    public function isAdmin(): bool
     {
-        return $this->hasMany(Mascota::class, 'Id_Usuario', 'Id_Usuario');
+        return $this->rol === 'admin';
     }
 
-    public function reportes()
+    public function isUsuario(): bool
     {
-        return $this->hasMany(Reporte::class, 'Id_Usuario', 'Id_Usuario');
-    }
-
-    public function notificaciones()
-    {
-        return $this->hasMany(NotificacionReserva::class, 'Id_Usuario', 'Id_Usuario');
+        return $this->rol === 'usuario';
     }
 }
