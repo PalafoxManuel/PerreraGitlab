@@ -23,13 +23,13 @@ class MascotaController extends Controller
      */
     public function create()
     {
-        $tipos   = TipoMascota::all();
+        $tipos    = TipoMascota::all();
         $usuarios = Usuario::all();
         return view('mascotas.create', compact('tipos', 'usuarios'));
     }
 
     /**
-     * Almacenar una mascota en la BD.
+     * Almacenar una mascota en la base de datos.
      */
     public function store(Request $request)
     {
@@ -37,7 +37,7 @@ class MascotaController extends Controller
             'Nombre'           => 'required|string|max:100',
             'Raza'             => 'nullable|string|max:100',
             'Edad'             => 'nullable|integer|min:0',
-            'Genero'          => 'nullable|string|in:M,H',
+            'Genero'           => 'nullable|string|in:M,H',
             'Color'            => 'nullable|string|max:50',
             'Peso'             => 'nullable|numeric|min:0',
             'Historial_Medico' => 'nullable|string',
@@ -50,7 +50,7 @@ class MascotaController extends Controller
 
         return redirect()
             ->route('mascotas.index')
-            ->with('success', 'Mascota creada correctamente');
+            ->with('success', 'Mascota creada correctamente.');
     }
 
     /**
@@ -63,18 +63,18 @@ class MascotaController extends Controller
     }
 
     /**
-     * Formulario para editar una mascota.
+     * Formulario para editar una mascota existente.
      */
     public function edit($id)
     {
-        $mascota = Mascota::findOrFail($id);
-        $tipos   = TipoMascota::all();
+        $mascota  = Mascota::findOrFail($id);
+        $tipos    = TipoMascota::all();
         $usuarios = Usuario::all();
         return view('mascotas.edit', compact('mascota', 'tipos', 'usuarios'));
     }
 
     /**
-     * Actualizar datos de la mascota.
+     * Actualizar los datos de una mascota.
      */
     public function update(Request $request, $id)
     {
@@ -82,7 +82,7 @@ class MascotaController extends Controller
             'Nombre'           => 'required|string|max:100',
             'Raza'             => 'nullable|string|max:100',
             'Edad'             => 'nullable|integer|min:0',
-            'Genero'          => 'nullable|string|in:M,H',
+            'Genero'           => 'nullable|string|in:M,H',
             'Color'            => 'nullable|string|max:50',
             'Peso'             => 'nullable|numeric|min:0',
             'Historial_Medico' => 'nullable|string',
@@ -96,7 +96,7 @@ class MascotaController extends Controller
 
         return redirect()
             ->route('mascotas.index')
-            ->with('success', 'Mascota actualizada correctamente');
+            ->with('success', 'Mascota actualizada correctamente.');
     }
 
     /**
@@ -108,6 +108,6 @@ class MascotaController extends Controller
 
         return redirect()
             ->route('mascotas.index')
-            ->with('success', 'Mascota eliminada correctamente');
+            ->with('success', 'Mascota eliminada correctamente.');
     }
 }
