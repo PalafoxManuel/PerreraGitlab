@@ -26,7 +26,7 @@ class UsuarioController extends Controller
     {
         $perreras = Perrera::all();
         $clientes = Cliente::all();
-        return view('usuarios.create', compact('perreras', 'clientes'));
+        return view('Register', compact('perreras', 'clientes'));
     }
 
     /**
@@ -34,17 +34,31 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
+        // 1) Reglas de validación básicas
+        $rules = [
             'Nombre_Usuario' => 'required|string|max:50|unique:usuario,Nombre_Usuario',
-            'Contrasena'     => 'required|string|min:6',
-            'Id_Perrera'     => 'nullable|exists:perrera,Id_Perrera',
-            'Id_Cliente'     => 'nullable|exists:cliente,Id_Cliente',
+            'Contrasena'     => 'required|string|min:6|confirmed',
+        ];
+
+        // 2) Si registra un admin, validamos rol y perrera
+        if (session('perfil') === 'admin') {
+            $rules['rol']        = 'required|in:usuario,admin';
+            $rules['Id_Perrera'] = 'nullable|exists:perrera,Id_Perrera';
+        }
+
+        $data = $request->validate($rules);
+
+        // 3) Valores finales
+        $rol       = session('perfil') === 'admin' ? $data['rol'] : 'usuario';
+        $perreraId = session('perfil') === 'admin' ? ($data['Id_Perrera'] ?? null) : null;
+
+        // 4) Crear usuario
+        Usuario::create([
+            'Nombre_Usuario' => $data['Nombre_Usuario'],
+            'Contrasena'     => Hash::make($data['Contrasena']),
+            'rol'            => $rol,
+            'Id_Perrera'     => $perreraId,
         ]);
-
-        // Hashear la contraseña
-        $data['Contrasena'] = Hash::make($data['Contrasena']);
-
-        Usuario::create($data);
 
         return redirect()
             ->route('usuarios.index')

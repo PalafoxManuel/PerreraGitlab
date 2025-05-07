@@ -2,56 +2,40 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\PerreraController;
 
-// Rutas de autenticación para invitados
+// Invitados: login + registro
 Route::middleware('guest')->group(function () {
-    // Mostrar formulario de login
-    Route::get('/login', [AuthController::class, 'showLoginForm'])
-        ->name('login');
+    Route::get('/login',  [AuthController::class,'showLoginForm'])->name('login');
+    Route::post('/login', [AuthController::class,'login'])->name('login.post');
 
-    // Procesar el POST del login
-    Route::post('/login', [AuthController::class, 'login'])
-        ->name('login.post');
-
-    // Mostrar formulario de registro
-    Route::get('/register', [RegisterController::class, 'showRegistrationForm'])
-        ->name('register');
-
-    // Procesar el POST del registro
-    Route::post('/register', [RegisterController::class, 'register'])
-        ->name('register.post');
+    Route::get('/register', [UsuarioController::class,'create'])->name('register');
+    Route::post('/register',[UsuarioController::class,'store'])->name('register.post');
 });
 
-// Cerrar sesión (solo usuarios autenticados)
-Route::post('/logout', [AuthController::class, 'logout'])
-    ->name('logout')
-    ->middleware('auth');
+// Logout
+Route::post('/logout', [AuthController::class,'logout'])
+     ->middleware('auth')
+     ->name('logout');
 
-// Redirigir la raíz al login
-Route::get('/', function () {
-    return redirect()->route('login');
-});
+// La raíz
+Route::get('/', fn() => redirect()->route('login'));
 
-// Rutas protegidas (solo para usuarios autenticados)
+// Autenticados
 Route::middleware('auth')->group(function () {
-    Route::get('/home', function () {
-        return view('welcome');
-    })->name('home');
+    // Panel común
+    Route::get('/home',       fn() => view('welcome'))->name('home');
+    Route::get('/adoptar',    fn() => view('adoptar'))->name('adoptar');
+    Route::get('/vacunacion', fn() => view('vacunacion'))->name('vacunacion');
+    Route::get('/contacto',   fn() => view('contacto'))->name('contacto');
+    Route::get('/donaciones', fn() => view('donaciones'))->name('donaciones');
 
-    Route::get('/adoptar', function () {
-        return view('adoptar');
-    })->name('adoptar');
+    // CRUD Usuarios
+    Route::resource('usuarios', UsuarioController::class)
+         ->only(['index','create','store','show','edit','update','destroy']);
 
-    Route::get('/vacunacion', function () {
-        return view('vacunacion');
-    })->name('vacunacion');
-
-    Route::get('/contacto', function () {
-        return view('contacto');
-    })->name('contacto');
-
-    Route::get('/donaciones', function () {
-        return view('donaciones');
-    })->name('donaciones');
+    // CRUD Perreras (solo admin podrá usar create/store/edit/update/destroy)
+    Route::resource('perreras', PerreraController::class)
+         ->only(['index','create','store','show','edit','update','destroy']);
 });
