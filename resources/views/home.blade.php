@@ -26,47 +26,47 @@
                 [
                 'title' => 'Agregar mascota',
                 'description' => 'Explora una lista de mascotas adorables que están buscando un hogar amoroso. Encuentra tu compañero perfecto y comienza una nueva aventura juntos.',
-                'image' => Vite::asset('resources/img/Agregar.png')
+                'image' => Vite::asset('resources/images/Agregar.png')
                 ],
                 [
                 'title' => 'Adoptar',
                 'description' => '¿Necesitas dejar temporalmente a tu mascota en buenas manos? Encuentra cuidadores confiables dispuestos a cuidar de tu amigo peludo mientras estás fuera.',
-                'image' => Vite::asset('resources/img/Adoptar.png')
+                'image' => Vite::asset('resources/images/Adoptar.png')
                 ],
                 [
                 'title' => 'Alojamiento',
                 'description' => 'Encuentra alojamiento temporal para tu mascota con cuidadores confiables.',
-                'image' => Vite::asset('resources/img/Alojamiento.png')
+                'image' => Vite::asset('resources/images/Alojamiento.png')
                 ],
                 [
                 'title' => 'Vacunación',
                 'description' => 'Consulta servicios de vacunación para mantener la salud de tu mascota al día.',
-                'image' => Vite::asset('resources/img/Vacunacion.png')
+                'image' => Vite::asset('resources/images/Vacunacion.png')
                 ],
                 [
                 'title' => 'Baño',
                 'description' => 'Busca servicios de baño para mantener a tu mascota limpia y fresca.',
-                'image' => Vite::asset('resources/img/Baño.png')
+                'image' => Vite::asset('resources/images/Baño.png')
                 ],
                 [
                 'title' => 'Corte de Pelo',
                 'description' => 'Encuentra profesionales para el corte de pelo de tu mascota.',
-                'image' => Vite::asset('resources/img/CortePelo.png')
+                'image' => Vite::asset('resources/images/CortePelo.png')
                 ],
                 [
                 'title' => 'Corte de Uñas',
                 'description' => 'Accede a servicios de corte de uñas para tu mascota.',
-                'image' => Vite::asset('resources/img/CorteUñas.png')
+                'image' => Vite::asset('resources/images/CorteUñas.png')
                 ],
                 [
                 'title' => 'Historial',
                 'description' => 'Mantén un registro detallado de todos los servicios que has utilizado, desde paseos hasta visitas al veterinario.',
-                'image' => Vite::asset('resources/img/Historial.png')
+                'image' => Vite::asset('resources/images/Historial.png')
                 ],
                 [
                 'title' => 'Generar reporte',
                 'description' => 'Reporta preocupaciones como maltrato animal, extravío o vacunación de tu mascota.',
-                'image' => Vite::asset('resources/img/Reporte.png')
+                'image' => Vite::asset('resources/images/Reporte.png')
                 ],
                 ];
                 @endphp
