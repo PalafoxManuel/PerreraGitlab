@@ -6,7 +6,7 @@
     <title>Inicio</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Bootstrap y FontAwesome (si usas estos estilos) -->
+    <!-- Bootstrap y FontAwesome -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
@@ -16,7 +16,7 @@
 <body class="back-container d-flex flex-column min-vh-100">
 
     {{-- Header --}}
-    @include('componentes.header')
+    @include('Components.Header')
 
     <div class="form-wrapper-2 flex-grow-1 d-flex">
         <div class="cards-container container py-4">
@@ -26,56 +26,47 @@
                 [
                 'title' => 'Agregar mascota',
                 'description' => 'Explora una lista de mascotas adorables que están buscando un hogar amoroso. Encuentra tu compañero perfecto y comienza una nueva aventura juntos.',
-                'image' => Vite::asset('resources/img/Agregar.png'),
-                'link' => route('mascota.agregar')
+                'image' => Vite::asset('resources/img/Agregar.png')
                 ],
                 [
                 'title' => 'Adoptar',
                 'description' => '¿Necesitas dejar temporalmente a tu mascota en buenas manos? Encuentra cuidadores confiables dispuestos a cuidar de tu amigo peludo mientras estás fuera.',
-                'image' => Vite::asset('resources/img/Adoptar.png'),
-                'link' => route('mascota.adoptar')
+                'image' => Vite::asset('resources/img/Adoptar.png')
                 ],
                 [
                 'title' => 'Alojamiento',
                 'description' => 'Encuentra alojamiento temporal para tu mascota con cuidadores confiables.',
-                'image' => Vite::asset('resources/img/Alojamiento.png'),
-                'link' => route('servicios.alojamiento')
+                'image' => Vite::asset('resources/img/Alojamiento.png')
                 ],
                 [
                 'title' => 'Vacunación',
                 'description' => 'Consulta servicios de vacunación para mantener la salud de tu mascota al día.',
-                'image' => Vite::asset('resources/img/Vacunacion.png'),
-                'link' => route('servicios.vacunacion')
+                'image' => Vite::asset('resources/img/Vacunacion.png')
                 ],
                 [
                 'title' => 'Baño',
                 'description' => 'Busca servicios de baño para mantener a tu mascota limpia y fresca.',
-                'image' => Vite::asset('resources/img/Baño.png'),
-                'link' => route('servicios.baño')
+                'image' => Vite::asset('resources/img/Baño.png')
                 ],
                 [
                 'title' => 'Corte de Pelo',
                 'description' => 'Encuentra profesionales para el corte de pelo de tu mascota.',
-                'image' => Vite::asset('resources/img/CortePelo.png'),
-                'link' => route('servicios.cortePelo')
+                'image' => Vite::asset('resources/img/CortePelo.png')
                 ],
                 [
                 'title' => 'Corte de Uñas',
                 'description' => 'Accede a servicios de corte de uñas para tu mascota.',
-                'image' => Vite::asset('resources/img/CorteUñas.png'),
-                'link' => route('servicios.corteUñas')
+                'image' => Vite::asset('resources/img/CorteUñas.png')
                 ],
                 [
                 'title' => 'Historial',
                 'description' => 'Mantén un registro detallado de todos los servicios que has utilizado, desde paseos hasta visitas al veterinario.',
-                'image' => Vite::asset('resources/img/Historial.png'),
-                'link' => route('usuario.historial')
+                'image' => Vite::asset('resources/img/Historial.png')
                 ],
                 [
                 'title' => 'Generar reporte',
                 'description' => 'Reporta preocupaciones como maltrato animal, extravío o vacunación de tu mascota.',
-                'image' => Vite::asset('resources/img/Reporte.png'),
-                'link' => route('reporte.crear')
+                'image' => Vite::asset('resources/img/Reporte.png')
                 ],
                 ];
                 @endphp
@@ -87,7 +78,7 @@
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">{{ $card['title'] }}</h5>
                             <p class="card-text flex-grow-1">{{ $card['description'] }}</p>
-                            <a href="{{ $card['link'] }}" class="btn btn-primary mt-2">Ir</a>
+                            <a href="#" class="btn btn-primary mt-2">Ir</a>
                         </div>
                     </div>
                 </div>

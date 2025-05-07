@@ -7,6 +7,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-bottom: 3px solid #2563eb;
     /* Línea inferior separadora */
+    width: 100%;
 }
 .navbar-container {
     display: flex;
@@ -14,6 +15,7 @@
     justify-content: space-between;
     max-width: 1200px;
     margin: 0 auto;
+    width: 100%;
 }
 
 .navbar-logo {
@@ -38,13 +40,6 @@
     color: white;
     text-decoration: none;
     margin-right: 2rem;
-}
-.navbar-container {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
 }
 
 .logo {
@@ -112,4 +107,45 @@
 form {
     display: inline;
     margin: 0;
+}
+/* Botón hamburguesa */
+.menu-toggle {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: white;
+    cursor: pointer;
+}
+
+/* Sidebar móvil oculto por defecto */
+.mobile-sidebar {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #1e3a8a;
+    padding: 1rem 2rem;
+    z-index: 1000;
+}
+
+.mobile-sidebar.active {
+    display: block;
+}
+
+.mobile-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.mobile-sidebar ul li {
+    margin: 1rem 0;
+}
+
+.mobile-sidebar ul li a,
+.mobile-sidebar ul li button {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
 }

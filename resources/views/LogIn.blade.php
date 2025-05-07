@@ -54,7 +54,7 @@
                     <a href="register" class="text-primary">¡Crea una ahora!</a>
                 </p>
 
-                <a href="#" class="btn btn-secondary w-100 mt-2">Login Admin</a>
+                <a href="home" class="btn btn-secondary w-100 mt-2">Login Admin</a>
             </form>
         </div>
     </div>

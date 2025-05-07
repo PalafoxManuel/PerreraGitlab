@@ -20,17 +20,15 @@ Route::post('/logout', [AuthController::class, 'logout'])
      ->name('logout');
 
 //Home
-Route::get('/home', function () {
-     return view('home');
-})->name('home');
+// Dentro del grupo middleware('auth')
+Route::get('/home', fn() => view('home'))->name('home');
 
 // La raíz
-Route::get('/', fn() => redirect()->route('home'));
+Route::get('/', fn() => redirect()->route('login'));
 
 // Autenticados
 Route::middleware('auth')->group(function () {
      // Panel común
-     Route::get('/home',       fn() => view('welcome'))->name('home');
      Route::get('/adoptar',    fn() => view('adoptar'))->name('adoptar');
      Route::get('/vacunacion', fn() => view('vacunacion'))->name('vacunacion');
      Route::get('/contacto',   fn() => view('contacto'))->name('contacto');
