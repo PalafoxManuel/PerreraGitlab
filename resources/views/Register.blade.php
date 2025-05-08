@@ -4,19 +4,24 @@
   <meta charset="UTF-8">
   <title>Registro de Usuario</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap y FontAwesome -->
   <link
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
     rel="stylesheet">
   <link
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     rel="stylesheet">
+
   @vite(['resources/css/app.css','resources/js/app.js'])
 </head>
 <body class="back-container d-flex flex-column min-vh-100">
+
   <div class="logo-container text-center py-3">
     <img class="logo-img" src="{{ Vite::asset('resources/images/Logo.png') }}" alt="Logo">
     <p class="logo-text-login text-white fs-4 fw-bold">Huellitas Felices</p>
   </div>
+
   <div class="form-wrapper-LogIn flex-grow-1 d-flex">
     <div class="form-container bg-dark text-white p-4 rounded shadow mx-auto" style="max-width:400px;">
       <h1 class="text-center mb-4">Registro de Usuario</h1>
@@ -30,33 +35,66 @@
       <form method="POST" action="{{ route('register.post') }}">
         @csrf
 
-        {{-- Usuario & Contraseña --}}
+        {{-- Usuario --}}
         <div class="mb-3">
           <label class="form-label">Nombre de Usuario *</label>
           <div class="input-group">
             <span class="input-group-text"><i class="fas fa-user"></i></span>
-            <input type="text" name="Nombre_Usuario" class="form-control"
-                   value="{{ old('Nombre_Usuario') }}" required>
+            <input
+              type="text"
+              name="Nombre_Usuario"
+              class="form-control"
+              value="{{ old('Nombre_Usuario') }}"
+              required>
           </div>
         </div>
+
+        {{-- Contraseña --}}
         <div class="mb-3">
           <label class="form-label">Contraseña *</label>
           <div class="input-group">
             <span class="input-group-text"><i class="fas fa-lock"></i></span>
-            <input type="password" name="Contrasena" class="form-control" required>
+            <input
+              type="password"
+              name="Contrasena"
+              class="form-control"
+              required>
           </div>
         </div>
+
+        {{-- Confirmar Contraseña --}}
         <div class="mb-3">
           <label class="form-label">Confirmar Contraseña *</label>
           <div class="input-group">
             <span class="input-group-text"><i class="fas fa-lock"></i></span>
-            <input type="password" name="Contrasena_confirmation" class="form-control" required>
+            <input
+              type="password"
+              name="Contrasena_confirmation"
+              class="form-control"
+              required>
           </div>
         </div>
 
+        {{-- Siempre: selección de Sucursal (Id_Perrera) --}}
+        <div class="mb-3">
+          <label class="form-label">Sucursal *</label>
+          <select name="Id_Perrera" class="form-select" required>
+            <option value="">— Selecciona una sucursal —</option>
+            @foreach($perreras as $p)
+              <option
+                value="{{ $p->Id_Perrera }}"
+                {{ old('Id_Perrera')==$p->Id_Perrera ? 'selected':'' }}>
+                {{ $p->Nombre }}
+              </option>
+            @endforeach
+          </select>
+          @error('Id_Perrera')<div class="text-danger mt-1">{{ $message }}</div>@enderror
+        </div>
+
         @php
-          // condiciones para ver “admin panel” en registro
-          $allowAdmin = session('perfil')==='admin' || !$adminExists;
+          // El primer admin puede crearse incluso sin sesión
+          $adminExists = isset($adminExists) ? $adminExists : false;
+          $allowAdmin  = session('perfil')==='admin' || !$adminExists;
         @endphp
 
         @if($allowAdmin)
@@ -69,28 +107,15 @@
             </select>
           </div>
 
-          {{-- Perrera --}}
-          <div class="mb-3">
-            <label class="form-label">Asignar Perrera</label>
-            <select name="Id_Perrera" class="form-select">
-              <option value="">— Ninguna —</option>
-              @foreach($perreras as $p)
-                <option value="{{ $p->Id_Perrera }}"
-                        {{ old('Id_Perrera')==$p->Id_Perrera?'selected':'' }}>
-                  {{ $p->Nombre }}
-                </option>
-              @endforeach
-            </select>
-          </div>
-
-          {{-- Cliente existente (solo si eligió “Cliente”) --}}
+          {{-- Cliente existente (sólo si rol = usuario) --}}
           <div class="mb-3" id="cliente-section">
             <label class="form-label">Cliente asociado *</label>
             <select name="Id_Cliente" class="form-select">
               <option value="">— Selecciona un cliente —</option>
               @foreach($clientes as $c)
-                <option value="{{ $c->Id_Cliente }}"
-                        {{ old('Id_Cliente')==$c->Id_Cliente?'selected':'' }}>
+                <option
+                  value="{{ $c->Id_Cliente }}"
+                  {{ old('Id_Cliente')==$c->Id_Cliente?'selected':'' }}>
                   {{ $c->Nombre_Completo }}
                 </option>
               @endforeach
@@ -122,28 +147,44 @@
           <h5 class="mt-4">Tus datos</h5>
           <div class="mb-3">
             <label class="form-label">Nombre completo *</label>
-            <input type="text" name="Nombre_Completo" class="form-control"
-                   value="{{ old('Nombre_Completo') }}" required>
+            <input
+              type="text"
+              name="Nombre_Completo"
+              class="form-control"
+              value="{{ old('Nombre_Completo') }}"
+              required>
           </div>
           <div class="mb-3">
             <label class="form-label">Teléfono</label>
-            <input type="text" name="Numero_Contacto" class="form-control"
-                   value="{{ old('Numero_Contacto') }}">
+            <input
+              type="text"
+              name="Numero_Contacto"
+              class="form-control"
+              value="{{ old('Numero_Contacto') }}">
           </div>
           <div class="mb-3">
             <label class="form-label">Correo electrónico</label>
-            <input type="email" name="Correo_Electronico" class="form-control"
-                   value="{{ old('Correo_Electronico') }}">
+            <input
+              type="email"
+              name="Correo_Electronico"
+              class="form-control"
+              value="{{ old('Correo_Electronico') }}">
           </div>
           <div class="mb-3">
             <label class="form-label">Calle</label>
-            <input type="text" name="Calle" class="form-control"
-                   value="{{ old('Calle') }}">
+            <input
+              type="text"
+              name="Calle"
+              class="form-control"
+              value="{{ old('Calle') }}">
           </div>
           <div class="mb-3">
             <label class="form-label">Código Postal</label>
-            <input type="text" name="Codigo_Postal" class="form-control"
-                   value="{{ old('Codigo_Postal') }}">
+            <input
+              type="text"
+              name="Codigo_Postal"
+              class="form-control"
+              value="{{ old('Codigo_Postal') }}">
           </div>
         @endif
 

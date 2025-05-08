@@ -7,8 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Bootstrap y FontAwesome -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        rel="stylesheet">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -22,6 +26,30 @@
     <div class="form-wrapper-2 flex-grow-1 d-flex">
         <div class="cards-container container py-4">
             <div class="row g-4">
+
+                {{-- Tarjeta extra para admin: Crear Perrera --}}
+                @if(session('perfil') === 'admin')
+                <div class="col-md-4">
+                    <div class="card h-100 shadow">
+                        <img
+                            src="{{ Vite::asset('resources/images/CrearPerrera.png') }}"
+                            class="card-img-top"
+                            alt="Crear Perrera">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">Crear Perrera</h5>
+                            <p class="card-text flex-grow-1">
+                                Da de alta una nueva perrera en el sistema. Solo los administradores pueden crearla.
+                            </p>
+                            <a
+                                href="{{ route('perreras.create') }}"
+                                class="btn btn-primary mt-2">
+                                Ir
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
                 @php
                 $cardsData = [
                 [
