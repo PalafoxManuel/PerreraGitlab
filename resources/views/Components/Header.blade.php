@@ -29,7 +29,7 @@
                     <li><a href="#"><i class="fas fa-paw me-2"></i>Corte de Uñas</a></li>
                     <li><a href="#"><i class="fas fa-folder-open me-2"></i>Historial</a></li>
 
-                    @if(auth()->check() && auth()->user()->role === 'admin')
+                    @if(session('perfil') === 'admin')
                     <li><a href="#"><i class="fas fa-plus me-2"></i>Agregar vacuna</a></li>
                     <li><a href="#"><i class="fas fa-user-shield me-2"></i>Agregar admin</a></li>
                     @endif
@@ -43,7 +43,7 @@
                     <li><a href="#"><i class="fas fa-exclamation-triangle me-2"></i>Reporte de maltrato</a></li>
                     <li><a href="#"><i class="fas fa-search-location me-2"></i>Reporte de extravío</a></li>
 
-                    @if(auth()->check() && auth()->user()->role === 'admin')
+                    @if(session('perfil') === 'admin')
                     <li><a href="#"><i class="fas fa-syringe me-2"></i>Reporte vacuna</a></li>
                     <li><a href="#"><i class="fas fa-heartbeat me-2"></i>Reporte adopción</a></li>
                     @endif
@@ -51,7 +51,7 @@
             </li>
 
             @auth
-            @if (auth()->user()->role === 'admin')
+            @if(session('perfil') === 'admin')
             <li><a href="{{ route('admin.dashboard') }}">Panel Admin</a></li>
             @elseif (auth()->user()->role === 'cliente')
             <li><a href="{{ route('perfil') }}">Mi Perfil</a></li>
@@ -82,7 +82,7 @@
             <li><a href="#"><i class="fas fa-paw me-2"></i>Corte de Uñas</a></li>
             <li><a href="#"><i class="fas fa-folder-open me-2"></i>Historial</a></li>
 
-            @if(auth()->check() && auth()->user()->role === 'admin')
+            @if(session('perfil') === 'admin')
             <li><a href="#"><i class="fas fa-plus me-2"></i>Agregar vacuna</a></li>
             <li><a href="#"><i class="fas fa-user-shield me-2"></i>Agregar admin</a></li>
             @endif
@@ -94,7 +94,7 @@
             <li><a href="#"><i class="fas fa-exclamation-triangle me-2"></i>Reporte de maltrato</a></li>
             <li><a href="#"><i class="fas fa-search-location me-2"></i>Reporte de extravío</a></li>
 
-            @if(auth()->check() && auth()->user()->role === 'admin')
+            @if(session('perfil') === 'admin')
             <li><a href="#"><i class="fas fa-syringe me-2"></i>Reporte vacuna</a></li>
             <li><a href="#"><i class="fas fa-heartbeat me-2"></i>Reporte adopción</a></li>
             @endif
@@ -102,11 +102,11 @@
 
         <!-- Acciones de usuario -->
         @auth
-        @if (auth()->user()->role === 'admin')
+        @if(session('perfil') === 'admin')
         <ul class="sidebar-section">
             <li><a href="{{ route('admin.dashboard') }}"><i class="fas fa-tools me-2"></i>Panel Admin</a></li>
         </ul>
-        @elseif (auth()->user()->role === 'cliente')
+        @elseif (session('perfil') === 'cliente')
         <ul class="sidebar-section">
             <li><a href="{{ route('perfil') }}"><i class="fas fa-user me-2"></i>Mi Perfil</a></li>
         </ul>
