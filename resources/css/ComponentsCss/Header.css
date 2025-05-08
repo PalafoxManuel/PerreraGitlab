@@ -7,6 +7,7 @@
     border-bottom: 3px solid #2563eb;
     width: 100%;
 }
+
 .navbar-container {
     display: flex;
     align-items: center;
@@ -75,6 +76,53 @@
 .navbar-links li a:hover {
     color: #93c5fd;
 }
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #1e3a8a;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    z-index: 999;
+}
+
+/* Dropdown en escritorio */
+.navbar-links .dropdown {
+    position: relative;
+}
+
+.navbar-links .dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #1e3a8a;
+    top: 100%;
+    left: 0;
+    padding: 0.5rem 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    min-width: 180px;
+    border-radius: 6px;
+}
+
+.navbar-links .dropdown-menu li {
+    padding: 0;
+}
+
+.navbar-links .dropdown-menu li a {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: white;
+    text-decoration: none;
+}
+
+.navbar-links .dropdown-menu li a:hover {
+    background-color: #2563eb;
+}
+
+.navbar-links .dropdown:hover .dropdown-menu {
+    display: block;
+}
 
 /* Botones de sesión */
 .btn-login,
@@ -101,80 +149,57 @@
     cursor: pointer;
 }
 
-/* Sidebar móvil oculto por defecto */
+/* Sidebar móvil */
 .mobile-sidebar {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
+    position: fixed;
+    top: 0;
+    right: -300px; /* oculto inicialmente */
+    height: 100%;
+    width: 280px;
     background-color: #1e3a8a;
-    padding: 1rem 2rem;
-    z-index: 1000;
+    padding: 2rem 1.5rem;
+    box-shadow: -2px 0 6px rgba(0, 0, 0, 0.2);
+    z-index: 1050;
+    transition: right 0.3s ease;
+    overflow-y: auto;
 }
 
 .mobile-sidebar.active {
-    display: block;
+    right: 0; /* visible */
 }
 
-.mobile-sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+/* Títulos dentro del sidebar */
+.sidebar-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 0.3rem;
 }
 
-.mobile-sidebar ul li {
-    margin: 1rem 0;
+/* Listas */
+.sidebar-section i {
+    margin-right: 0.5rem;
+    width: 20px;
+    text-align: center;
+}
+.sidebar-section li {
+    margin: 0.5rem 0;
 }
 
-.mobile-sidebar ul li a,
-.mobile-sidebar ul li button {
+.sidebar-section li a,
+.sidebar-section li button {
     color: white;
     text-decoration: none;
     font-weight: 500;
-}
-
-/* ======================= */
-/* Menú desplegable header */
-/* ======================= */
-.dropdown {
-    position: relative;
-}
-
-.dropdown-toggle {
-    cursor: pointer;
-    display: inline-block;
-}
-
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #1e3a8a;
-    padding: 0.5rem 0;
-    min-width: 180px;
-    display: none;
-    flex-direction: column;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-}
-
-.dropdown-menu li {
-    padding: 0.3rem 1rem;
-    white-space: nowrap;
-}
-
-.dropdown-menu li a {
-    color: white;
-    text-decoration: none;
     display: block;
+    padding: 0.3rem 0;
     transition: background-color 0.2s ease;
 }
 
-.dropdown-menu li a:hover {
+.sidebar-section li a:hover {
     background-color: #2563eb;
-}
-
-.dropdown:hover .dropdown-menu {
-    display: flex;
+    border-radius: 4px;
 }
