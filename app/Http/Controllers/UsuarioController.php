@@ -34,30 +34,61 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        // 1) Reglas de validación básicas
+        // 1) Reglas base para todos
         $rules = [
             'Nombre_Usuario' => 'required|string|max:50|unique:usuario,Nombre_Usuario',
             'Contrasena'     => 'required|string|min:6|confirmed',
         ];
 
-        // 2) Si registra un admin, validamos rol y perrera
         if (session('perfil') === 'admin') {
+            // El admin puede crear usuarios de ambos tipos
             $rules['rol']        = 'required|in:usuario,admin';
             $rules['Id_Perrera'] = 'nullable|exists:perrera,Id_Perrera';
+            // Solo si elige rol=usuario, el Id_Cliente es obligatorio
+            $rules['Id_Cliente'] = 'required_if:rol,usuario|exists:cliente,Id_Cliente';
+        } else {
+            // Usuario normal al auto-registrarse: debe crear un cliente nuevo
+            $rules['Nombre_Completo']    = 'required|string|max:200';
+            $rules['Numero_Contacto']    = 'nullable|string|max:20';
+            $rules['Correo_Electronico'] = 'nullable|email|max:100';
+            $rules['Calle']              = 'nullable|string|max:100';
+            $rules['Codigo_Postal']      = 'nullable|string|max:20';
         }
 
+        // 2) Validamos todo junto
         $data = $request->validate($rules);
 
-        // 3) Valores finales
-        $rol       = session('perfil') === 'admin' ? $data['rol'] : 'usuario';
-        $perreraId = session('perfil') === 'admin' ? ($data['Id_Perrera'] ?? null) : null;
+        // 3) Creamos o asignamos el cliente
+        if (session('perfil') === 'admin') {
+            // Si es admin y rol=usuario, usará el Id_Cliente validado
+            $clienteId = $data['rol'] === 'usuario'
+                    ? $data['Id_Cliente']
+                    : null;
+        } else {
+            // Usuario normal: creamos un cliente con los datos enviados
+            $cliente = Cliente::create([
+                'Nombre_Completo'    => $data['Nombre_Completo'],
+                'Numero_Contacto'    => $data['Numero_Contacto']    ?? null,
+                'Correo_Electronico' => $data['Correo_Electronico'] ?? null,
+                'Calle'              => $data['Calle']              ?? null,
+                'Codigo_Postal'      => $data['Codigo_Postal']      ?? null,
+            ]);
+            $clienteId = $cliente->Id_Cliente;
+        }
 
-        // 4) Crear usuario
+        // 4) Preparamos valores de rol y perrera
+        $rol       = session('perfil') === 'admin' ? $data['rol'] : 'usuario';
+        $perreraId = session('perfil') === 'admin'
+                ? ($data['Id_Perrera'] ?? null)
+                : null;
+
+        // 5) Creamos el usuario
         Usuario::create([
             'Nombre_Usuario' => $data['Nombre_Usuario'],
-            'Contrasena'     => Hash::make($data['Contrasena']),
+            'Contrasena'     => $data['Contrasena'],  // <-- raw, mutator la encripta
             'rol'            => $rol,
             'Id_Perrera'     => $perreraId,
+            'Id_Cliente'     => $clienteId,
         ]);
 
         return redirect()

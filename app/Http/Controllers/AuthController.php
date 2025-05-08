@@ -21,41 +21,42 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        $data = $request->validate([
+        // 1) Validamos
+        $credentials = $request->validate([
             'Nombre_Usuario' => 'required|string',
             'Contrasena'     => 'required|string',
         ]);
 
-        $usuario = Usuario::where('Nombre_Usuario', $data['Nombre_Usuario'])->first();
+        // 2) Intentamos buscar al usuario
+        $usuario = Usuario::where('Nombre_Usuario', $credentials['Nombre_Usuario'])
+                          ->first();
 
-        if (! $usuario || ! Hash::check($data['Contrasena'], $usuario->Contrasena)) {
+        if (! $usuario || ! Hash::check($credentials['Contrasena'], $usuario->Contrasena)) {
             return back()
                 ->withErrors(['login' => 'Credenciales inválidas'])
-                ->withInput(['Nombre_Usuario' => $data['Nombre_Usuario']]);
+                ->withInput();
         }
 
-        // Guardar datos en sesión
+        // 3) Regeneramos sesión y guardamos el perfil
+        $request->session()->regenerate();
+        // Usamos el campo 'rol' que ya tienes en tu Usuario
         session([
             'usuario_id'     => $usuario->Id_Usuario,
             'usuario_nombre' => $usuario->Nombre_Usuario,
-            // Perfil según asociación:
-            'perfil'         => $usuario->Id_Perrera ? 'admin' : 'usuario',
+            'perfil'         => $usuario->rol, // 'admin' o 'usuario'
         ]);
 
-        // Redirigir según perfil
-        if ($usuario->Id_Perrera) {
-            return redirect()->route('perreras.index');
-        }
-
-        return redirect()->route('reservas.index');
+        // 4) Redirigimos al home para ambos perfiles
+        return redirect()->route('home');
     }
 
     /**
      * Cerrar sesión.
      */
-    public function logout()
+    public function logout(Request $request)
     {
-        session()->flush();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
         return redirect()->route('login');
     }
 }
