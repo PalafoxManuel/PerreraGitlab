@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\PerreraController;
+use App\Http\Controllers\MascotaController;
 
 // Invitados: login + registro
 Route::middleware('guest')->group(function () {
@@ -19,12 +20,19 @@ Route::post('/logout', [AuthController::class, 'logout'])
      ->middleware('auth')
      ->name('logout');
 
-//Home
 // Dentro del grupo middleware('auth')
 Route::get('/home', fn() => view('home'))->name('home');
 
 // La raíz
 Route::get('/', fn() => redirect()->route('login'));
+
+// Mascotas - agregar SIN autenticación
+Route::prefix('mascotas')->name('mascotas.')->group(function () {
+     Route::get('/', [MascotaController::class, 'index'])->name('index');
+     Route::get('/agregar', [MascotaController::class, 'create'])->name('agregar');
+     Route::post('/', [MascotaController::class, 'store'])->name('store');
+});
+
 
 // Autenticados
 Route::middleware('auth')->group(function () {
@@ -38,7 +46,7 @@ Route::middleware('auth')->group(function () {
      Route::resource('usuarios', UsuarioController::class)
           ->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']);
 
-     // CRUD Perreras (solo admin podrá usar create/store/edit/update/destroy)
+     // CRUD Perreras
      Route::resource('perreras', PerreraController::class)
           ->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']);
 });

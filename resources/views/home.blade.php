@@ -18,6 +18,7 @@
     {{-- Header --}}
     @include('Components.Header')
 
+
     <div class="form-wrapper-2 flex-grow-1 d-flex">
         <div class="cards-container container py-4">
             <div class="row g-4">
@@ -26,68 +27,78 @@
                 [
                 'title' => 'Agregar mascota',
                 'description' => 'Explora una lista de mascotas adorables que están buscando un hogar amoroso. Encuentra tu compañero perfecto y comienza una nueva aventura juntos.',
-                'image' => Vite::asset('resources/images/Agregar.png')
+                'image' => 'resources/images/Agregar.png',
+                'link' => route('mascotas.agregar')
                 ],
                 [
                 'title' => 'Adoptar',
                 'description' => '¿Necesitas dejar temporalmente a tu mascota en buenas manos? Encuentra cuidadores confiables dispuestos a cuidar de tu amigo peludo mientras estás fuera.',
-                'image' => Vite::asset('resources/images/Adoptar.png')
+                'image' => 'resources/images/Adoptar.png',
+                'link' => route('adoptar')
                 ],
                 [
                 'title' => 'Alojamiento',
                 'description' => 'Encuentra alojamiento temporal para tu mascota con cuidadores confiables.',
-                'image' => Vite::asset('resources/images/Alojamiento.png')
+                'image' => 'resources/images/Alojamiento.png',
+                'link' => '#'
                 ],
                 [
                 'title' => 'Vacunación',
                 'description' => 'Consulta servicios de vacunación para mantener la salud de tu mascota al día.',
-                'image' => Vite::asset('resources/images/Vacunacion.png')
+                'image' => 'resources/images/Vacunacion.png',
+                'link' => route('vacunacion')
                 ],
                 [
                 'title' => 'Baño',
                 'description' => 'Busca servicios de baño para mantener a tu mascota limpia y fresca.',
-                'image' => Vite::asset('resources/images/Baño.png')
+                'image' => 'resources/images/Baño.png',
+                'link' => '#'
                 ],
                 [
                 'title' => 'Corte de Pelo',
                 'description' => 'Encuentra profesionales para el corte de pelo de tu mascota.',
-                'image' => Vite::asset('resources/images/CortePelo.png')
+                'image' => 'resources/images/CortePelo.png',
+                'link' => '#'
                 ],
                 [
                 'title' => 'Corte de Uñas',
                 'description' => 'Accede a servicios de corte de uñas para tu mascota.',
-                'image' => Vite::asset('resources/images/CorteUñas.png')
+                'image' => 'resources/images/CorteUñas.png',
+                'link' => '#'
                 ],
                 [
                 'title' => 'Historial',
                 'description' => 'Mantén un registro detallado de todos los servicios que has utilizado, desde paseos hasta visitas al veterinario.',
-                'image' => Vite::asset('resources/images/Historial.png')
+                'image' => 'resources/images/Historial.png',
+                'link' => '#'
                 ],
                 [
                 'title' => 'Generar reporte',
                 'description' => 'Reporta preocupaciones como maltrato animal, extravío o vacunación de tu mascota.',
-                'image' => Vite::asset('resources/images/Reporte.png')
+                'image' => 'resources/images/Reporte.png',
+                'link' => '#'
                 ],
                 ];
                 @endphp
 
                 @foreach ($cardsData as $card)
                 <div class="col-md-4">
-                    <div class="card h-100 shadow">
-                        <img src="{{ $card['image'] }}" class="card-img-top" alt="{{ $card['title'] }}">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">{{ $card['title'] }}</h5>
-                            <p class="card-text flex-grow-1">{{ $card['description'] }}</p>
-                            <a href="#" class="btn btn-primary mt-2">Ir</a>
-                        </div>
-                    </div>
+                    <x-card
+                        :imagen="$card['image']"
+                        :nombre="$card['title']"
+                        :descripcion="$card['description']"
+                        :accion="'Ir'"
+                        :link="$card['link']" />
                 </div>
                 @endforeach
-
+                @auth
+                <p>Estás logueado como: {{ Auth::user()->Nombre_Usuario }}</p>
+                @else
+                <p>No estás logueado.</p>
+                @endauth
             </div>
         </div>
     </div>
-
 </body>
 
 </html>

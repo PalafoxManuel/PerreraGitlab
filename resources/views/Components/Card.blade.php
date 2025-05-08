@@ -22,7 +22,7 @@ $rutaImagen = $esRutaVite ? Vite::asset($imagen) : $imagen;
         <div class="card-title">{{ $nombre }}</div>
         <p class="card-description">{{ $descripcion }}</p>
         <div class="card-footer">
-            <a href="{{ $link }}" class="card-button">{{ $accion }}</a>
+            <a href="{{ route('mascotas.agregar') }}" class="card-button">{{ $accion }}</a>
         </div>
     </div>
 </div>

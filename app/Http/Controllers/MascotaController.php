@@ -25,7 +25,7 @@ class MascotaController extends Controller
     {
         $tipos    = TipoMascota::all();
         $usuarios = Usuario::all();
-        return view('mascotas.create', compact('tipos', 'usuarios'));
+        return view('agregar', compact('tipos', 'usuarios'));
     }
 
     /**
