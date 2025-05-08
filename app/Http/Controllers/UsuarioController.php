@@ -6,48 +6,70 @@ use App\Models\Usuario;
 use App\Models\Perrera;
 use App\Models\Cliente;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class UsuarioController extends Controller
 {
     /**
-     * Mostrar listado de usuarios.
+     * Listado de usuarios (solo admin).
      */
     public function index()
     {
+        if (! session('usuario_id')) {
+            return redirect()->route('login');
+        }
+        if (session('perfil') !== 'admin') {
+            abort(403, 'No tienes permiso.');
+        }
+
         $usuarios = Usuario::with(['perrera', 'cliente'])->get();
         return view('usuarios.index', compact('usuarios'));
     }
 
+    /**
+     * Formulario de registro / creación de usuario.
+     * Invitados => auto‐registro usuario normal.
+     * Admins  => pueden crear usuario/cliente/admin.
+     */
     public function create()
     {
         $perreras    = Perrera::all();
         $clientes    = Cliente::all();
-        // ¿Hay al menos un admin registrado?
-        $adminExists = Usuario::where('rol','admin')->exists();
+        // Comprueba si ya existe al menos un admin:
+        $adminExists = Usuario::where('rol', 'admin')->exists();
+
+        // Si ya estás logeado y NO eres admin, y ya hay un admin, no puedes crear más:
+        if (session('usuario_id')
+            && session('perfil') !== 'admin'
+            && $adminExists
+        ) {
+            abort(403, 'No tienes permiso para crear usuarios.');
+        }
 
         return view('Register', compact('perreras','clientes','adminExists'));
     }
 
+    /**
+     * Procesar registro/creación de usuario.
+     */
     public function store(Request $request)
     {
-        // Calcular si estamos en “primer admin”
+        // ¿Es el primer admin?
         $isFirstAdmin = ! Usuario::where('rol','admin')->exists();
 
         // Reglas base
         $rules = [
             'Nombre_Usuario' => 'required|string|max:50|unique:usuario,Nombre_Usuario',
             'Contrasena'     => 'required|string|min:6|confirmed',
+            'Id_Perrera'     => 'required|exists:perrera,Id_Perrera',
         ];
 
-        // Si es primer admin o un admin logeado, validamos rol/perrera/cliente
         if ($isFirstAdmin || session('perfil') === 'admin') {
+            // Primer admin o ya logeado como admin
             $rules['rol']        = 'required|in:usuario,admin';
-            $rules['Id_Perrera'] = 'nullable|exists:perrera,Id_Perrera';
-            // Si eligen rol=usuario, forzamos cliente existente
+            // Si crea un usuario común, debe elegir cliente existente:
             $rules['Id_Cliente'] = 'exclude_if:rol,admin|required_if:rol,usuario|exists:cliente,Id_Cliente';
         } else {
-            // Usuario normal: datos de cliente a crear
+            // Registro normal: capturamos datos para crear cliente
             $rules['Nombre_Completo']    = 'required|string|max:200';
             $rules['Numero_Contacto']    = 'nullable|string|max:20';
             $rules['Correo_Electronico'] = 'nullable|email|max:100';
@@ -57,13 +79,14 @@ class UsuarioController extends Controller
 
         $data = $request->validate($rules);
 
-        // Asociar/crear cliente
+        // 1) Creamos o asignamos el cliente
         if ($isFirstAdmin || session('perfil') === 'admin') {
-            // rol=usuario → usar Id_Cliente enviado; rol=admin → null
+            // Si rol=usuario usamos Id_Cliente, si rol=admin => null
             $clienteId = ($data['rol'] ?? '') === 'usuario'
-                    ? $data['Id_Cliente']
-                    : null;
+                       ? $data['Id_Cliente']
+                       : null;
         } else {
+            // Auto-registro normal => creamos cliente
             $cliente = Cliente::create([
                 'Nombre_Completo'    => $data['Nombre_Completo'],
                 'Numero_Contacto'    => $data['Numero_Contacto']    ?? null,
@@ -74,15 +97,13 @@ class UsuarioController extends Controller
             $clienteId = $cliente->Id_Cliente;
         }
 
-        // Determinar rol y perrera
+        // 2) Determinamos rol y perrera
         $rol       = ($isFirstAdmin || session('perfil')==='admin')
-                ? $data['rol']
-                : 'usuario';
-        $perreraId = ($isFirstAdmin || session('perfil')==='admin')
-                ? ($data['Id_Perrera'] ?? null)
-                : null;
+                   ? $data['rol']
+                   : 'usuario';
+        $perreraId = $data['Id_Perrera'];
 
-        // Crear usuario (mutator hará bcrypt)
+        // 3) Creamos el usuario (tu mutator en Usuario hará el bcrypt)
         Usuario::create([
             'Nombre_Usuario' => $data['Nombre_Usuario'],
             'Contrasena'     => $data['Contrasena'],
@@ -92,53 +113,70 @@ class UsuarioController extends Controller
         ]);
 
         return redirect()
-            ->route('usuarios.index')
-            ->with('success','Usuario creado correctamente.');
+            ->route('home')
+            ->with('success', 'Usuario creado correctamente.');
     }
 
     /**
-     * Mostrar detalle de un usuario.
+     * Mostrar detalle de un usuario (solo admin).
      */
     public function show($id)
     {
-        $usuario = Usuario::with(['perrera', 'cliente'])->findOrFail($id);
+        if (! session('usuario_id')) {
+            return redirect()->route('login');
+        }
+        if (session('perfil') !== 'admin') {
+            abort(403);
+        }
+
+        $usuario = Usuario::with(['perrera','cliente'])->findOrFail($id);
         return view('usuarios.show', compact('usuario'));
     }
 
     /**
-     * Formulario para editar un usuario existente.
+     * Formulario de edición (solo admin).
      */
     public function edit($id)
     {
+        if (! session('usuario_id')) {
+            return redirect()->route('login');
+        }
+        if (session('perfil') !== 'admin') {
+            abort(403);
+        }
+
         $usuario  = Usuario::findOrFail($id);
         $perreras = Perrera::all();
         $clientes = Cliente::all();
-        return view('usuarios.edit', compact('usuario', 'perreras', 'clientes'));
+        return view('usuarios.edit', compact('usuario','perreras','clientes'));
     }
 
     /**
-     * Actualizar los datos de un usuario.
+     * Actualizar usuario (solo admin).
      */
     public function update(Request $request, $id)
     {
+        if (! session('usuario_id')) {
+            return redirect()->route('login');
+        }
+        if (session('perfil') !== 'admin') {
+            abort(403);
+        }
+
         $usuario = Usuario::findOrFail($id);
-
-        $rules = [
+        $rules   = [
             'Nombre_Usuario' => "required|string|max:50|unique:usuario,Nombre_Usuario,{$id},Id_Usuario",
-            'Id_Perrera'     => 'nullable|exists:perrera,Id_Perrera',
-            'Id_Cliente'     => 'nullable|exists:cliente,Id_Cliente',
+            'Id_Perrera'     => 'required|exists:perrera,Id_Perrera',
+            'Id_Cliente'     => 'exclude_if:rol,admin|required_if:rol,usuario|exists:cliente,Id_Cliente',
         ];
-
-        // Hacer la contraseña opcional en edición
         if ($request->filled('Contrasena')) {
-            $rules['Contrasena'] = 'string|min:6';
+            $rules['Contrasena'] = 'string|min:6|confirmed';
         }
 
         $data = $request->validate($rules);
 
-        if ($request->filled('Contrasena')) {
-            $data['Contrasena'] = Hash::make($data['Contrasena']);
-        } else {
+        // Si cambian contraseña, el mutator la encripta
+        if (! $request->filled('Contrasena')) {
             unset($data['Contrasena']);
         }
 
@@ -150,10 +188,17 @@ class UsuarioController extends Controller
     }
 
     /**
-     * Eliminar un usuario.
+     * Eliminar usuario (solo admin).
      */
     public function destroy($id)
     {
+        if (! session('usuario_id')) {
+            return redirect()->route('login');
+        }
+        if (session('perfil') !== 'admin') {
+            abort(403);
+        }
+
         Usuario::destroy($id);
 
         return redirect()
