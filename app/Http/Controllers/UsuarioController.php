@@ -19,35 +19,35 @@ class UsuarioController extends Controller
         return view('usuarios.index', compact('usuarios'));
     }
 
-    /**
-     * Formulario para crear un nuevo usuario.
-     */
     public function create()
     {
-        $perreras = Perrera::all();
-        $clientes = Cliente::all();
-        return view('Register', compact('perreras', 'clientes'));
+        $perreras    = Perrera::all();
+        $clientes    = Cliente::all();
+        // ¿Hay al menos un admin registrado?
+        $adminExists = Usuario::where('rol','admin')->exists();
+
+        return view('Register', compact('perreras','clientes','adminExists'));
     }
 
-    /**
-     * Almacenar un usuario en la base de datos.
-     */
     public function store(Request $request)
     {
-        // 1) Reglas base para todos
+        // Calcular si estamos en “primer admin”
+        $isFirstAdmin = ! Usuario::where('rol','admin')->exists();
+
+        // Reglas base
         $rules = [
             'Nombre_Usuario' => 'required|string|max:50|unique:usuario,Nombre_Usuario',
             'Contrasena'     => 'required|string|min:6|confirmed',
         ];
 
-        if (session('perfil') === 'admin') {
-            // El admin puede crear usuarios de ambos tipos
+        // Si es primer admin o un admin logeado, validamos rol/perrera/cliente
+        if ($isFirstAdmin || session('perfil') === 'admin') {
             $rules['rol']        = 'required|in:usuario,admin';
             $rules['Id_Perrera'] = 'nullable|exists:perrera,Id_Perrera';
-            // Solo si elige rol=usuario, el Id_Cliente es obligatorio
-            $rules['Id_Cliente'] = 'required_if:rol,usuario|exists:cliente,Id_Cliente';
+            // Si eligen rol=usuario, forzamos cliente existente
+            $rules['Id_Cliente'] = 'exclude_if:rol,admin|required_if:rol,usuario|exists:cliente,Id_Cliente';
         } else {
-            // Usuario normal al auto-registrarse: debe crear un cliente nuevo
+            // Usuario normal: datos de cliente a crear
             $rules['Nombre_Completo']    = 'required|string|max:200';
             $rules['Numero_Contacto']    = 'nullable|string|max:20';
             $rules['Correo_Electronico'] = 'nullable|email|max:100';
@@ -55,17 +55,15 @@ class UsuarioController extends Controller
             $rules['Codigo_Postal']      = 'nullable|string|max:20';
         }
 
-        // 2) Validamos todo junto
         $data = $request->validate($rules);
 
-        // 3) Creamos o asignamos el cliente
-        if (session('perfil') === 'admin') {
-            // Si es admin y rol=usuario, usará el Id_Cliente validado
-            $clienteId = $data['rol'] === 'usuario'
+        // Asociar/crear cliente
+        if ($isFirstAdmin || session('perfil') === 'admin') {
+            // rol=usuario → usar Id_Cliente enviado; rol=admin → null
+            $clienteId = ($data['rol'] ?? '') === 'usuario'
                     ? $data['Id_Cliente']
                     : null;
         } else {
-            // Usuario normal: creamos un cliente con los datos enviados
             $cliente = Cliente::create([
                 'Nombre_Completo'    => $data['Nombre_Completo'],
                 'Numero_Contacto'    => $data['Numero_Contacto']    ?? null,
@@ -76,16 +74,18 @@ class UsuarioController extends Controller
             $clienteId = $cliente->Id_Cliente;
         }
 
-        // 4) Preparamos valores de rol y perrera
-        $rol       = session('perfil') === 'admin' ? $data['rol'] : 'usuario';
-        $perreraId = session('perfil') === 'admin'
+        // Determinar rol y perrera
+        $rol       = ($isFirstAdmin || session('perfil')==='admin')
+                ? $data['rol']
+                : 'usuario';
+        $perreraId = ($isFirstAdmin || session('perfil')==='admin')
                 ? ($data['Id_Perrera'] ?? null)
                 : null;
 
-        // 5) Creamos el usuario
+        // Crear usuario (mutator hará bcrypt)
         Usuario::create([
             'Nombre_Usuario' => $data['Nombre_Usuario'],
-            'Contrasena'     => $data['Contrasena'],  // <-- raw, mutator la encripta
+            'Contrasena'     => $data['Contrasena'],
             'rol'            => $rol,
             'Id_Perrera'     => $perreraId,
             'Id_Cliente'     => $clienteId,
@@ -93,7 +93,7 @@ class UsuarioController extends Controller
 
         return redirect()
             ->route('usuarios.index')
-            ->with('success', 'Usuario creado correctamente.');
+            ->with('success','Usuario creado correctamente.');
     }
 
     /**
