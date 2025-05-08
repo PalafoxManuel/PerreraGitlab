@@ -15,9 +15,39 @@
 
         <!-- Lado derecho: enlaces de navegación -->
         <ul class="navbar-links d-none d-md-flex">
-            <li><a href="{{ route('adoptar') }}">Adoptar</a></li>
-            <li><a href="{{ route('vacunacion') }}">Vacunación</a></li>
-            <li><a href="{{ route('contacto') }}">Contacto</a></li>
+            <!-- Menú desplegable: Servicios -->
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Servicios</a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Agregar mascota</a></li>
+                    <li><a href="{{ route('adoptar') }}">Adoptar</a></li>
+                    <li><a href="#">Alojamiento</a></li>
+                    <li><a href="{{ route('vacunacion') }}">Vacunación</a></li>
+                    <li><a href="#">Baño</a></li>
+                    <li><a href="#">Corte de Pelo</a></li>
+                    <li><a href="#">Corte de Uñas</a></li>
+                    <li><a href="#">Historial</a></li>
+
+                    @if(auth()->check() && auth()->user()->role === 'admin')
+                    <li><a href="#">Agregar vacuna</a></li>
+                    <li><a href="#">Agregar admin</a></li>
+                    @endif
+                </ul>
+            </li>
+
+            <!-- Menú desplegable: Reportes -->
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Reportes</a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Reporte de maltrato</a></li>
+                    <li><a href="#">Reporte de extravío</a></li>
+
+                    @if(auth()->check() && auth()->user()->role === 'admin')
+                    <li><a href="#">Reporte vacuna</a></li>
+                    <li><a href="#">Reporte adopción</a></li>
+                    @endif
+                </ul>
+            </li>
 
             @auth
             @if (auth()->user()->role === 'admin')
@@ -39,10 +69,42 @@
 
     <!-- Sidebar móvil -->
     <div class="mobile-sidebar d-md-none" id="mobileSidebar">
-        <ul>
-            <li><a href="{{ route('adoptar') }}">Adoptar</a></li>
-            <li><a href="{{ route('vacunacion') }}">Vacunación</a></li>
-            <li><a href="{{ route('contacto') }}">Contacto</a></li>
+        <ul class="navbar-links d-none d-md-flex">
+            <!-- Menú desplegable: Servicios -->
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Servicios</a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Agregar mascota</a></li>
+                    <li><a href="{{ route('adoptar') }}">Adoptar</a></li>
+                    <li><a href="#">Alojamiento</a></li>
+                    <li><a href="{{ route('vacunacion') }}">Vacunación</a></li>
+                    <li><a href="#">Baño</a></li>
+                    <li><a href="#">Corte de Pelo</a></li>
+                    <li><a href="#">Corte de Uñas</a></li>
+                    <li><a href="#">Historial</a></li>
+
+                    @if(auth()->check() && auth()->user()->role === 'admin')
+                    <li><a href="#">Agregar vacuna</a></li>
+                    <li><a href="#">Agregar admin</a></li>
+                    @endif
+                </ul>
+            </li>
+
+            <!-- Menú desplegable: Reportes -->
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Reportes</a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Reporte de maltrato</a></li>
+                    <li><a href="#">Reporte de extravío</a></li>
+
+                    @if(auth()->check() && auth()->user()->role === 'admin')
+                    <li><a href="#">Reporte vacuna</a></li>
+                    <li><a href="#">Reporte adopción</a></li>
+                    @endif
+                </ul>
+            </li>
+
+
             @auth
             @if (auth()->user()->role === 'admin')
             <li><a href="{{ route('admin.dashboard') }}">Panel Admin</a></li>

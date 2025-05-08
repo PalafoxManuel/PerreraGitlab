@@ -1,12 +1,10 @@
 /* Estilos generales de la barra de navegación */
 .navbar {
     background-color: #1e3a8a;
-    /* Azul oscuro */
     color: white;
     padding: 1rem 2rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-bottom: 3px solid #2563eb;
-    /* Línea inferior separadora */
     width: 100%;
 }
 .navbar-container {
@@ -34,14 +32,7 @@
     justify-content: space-between;
 }
 
-.logo-text {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: white;
-    text-decoration: none;
-    margin-right: 2rem;
-}
-
+.logo-text,
 .logo {
     font-size: 1.5rem;
     font-weight: bold;
@@ -58,7 +49,6 @@
     padding: 0;
     align-items: center;
     border-left: 1px solid rgba(255, 255, 255, 0.3);
-    /* Separador inicial opcional */
 }
 
 .navbar-links li {
@@ -84,7 +74,6 @@
 
 .navbar-links li a:hover {
     color: #93c5fd;
-    /* Azul claro */
 }
 
 /* Botones de sesión */
@@ -103,11 +92,6 @@
     background-color: #2563eb;
 }
 
-/* Asegura que el botón de logout se muestre bien */
-form {
-    display: inline;
-    margin: 0;
-}
 /* Botón hamburguesa */
 .menu-toggle {
     background: none;
@@ -148,4 +132,49 @@ form {
     color: white;
     text-decoration: none;
     font-weight: 500;
+}
+
+/* ======================= */
+/* Menú desplegable header */
+/* ======================= */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-toggle {
+    cursor: pointer;
+    display: inline-block;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #1e3a8a;
+    padding: 0.5rem 0;
+    min-width: 180px;
+    display: none;
+    flex-direction: column;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.dropdown-menu li {
+    padding: 0.3rem 1rem;
+    white-space: nowrap;
+}
+
+.dropdown-menu li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-menu li a:hover {
+    background-color: #2563eb;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: flex;
 }
