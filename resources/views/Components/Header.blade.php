@@ -2,9 +2,11 @@
     <div class="navbar-container">
         <!-- Lado izquierdo: Logo + Marca -->
         <div class="navbar-left d-flex align-items-center">
-            <div class="navbar-logo">
-                <img class="logo-img" src="{{ Vite::asset('resources/images/Logo.png') }}" alt="Logo">
-            </div>
+            <a href="{{ route('home') }}">
+                <div class="navbar-logo">
+                    <img class="logo-img" src="{{ Vite::asset('resources/images/Logo.png') }}" alt="Logo">
+                </div>
+            </a>
             <a href="{{ route('home') }}" class="logo-text">Patitas felices</a>
         </div>
 
