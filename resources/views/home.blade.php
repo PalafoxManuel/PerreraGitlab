@@ -61,7 +61,7 @@
                       'title'       => 'Adoptar',
                       'description' => '¿Necesitas dejar temporalmente a tu mascota en buenas manos? Encuentra cuidadores confiables dispuestos a cuidar de tu amigo peludo mientras estás fuera.',
                       'image'       => Vite::asset('resources/images/Adoptar.png'),
-                      'route'       => '#'
+                      'route'       => route('adoptar')
                     ],
                     [
                       'title'       => 'Alojamiento',

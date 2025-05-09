@@ -5,7 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\PerreraController;
 use App\Http\Controllers\MascotaController;
-
+use App\Http\Controllers\AdopcionController;
 
 // Invitados: login + registro
 Route::middleware('guest')->group(function () {
@@ -40,6 +40,15 @@ Route::resource('perreras', PerreraController::class)
 Route::resource('mascotas', MascotaController::class)
      ->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']);
 
+// Mostrar el formulario de adopción
+Route::get('/adoptar', [AdopcionController::class, 'create'])
+     ->name('adoptar');
+
+// Procesar el POST de la adopción
+Route::post('/adoptar', [AdopcionController::class, 'store'])
+     ->name('adopciones.store');
+
+Route::get('/perfil', [UsuarioController::class, 'perfil'])->name('perfil');
 
 // Raíz → login
 Route::get('/', fn() => redirect()->route('login'));

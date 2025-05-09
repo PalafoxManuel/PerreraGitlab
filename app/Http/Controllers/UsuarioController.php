@@ -118,19 +118,34 @@ class UsuarioController extends Controller
     }
 
     /**
-     * Mostrar detalle de un usuario (solo admin).
+     * Mostrar detalle de un usuario (solo admin o perfil propio).
      */
     public function show($id)
     {
+        // 1) Si no hay sesión, redirige al login
         if (! session('usuario_id')) {
             return redirect()->route('login');
         }
-        if (session('perfil') !== 'admin') {
-            abort(403);
+
+        $authId  = session('usuario_id');
+        $isAdmin = session('perfil') === 'admin';
+
+        // 2) Si no soy admin y no es mi propio ID => forbidden
+        if (! $isAdmin && $authId != $id) {
+            abort(403, 'No tienes permiso para ver este perfil.');
         }
 
-        $usuario = Usuario::with(['perrera','cliente'])->findOrFail($id);
-        return view('usuarios.show', compact('usuario'));
+        // 3) Cargo relaciones necesarias
+        $usuario = Usuario::with(['perrera', 'cliente', 'mascotas'])
+                        ->findOrFail($id);
+
+        // 4) Si es admin, muestro la vista de admin (usuarios.show)
+        if ($isAdmin) {
+            return view('usuarios.show', compact('usuario'));
+        }
+
+        //    si es el propio usuario, muestro su perfil de cliente
+        return view('perfil-usuario', compact('usuario'));
     }
 
     /**
@@ -204,5 +219,22 @@ class UsuarioController extends Controller
         return redirect()
             ->route('usuarios.index')
             ->with('success', 'Usuario eliminado correctamente.');
+    }
+
+    /**
+     * Mostrar perfil del usuario logeado.
+     */
+    public function perfil()
+    {
+        // 1) Si no hay sesión, redirige al login
+        if (! session('usuario_id')) {
+            return redirect()->route('login');
+        }
+
+        // 2) Cargamos usuario + relaciones: perrera, cliente y sus mascotas
+        $usuario = Usuario::with(['perrera', 'cliente', 'mascotas'])
+                        ->findOrFail(session('usuario_id'));
+
+        return view('perfil-usuario', compact('usuario'));
     }
 }
