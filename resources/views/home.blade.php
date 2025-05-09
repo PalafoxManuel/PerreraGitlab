@@ -55,7 +55,7 @@
                       'title'       => 'Agregar mascota',
                       'description' => 'Explora una lista de mascotas adorables que están buscando un hogar amoroso. Encuentra tu compañero perfecto y comienza una nueva aventura juntos.',
                       'image'       => Vite::asset('resources/images/Agregar.png'),
-                      'route'       => '#'
+                      'route'       => route('mascotas.create')
                     ],
                     [
                       'title'       => 'Adoptar',

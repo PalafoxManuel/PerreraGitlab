@@ -25,7 +25,7 @@ class MascotaController extends Controller
     {
         $tipos    = TipoMascota::all();
         $usuarios = Usuario::all();
-        return view('mascotas.create', compact('tipos', 'usuarios'));
+        return view('agregar-mascota', compact('tipos', 'usuarios'));
     }
 
     /**
@@ -49,7 +49,7 @@ class MascotaController extends Controller
         Mascota::create($data);
 
         return redirect()
-            ->route('mascotas.index')
+            ->route('home')
             ->with('success', 'Mascota creada correctamente.');
     }
 
