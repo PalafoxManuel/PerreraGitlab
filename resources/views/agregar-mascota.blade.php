@@ -17,7 +17,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
         <div class="container">
             <a class="navbar-brand" href="#">Sistema Perrera</a>
-            <a href="{{ route('mascotas.index') }}" class="btn btn-light">← Regresar</a>
+            <a href="{{ route('home') }}" class="btn btn-light">← Regresar</a>
         </div>
     </nav>
 
