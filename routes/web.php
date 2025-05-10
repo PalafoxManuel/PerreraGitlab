@@ -6,49 +6,59 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\PerreraController;
 use App\Http\Controllers\MascotaController;
 use App\Http\Controllers\AdopcionController;
+use App\Http\Controllers\ServicioController;
+use App\Http\Controllers\ReservaServicioController;
 
 // Invitados: login + registro
 Route::middleware('guest')->group(function () {
-     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-     Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+    // Formulario y POST de login
+    Route::get('/login',  [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 
-     Route::get('/register', [UsuarioController::class, 'create'])->name('register');
-     Route::post('/register', [UsuarioController::class, 'store'])->name('register.post');
+    // Formulario y POST de registro
+    Route::get('/register', [UsuarioController::class, 'create'])->name('register');
+    Route::post('/register', [UsuarioController::class, 'store'])->name('register.post');
 });
 
 // Logout
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Home (session-based)
+// Página principal (requiere solo sesión manual)
 Route::get('/home', fn() => view('home'))->name('home');
 
-// Páginas generales (requieren sólo session manual)
-Route::get('/adoptar', fn() => view('adoptar'))->name('adoptar');
+// Páginas públicas (requieren solo sesión manual)
+Route::get('/adoptar',    fn() => view('adoptar-mascota'))->name('adoptar');
+Route::post('/adoptar',   [AdopcionController::class, 'store'])->name('adopciones.store');
 Route::get('/vacunacion', fn() => view('vacunacion'))->name('vacunacion');
-Route::get('/contacto', fn() => view('contacto'))->name('contacto');
+Route::get('/contacto',   fn() => view('contacto'))->name('contacto');
 Route::get('/donaciones', fn() => view('donaciones'))->name('donaciones');
 
-// CRUD Usuarios: sacado del auth-guard
+// CRUD Usuarios
 Route::resource('usuarios', UsuarioController::class)
-     ->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']);
+     ->only(['index','create','store','show','edit','update','destroy']);
 
-// CRUD Perreras: sacado del auth-guard
+// CRUD Perreras
 Route::resource('perreras', PerreraController::class)
-     ->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']);
+     ->only(['index','create','store','show','edit','update','destroy']);
 
-
+// CRUD Mascotas
 Route::resource('mascotas', MascotaController::class)
-     ->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']);
+     ->only(['index','create','store','show','edit','update','destroy']);
 
-// Mostrar el formulario de adopción
-Route::get('/adoptar', [AdopcionController::class, 'create'])
-     ->name('adoptar');
+// CRUD Servicios
+Route::resource('servicios', ServicioController::class)
+     ->only(['index','create','store','show','edit','update','destroy']);
 
-// Procesar el POST de la adopción
-Route::post('/adoptar', [AdopcionController::class, 'store'])
-     ->name('adopciones.store');
-
+// Perfil de usuario logueado
 Route::get('/perfil', [UsuarioController::class, 'perfil'])->name('perfil');
+
+Route::resource('reserva_servicios', ReservaServicioController::class)
+    ->only(['create','store','index','show']);
+
+Route::get('api/disponibilidad/{servicio}', function($servicio){
+    $d = \App\Models\DisponibilidadServicio::where('Id_Servicio',$servicio)->value('Disponible');
+    return response()->json(['disponible' => $d ?? 0]);
+});
 
 // Raíz → login
 Route::get('/', fn() => redirect()->route('login'));
