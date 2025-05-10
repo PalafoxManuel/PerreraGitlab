@@ -14,7 +14,8 @@ class DisponibilidadServicioController extends Controller
     public function index()
     {
         $disponibilidades = DisponibilidadServicio::with('servicio')->get();
-        return view('disponibilidad_servicios.index', compact('disponibilidades'));
+
+        // return view('disponibilidad_servicios.index', compact('disponibilidades'));
     }
 
     /**
@@ -23,7 +24,8 @@ class DisponibilidadServicioController extends Controller
     public function create()
     {
         $servicios = Servicio::all();
-        return view('disponibilidad_servicios.create', compact('servicios'));
+
+        // return view('disponibilidad_servicios.create', compact('servicios'));
     }
 
     /**
@@ -38,9 +40,10 @@ class DisponibilidadServicioController extends Controller
 
         DisponibilidadServicio::create($data);
 
+        // Aquí sólo devolvemos la redirección; no usamos ninguna vista de disponibilidad
         return redirect()
-            ->route('disponibilidad_servicios.index')
-            ->with('success', 'Disponibilidad creada correctamente');
+            ->route('servicios.index') // ó la ruta que prefieras tras guardar
+            ->with('success', 'Servicio y disponibilidad creados correctamente.');
     }
 
     /**
@@ -49,7 +52,8 @@ class DisponibilidadServicioController extends Controller
     public function show($id)
     {
         $disponibilidad = DisponibilidadServicio::with('servicio')->findOrFail($id);
-        return view('disponibilidad_servicios.show', compact('disponibilidad'));
+
+        // return view('disponibilidad_servicios.show', compact('disponibilidad'));
     }
 
     /**
@@ -59,7 +63,8 @@ class DisponibilidadServicioController extends Controller
     {
         $disponibilidad = DisponibilidadServicio::findOrFail($id);
         $servicios       = Servicio::all();
-        return view('disponibilidad_servicios.edit', compact('disponibilidad', 'servicios'));
+
+        // return view('disponibilidad_servicios.edit', compact('disponibilidad', 'servicios'));
     }
 
     /**
@@ -75,9 +80,9 @@ class DisponibilidadServicioController extends Controller
         $disponibilidad = DisponibilidadServicio::findOrFail($id);
         $disponibilidad->update($data);
 
-        return redirect()
-            ->route('disponibilidad_servicios.index')
-            ->with('success', 'Disponibilidad actualizada correctamente');
+        // return redirect()
+        //     ->route('disponibilidad_servicios.index')
+        //     ->with('success', 'Disponibilidad actualizada correctamente');
     }
 
     /**
@@ -87,8 +92,8 @@ class DisponibilidadServicioController extends Controller
     {
         DisponibilidadServicio::destroy($id);
 
-        return redirect()
-            ->route('disponibilidad_servicios.index')
-            ->with('success', 'Disponibilidad eliminada correctamente');
+        // return redirect()
+        //     ->route('disponibilidad_servicios.index')
+        //     ->with('success', 'Disponibilidad eliminada correctamente');
     }
 }
