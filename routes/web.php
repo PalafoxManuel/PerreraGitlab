@@ -8,6 +8,7 @@ use App\Http\Controllers\MascotaController;
 use App\Http\Controllers\AdopcionController;
 use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\ReservaServicioController;
+use App\Http\Controllers\VacunacionController;
 
 // Invitados: login + registro
 Route::middleware('guest')->group(function () {
@@ -23,14 +24,13 @@ Route::middleware('guest')->group(function () {
 // Logout
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Página principal (requiere solo sesión manual)
+// Página principal (requiere sólo sesión)
 Route::get('/home', fn() => view('home'))->name('home');
 
-// Páginas públicas (requieren solo sesión manual)
-Route::get('/adoptar',    fn() => view('adoptar-mascota'))->name('adoptar');
-Route::post('/adoptar',   [AdopcionController::class, 'store'])->name('adopciones.store');
-Route::get('/vacunacion', fn() => view('vacunacion'))->name('vacunacion');
-Route::get('/contacto',   fn() => view('contacto'))->name('contacto');
+// Páginas públicas
+Route::get('/adoptar',  fn() => view('adoptar-mascota'))->name('adoptar');
+Route::post('/adoptar', [AdopcionController::class, 'store'])->name('adopciones.store');
+Route::get('/contacto', fn() => view('contacto'))->name('contacto');
 Route::get('/donaciones', fn() => view('donaciones'))->name('donaciones');
 
 // CRUD Usuarios
@@ -52,13 +52,26 @@ Route::resource('servicios', ServicioController::class)
 // Perfil de usuario logueado
 Route::get('/perfil', [UsuarioController::class, 'perfil'])->name('perfil');
 
+// CRUD Reserva de Servicios
 Route::resource('reserva_servicios', ReservaServicioController::class)
     ->only(['create','store','index','show']);
 
+// API Disponibilidad de servicio
 Route::get('api/disponibilidad/{servicio}', function($servicio){
     $d = \App\Models\DisponibilidadServicio::where('Id_Servicio',$servicio)->value('Disponible');
     return response()->json(['disponible' => $d ?? 0]);
 });
+
+// CRUD Vacunación
+Route::resource('vacunacion', VacunacionController::class)->names([
+    'index'   => 'vacunacion',        // así route('vacunacion') funcionará
+    'create'  => 'vacunacion.create',
+    'store'   => 'vacunacion.store',
+    'show'    => 'vacunacion.show',
+    'edit'    => 'vacunacion.edit',
+    'update'  => 'vacunacion.update',
+    'destroy' => 'vacunacion.destroy',
+]);
 
 // Raíz → login
 Route::get('/', fn() => redirect()->route('login'));
