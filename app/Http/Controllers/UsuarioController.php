@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Usuario;
 use App\Models\Perrera;
 use App\Models\Cliente;
+use App\Models\Reserva;
 use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
@@ -122,7 +123,6 @@ class UsuarioController extends Controller
      */
     public function show($id)
     {
-        // 1) Si no hay sesión, redirige al login
         if (! session('usuario_id')) {
             return redirect()->route('login');
         }
@@ -130,22 +130,29 @@ class UsuarioController extends Controller
         $authId  = session('usuario_id');
         $isAdmin = session('perfil') === 'admin';
 
-        // 2) Si no soy admin y no es mi propio ID => forbidden
         if (! $isAdmin && $authId != $id) {
             abort(403, 'No tienes permiso para ver este perfil.');
         }
 
-        // 3) Cargo relaciones necesarias
         $usuario = Usuario::with(['perrera', 'cliente', 'mascotas'])
                         ->findOrFail($id);
 
-        // 4) Si es admin, muestro la vista de admin (usuarios.show)
         if ($isAdmin) {
             return view('usuarios.show', compact('usuario'));
         }
 
-        //    si es el propio usuario, muestro su perfil de cliente
-        return view('perfil-usuario', compact('usuario'));
+        // → AQUÍ añadimos el historial igual que en perfil()
+        $clienteId = optional($usuario->cliente)->Id_Cliente;
+        $historial = Reserva::with([
+                'reservaServicios.servicio',
+                'reservaServicios.mascota',
+                'pago'
+            ])
+            ->where('Id_Cliente', $clienteId)
+            ->orderBy('Fecha_Reserva','desc')
+            ->get();
+
+        return view('perfil-usuario', compact('usuario','historial'));
     }
 
     /**
@@ -226,15 +233,21 @@ class UsuarioController extends Controller
      */
     public function perfil()
     {
-        // 1) Si no hay sesión, redirige al login
-        if (! session('usuario_id')) {
-            return redirect()->route('login');
-        }
+        $usuario = Usuario::with(['cliente', 'perrera', 'mascotas'])->findOrFail(session('usuario_id'));
 
-        // 2) Cargamos usuario + relaciones: perrera, cliente y sus mascotas
-        $usuario = Usuario::with(['perrera', 'cliente', 'mascotas'])
-                        ->findOrFail(session('usuario_id'));
+        // Si el usuario es un cliente válido...
+        $clienteId = optional($usuario->cliente)->Id_Cliente;
 
-        return view('perfil-usuario', compact('usuario'));
+        // Traemos todas las reservas de este cliente junto con los servicios y el pago
+        $historial = Reserva::with([
+                'reservaServicios.servicio',
+                'reservaServicios.mascota',
+                'pago'
+            ])
+            ->where('Id_Cliente', $clienteId)
+            ->orderBy('Fecha_Reserva', 'desc')
+            ->get();
+
+        return view('perfil-usuario', compact('usuario', 'historial'));
     }
 }

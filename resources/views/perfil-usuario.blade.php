@@ -1,3 +1,4 @@
+{{-- resources/views/perfil-usuario.blade.php --}}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,6 +15,7 @@
 </head>
 <body class="back-container d-flex flex-column min-vh-100">
 
+  {{-- Header --}}
   @include('Components.Header')
 
   <div class="container my-5">
@@ -76,9 +78,41 @@
             <i class="fas fa-history me-2"></i>Historial de servicios
           </div>
           <div class="card-body">
-            <p class="text-muted">Aún no hay registros de servicios.</p>
+            @if($historial->isEmpty())
+              <p class="text-muted">Aún no hay registros de servicios.</p>
+            @else
+              <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Fecha</th>
+                      <th>Servicio</th>
+                      <th>Mascota</th>
+                      <th>Duración</th>
+                      <th>Monto</th>
+                      <th>Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($historial as $reserva)
+                      @foreach($reserva->reservaServicios as $rs)
+                        <tr>
+                          <td>{{ \Carbon\Carbon::parse($reserva->Fecha_Reserva)->format('d/m/Y') }}</td>
+                          <td>{{ $rs->servicio->Nombre_Servicio }}</td>
+                          <td>{{ optional($rs->mascota)->Nombre ?? '—' }}</td>
+                          <td>{{ $reserva->Duracion_Dias }} días</td>
+                          <td>${{ number_format($reserva->pago->Monto ?? 0, 2) }}</td>
+                          <td>{{ $reserva->Estado }}</td>
+                        </tr>
+                      @endforeach
+                    @endforeach
+                  </tbody>
+                </table>
+              </div>
+            @endif
           </div>
         </div>
+
       </div>
     </div>
   </div>
