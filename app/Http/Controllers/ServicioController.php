@@ -4,67 +4,76 @@ namespace App\Http\Controllers;
 
 use App\Models\Servicio;
 use Illuminate\Http\Request;
+use App\Models\DisponibilidadServicio;
 
 class ServicioController extends Controller
 {
-    /**
-     * Mostrar listado de servicios.
-     */
     public function index()
     {
-        $servicios = Servicio::all();
-        return view('servicios.index', compact('servicios'));
+        return redirect()->route('home');
     }
 
-    /**
-     * Formulario para crear un nuevo servicio.
-     */
     public function create()
     {
-        return view('servicios.create');
+        // Solo admin
+        if (session('perfil') !== 'admin') {
+            abort(403, 'No tienes permiso.');
+        }
+
+        return view('agregar-servicio');
     }
 
-    /**
-     * Almacenar un servicio en la base de datos.
-     */
     public function store(Request $request)
     {
+        // 1) Validación, ahora con 'Disponible'
         $data = $request->validate([
             'Nombre_Servicio' => 'required|string|max:100',
             'Descripcion'     => 'nullable|string',
             'Tarifa'          => 'required|numeric|min:0',
+            'Disponible'      => 'required|integer|min:0',  // ó boolean si usas select
         ]);
 
-        Servicio::create($data);
+        // 2) Creamos el servicio
+        $servicio = Servicio::create([
+            'Nombre_Servicio' => $data['Nombre_Servicio'],
+            'Descripcion'     => $data['Descripcion']  ?? null,
+            'Tarifa'          => $data['Tarifa'],
+        ]);
 
+        // 3) Creamos la disponibilidad ligada a ese servicio
+        DisponibilidadServicio::create([
+            'Id_Servicio' => $servicio->Id_Servicio,
+            'Disponible'  => $data['Disponible'],
+        ]);
+
+        // 4) Rediriges donde quieras (por ejemplo al listado)
         return redirect()
             ->route('servicios.index')
-            ->with('success', 'Servicio creado correctamente.');
+            ->with('success', 'Servicio y disponibilidad creados correctamente.');
     }
 
-    /**
-     * Mostrar detalle de un servicio.
-     */
     public function show($id)
     {
         $servicio = Servicio::findOrFail($id);
         return view('servicios.show', compact('servicio'));
     }
 
-    /**
-     * Formulario para editar un servicio existente.
-     */
     public function edit($id)
     {
+        if (session('perfil') !== 'admin') {
+            abort(403, 'Solo los administradores pueden editar servicios.');
+        }
+
         $servicio = Servicio::findOrFail($id);
         return view('servicios.edit', compact('servicio'));
     }
 
-    /**
-     * Actualizar los datos de un servicio.
-     */
     public function update(Request $request, $id)
     {
+        if (session('perfil') !== 'admin') {
+            abort(403);
+        }
+
         $data = $request->validate([
             'Nombre_Servicio' => 'required|string|max:100',
             'Descripcion'     => 'nullable|string',
@@ -79,11 +88,12 @@ class ServicioController extends Controller
             ->with('success', 'Servicio actualizado correctamente.');
     }
 
-    /**
-     * Eliminar un servicio.
-     */
     public function destroy($id)
     {
+        if (session('perfil') !== 'admin') {
+            abort(403);
+        }
+
         Servicio::destroy($id);
 
         return redirect()

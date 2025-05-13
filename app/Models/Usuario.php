@@ -58,4 +58,12 @@ class Usuario extends Authenticatable
     {
         return $this->rol === 'usuario';
     }
+
+    /**
+     * Las mascotas adoptadas por este usuario.
+     */
+    public function mascotas()
+    {
+        return $this->hasMany(\App\Models\Mascota::class, 'Id_Usuario', 'Id_Usuario');
+    }
 }

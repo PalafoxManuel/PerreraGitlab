@@ -49,7 +49,7 @@ class MascotaController extends Controller
         Mascota::create($data);
 
         return redirect()
-            ->route('mascotas.index')
+            ->route('home')
             ->with('success', 'Mascota creada correctamente.');
     }
 
