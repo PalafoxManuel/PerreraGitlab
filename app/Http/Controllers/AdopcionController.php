@@ -12,24 +12,21 @@ class AdopcionController extends Controller
 {
     public function create()
     {
-        // forzamos sesión manual
         if (! session('usuario_id')) {
             return redirect()->route('login');
         }
 
-        // obtenemos solo mascotas sin dueño
+        // Mascotas sin dueño
         $mascotas = Mascota::whereNull('Id_Usuario')->get();
 
-        // si eres admin, necesitas la lista de clientes
+        // Si eres admin, también cargo clientes…
         $isAdmin  = session('perfil') === 'admin';
         $clientes = $isAdmin ? Cliente::all() : null;
 
-        // si eres cliente normal, tu Id_Cliente viene de tu usuario
-        $clienteId = null;
-        if (! $isAdmin) {
-            $usuario   = Usuario::find(session('usuario_id'));
-            $clienteId = $usuario?->Id_Cliente;
-        }
+        // Si no eres admin, determino tu cliente asociado
+        $clienteId = $isAdmin
+            ? null
+            : Usuario::find(session('usuario_id'))?->Id_Cliente;
 
         return view('adoptar-mascota', compact(
             'mascotas','clientes','isAdmin','clienteId'

@@ -28,7 +28,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/home', fn() => view('home'))->name('home');
 
 // Páginas públicas
-Route::get('/adoptar',  fn() => view('adoptar-mascota'))->name('adoptar');
+Route::get('/adoptar',  [AdopcionController::class, 'create'])->name('adoptar');
 Route::post('/adoptar', [AdopcionController::class, 'store'])->name('adopciones.store');
 Route::get('/contacto', fn() => view('contacto'))->name('contacto');
 Route::get('/donaciones', fn() => view('donaciones'))->name('donaciones');

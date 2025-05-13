@@ -41,7 +41,6 @@
       ['title'=>'Adoptar','description'=>'Deja temporalmente a tu mascota en buenas manos.','route'=>route('adoptar')],
       ['title'=>'Alojamiento','description'=>'Encuentra alojamiento temporal para tu mascota con cuidadores confiables.','route'=>'#'],
       ['title'=>'Vacunación','description'=>'Consulta servicios de vacunación para mantener la salud de tu mascota al día.','route'=>route('vacunacion')],
-      ['title'=>'Crear Perrera','description'=>'Crea una nueva perrera para alojar a tus mascotas. Solo administradores.','route'=>'#'],
       ['title'=>'Baño','description'=>'Servicios de baño para mantener a tu mascota limpia y fresca.','route'=>'#'],
       ['title'=>'Corte de Pelo','description'=>'Encuentra profesionales para el corte de pelo de tu mascota.','route'=>'#'],
       ['title'=>'Corte de Uñas','description'=>'Corte de uñas seguro y cómodo para tu mascota.','route'=>'#'],
@@ -95,6 +94,11 @@
 
         {{-- B) Todas las tarjetas (estáticas + “Reservar”) --}}
         @foreach($cards as $card)
+
+          @if($card['title']==='Agregar servicio' && session('perfil')!=='admin')
+            @continue
+          @endif
+
           <div class="col-md-4">
             <div class="card h-100 shadow">
               <img src="{{ Vite::asset('resources/images/' . ($imageMap[$card['title']] ?? 'default.png')) }}"
@@ -106,8 +110,8 @@
                   {{ $card['buttonText'] }}
                 </a>
               </div>
-            </div>
-          </div>
+        </div>
+        </div>
         @endforeach
 
       </div>
