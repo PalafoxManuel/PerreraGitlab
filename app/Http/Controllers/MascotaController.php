@@ -6,6 +6,8 @@ use App\Models\Mascota;
 use App\Models\TipoMascota;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
+use App\Models\Vacunacion;
+use App\Models\ReservaServicio;
 
 class MascotaController extends Controller
 {
@@ -109,5 +111,36 @@ class MascotaController extends Controller
         return redirect()
             ->route('mascotas.index')
             ->with('success', 'Mascota eliminada correctamente.');
+    }
+
+    public function historial(Request $request)
+    {
+        if (! session('usuario_id')) {
+            return redirect()->route('login');
+        }
+
+        $mascotas     = Mascota::where('Id_Usuario', session('usuario_id'))->get();
+        $selected     = null;
+        $servicios    = collect();
+        $vacunaciones = collect();
+
+        if ($request->filled('mascota')) {
+            $selected = $mascotas->firstWhere('Id_Mascota', $request->mascota);
+
+            if ($selected) {
+                $vacunaciones = Vacunacion::where('Id_Mascota', $selected->Id_Mascota)->get();
+
+                $servicios = ReservaServicio::with(['reserva', 'servicio'])
+                    ->whereHas('reserva', fn($q) => $q->where('Id_Mascota', $selected->Id_Mascota))
+                    ->get();
+            }
+        }
+
+        return view('historial-mascota', compact(
+            'mascotas',
+            'selected',
+            'servicios',
+            'vacunaciones'
+        ));
     }
 }
