@@ -58,7 +58,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{ route('mascotas.historial') }}">
                             <i class="fas fa-folder-open me-2"></i>Historial
                         </a>
                     </li>
