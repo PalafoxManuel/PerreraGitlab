@@ -19,8 +19,8 @@
     {{-- Header --}}
     @include('Components.Header')
 
-    <div class="form-wrapper-LogIn flex-grow-1 d-flex align-items-center justify-content-center py-5">
-        <div class="form-container text-white p-4 p-md-5 rounded-4 shadow-lg">
+    <div class="form-wrapper-formField flex-grow-1 d-flex align-items-center justify-content-center py-5">
+        <div class="form-container-formField text-white p-4 p-md-5 rounded-4 shadow-lg">
             <h1 class="text-center mb-5 fw-bold">Registrar Mascota</h1>
 
             @if ($errors->any())
