@@ -13,6 +13,11 @@
     margin: 0 auto;
     border: 2px solid #475569;
 }
+/* Estilo para las opciones desplegables */
+.form-field-select option {
+    color: #ffffff; /* Color del texto de las opciones */
+    background-color: #1e293b; /* Fondo de cada opción */
+}
 
 /* Título */
 .form-container-formField h1 {
@@ -38,7 +43,7 @@
 .form-field-select {
     width: 100%;
     padding: 0.5rem 0.75rem;
-    border: 1px solid #d1d5db;
+    border: 1px solid #0e0e0e;
     border-radius: 0.5rem;
     font-size: 1rem;
     transition: border-color 0.3s ease;
