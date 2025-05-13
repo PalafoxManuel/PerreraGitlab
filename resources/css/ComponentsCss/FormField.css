@@ -1,15 +1,17 @@
-.form-wrapper-FormField {
-    padding: 2rem;
+.form-wrapper-formField {
+    padding-top: 1em;
 }
 
 .form-container-formField {
-    background-color: #292929; /* gris claro */
+    background-color: #1e293b; /* slate-800 */
     color: white;
-    padding: 2rem 2.5rem;
-    border-radius: 1rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    padding: 3rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
     width: 100%;
-    max-width: 800px;
+    width: 800px;
+    margin: 0 auto;
+    border: 2px solid #475569;
 }
 
 /* Título */
@@ -70,7 +72,7 @@
         border-radius: 1rem;
     }
 
-    .form-container-formfield {
+    .form-container-formField {
         padding: 2rem 1rem;
         width: 100% !important;
         min-width: 100%;

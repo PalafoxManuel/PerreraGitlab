@@ -63,12 +63,12 @@
                         </a>
                     </li>
                     @if(session('perfil') === 'admin')
-                        <li>
-                            <a href="#"><i class="fas fa-plus me-2"></i>Agregar vacuna</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fas fa-user-shield me-2"></i>Agregar admin</a>
-                        </li>
+                    <li>
+                        <a href="#"><i class="fas fa-plus me-2"></i>Agregar vacuna</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fas fa-user-shield me-2"></i>Agregar admin</a>
+                    </li>
                     @endif
                 </ul>
             </li>
@@ -80,26 +80,26 @@
                     <li><a href="#"><i class="fas fa-exclamation-triangle me-2"></i>Reporte de maltrato</a></li>
                     <li><a href="#"><i class="fas fa-search-location me-2"></i>Reporte de extravío</a></li>
                     @if(session('perfil') === 'admin')
-                        <li><a href="#"><i class="fas fa-syringe me-2"></i>Reporte vacuna</a></li>
-                        <li><a href="#"><i class="fas fa-heartbeat me-2"></i>Reporte adopción</a></li>
+                    <li><a href="#"><i class="fas fa-syringe me-2"></i>Reporte vacuna</a></li>
+                    <li><a href="#"><i class="fas fa-heartbeat me-2"></i>Reporte adopción</a></li>
                     @endif
                 </ul>
             </li>
 
             @if(session('usuario_id'))
-                @if(session('perfil') === 'admin')
-                    <li><a href="{{ route('usuarios.index') }}">Panel Admin</a></li>
-                @else
-                    <li><a href="{{ route('usuarios.show', session('usuario_id')) }}">Mi Perfil</a></li>
-                @endif
-                <li>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="btn-logout">Cerrar sesión</button>
-                    </form>
-                </li>
+            @if(session('perfil') === 'admin')
+            <li><a href="{{ route('usuarios.index') }}">Panel Admin</a></li>
             @else
-                <li><a href="{{ route('login') }}" class="btn-login">Iniciar sesión</a></li>
+            <li><a href="{{ route('usuarios.show', session('usuario_id')) }}">Mi Perfil</a></li>
+            @endif
+            <li>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="btn-logout">Cerrar sesión</button>
+                </form>
+            </li>
+            @else
+            <li><a href="{{ route('login') }}" class="btn-login">Iniciar sesión</a></li>
             @endif
         </ul>
     </div>
@@ -155,40 +155,40 @@
             <li><a href="#"><i class="fas fa-exclamation-triangle me-2"></i>Reporte de maltrato</a></li>
             <li><a href="#"><i class="fas fa-search-location me-2"></i>Reporte de extravío</a></li>
             @if(session('perfil') === 'admin')
-                <li><a href="#"><i class="fas fa-syringe me-2"></i>Reporte vacuna</a></li>
-                <li><a href="#"><i class="fas fa-heartbeat me-2"></i>Reporte adopción</a></li>
+            <li><a href="#"><i class="fas fa-syringe me-2"></i>Reporte vacuna</a></li>
+            <li><a href="#"><i class="fas fa-heartbeat me-2"></i>Reporte adopción</a></li>
             @endif
         </ul>
 
         @if(session('usuario_id'))
-            @if(session('perfil') === 'admin')
-                <ul class="sidebar-section">
-                    <li><a href="{{ route('usuarios.index') }}"><i class="fas fa-tools me-2"></i>Panel Admin</a></li>
-                </ul>
-            @else
-                <ul class="sidebar-section">
-                    <li><a href="{{ route('usuarios.show', session('usuario_id')) }}"><i class="fas fa-user me-2"></i>Mi Perfil</a></li>
-                </ul>
-            @endif
-            <ul class="sidebar-section">
-                <li>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="btn-logout"><i class="fas fa-sign-out-alt me-2"></i>Cerrar sesión</button>
-                    </form>
-                </li>
-            </ul>
+        @if(session('perfil') === 'admin')
+        <ul class="sidebar-section">
+            <li><a href="{{ route('usuarios.index') }}"><i class="fas fa-tools me-2"></i>Panel Admin</a></li>
+        </ul>
         @else
-            <ul class="sidebar-section">
-                <li><a href="{{ route('login') }}" class="btn-login"><i class="fas fa-sign-in-alt me-2"></i>Iniciar sesión</a></li>
-            </ul>
+        <ul class="sidebar-section">
+            <li><a href="{{ route('usuarios.show', session('usuario_id')) }}"><i class="fas fa-user me-2"></i>Mi Perfil</a></li>
+        </ul>
+        @endif
+        <ul class="sidebar-section">
+            <li>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="btn-logout"><i class="fas fa-sign-out-alt me-2"></i>Cerrar sesión</button>
+                </form>
+            </li>
+        </ul>
+        @else
+        <ul class="sidebar-section">
+            <li><a href="{{ route('login') }}" class="btn-login"><i class="fas fa-sign-in-alt me-2"></i>Iniciar sesión</a></li>
+        </ul>
         @endif
     </div>
 </nav>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const sidebar      = document.getElementById('mobileSidebar');
+        const sidebar = document.getElementById('mobileSidebar');
         const toggleButton = document.getElementById('menuToggle');
 
         toggleButton.addEventListener('click', () => {

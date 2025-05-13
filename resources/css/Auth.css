@@ -15,7 +15,7 @@ body {
 }
 
 body.back-container {
-    background-color: #dddddd;
+    background-color: #1d1d1d;
     display: flex;
     flex-direction: column;
     align-items: center;
