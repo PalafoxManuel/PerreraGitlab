@@ -46,8 +46,7 @@ Route::resource('servicios', ServicioController::class)
 
 // Reportes
 Route::get('/reporte', [ReporteController::class, 'index'])->name('reporte.index');
-Route::get('/reporte/maltrato', [ReporteController::class, 'crearMaltrato'])->name('reporte.maltrato');
-Route::get('/reporte/extravio', [ReporteController::class, 'crearExtravío'])->name('reporte.extravio');
+Route::get('/reporte/crear/{tipo?}', [ReporteController::class, 'create'])->name('reporte.create');
 Route::post('/reporte', [ReporteController::class, 'store'])->name('reporte.store');
 
 

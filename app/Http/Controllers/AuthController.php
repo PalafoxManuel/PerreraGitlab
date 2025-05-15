@@ -29,7 +29,7 @@ class AuthController extends Controller
 
         // 2) Intentamos buscar al usuario
         $usuario = Usuario::where('Nombre_Usuario', $credentials['Nombre_Usuario'])
-                          ->first();
+            ->first();
 
         if (! $usuario || ! Hash::check($credentials['Contrasena'], $usuario->Contrasena)) {
             return back()

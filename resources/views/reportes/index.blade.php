@@ -19,17 +19,36 @@
     $reportes = [
     [
     'title' => 'Reporte de maltrato',
-    'description' => 'Reporta casos de maltrato animal para que podamos tomar acción.',
+    'description' => 'Reporta casos de maltrato animal.',
     'image' => 'ReporteMaltrato.png',
-    'route' => route('reporte.maltrato'),
+    'route' => route('reporte.create', 1), // ID del tipo de reporte "Maltrato"
     ],
     [
-    'title' => 'Reporte de extravío',
-    'description' => 'Informa sobre mascotas extraviadas para ayudarlas a volver a casa.',
+    'title' => 'Reporte de extravio',
+    'description' => 'Reporta casos de extravío de una mascota.',
     'image' => 'ReporteExtravio.png',
-    'route' => route('reporte.extravio'),
+    'route' => route('reporte.create', 2), // ID del tipo de reporte "Extravío"
     ]
     ];
+
+
+    // Si el usuario es administrador, se agregan más reportes
+    if (auth()->check() && auth()->user()->rol === 'admin') {
+    $reportes = array_merge($reportes, [
+    [
+    'title' => 'Reporte de vacuna',
+    'description' => 'Registra la información de vacunas aplicadas a las mascotas.',
+    'image' => 'AdminReporteVacuna.png',
+    'route' => route('admin.reporte.vacuna'),
+    ],
+    [
+    'title' => 'Reporte de adopción',
+    'description' => 'Informa sobre mascotas disponibles para adopción.',
+    'image' => 'AdminReporteAdopcion.png',
+    'route' => route('admin.reporte.adopcion'),
+    ]
+    ]);
+    }
     @endphp
 
     <div class="form-wrapper-2 flex-grow-1 d-flex">

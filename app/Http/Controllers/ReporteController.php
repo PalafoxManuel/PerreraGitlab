@@ -10,9 +10,6 @@ use Illuminate\Http\Request;
 
 class ReporteController extends Controller
 {
-    /**
-     * Mostrar listado de reportes.
-     */
     public function index()
     {
         $reportes = Reporte::with(['tipo', 'mascota', 'usuario'])->get();
@@ -20,19 +17,24 @@ class ReporteController extends Controller
     }
 
     /**
-     * Formulario para crear un nuevo reporte.
+     * Formulario para crear un nuevo reporte (con tipo opcional).
      */
-    public function create()
+    public function create($idTipo = null)
     {
         $tipos    = TipoReporte::all();
         $mascotas = Mascota::all();
         $usuarios = Usuario::all();
-        return view('reportes.create', compact('tipos', 'mascotas', 'usuarios'));
+
+        $tipoSeleccionado = null;
+
+        if ($idTipo) {
+            $tipoSeleccionado = TipoReporte::find($idTipo);
+        }
+
+        return view('reportes.create', compact('tipos', 'mascotas', 'usuarios', 'tipoSeleccionado'));
     }
 
-    /**
-     * Almacenar un reporte en la base de datos.
-     */
+
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -50,18 +52,12 @@ class ReporteController extends Controller
             ->with('success', 'Reporte creado correctamente.');
     }
 
-    /**
-     * Mostrar detalle de un reporte.
-     */
     public function show($id)
     {
         $reporte = Reporte::with(['tipo', 'mascota', 'usuario'])->findOrFail($id);
         return view('reportes.show', compact('reporte'));
     }
 
-    /**
-     * Formulario para editar un reporte existente.
-     */
     public function edit($id)
     {
         $reporte  = Reporte::findOrFail($id);
@@ -71,9 +67,6 @@ class ReporteController extends Controller
         return view('reportes.edit', compact('reporte', 'tipos', 'mascotas', 'usuarios'));
     }
 
-    /**
-     * Actualizar los datos de un reporte.
-     */
     public function update(Request $request, $id)
     {
         $data = $request->validate([
@@ -92,9 +85,6 @@ class ReporteController extends Controller
             ->with('success', 'Reporte actualizado correctamente.');
     }
 
-    /**
-     * Eliminar un reporte.
-     */
     public function destroy($id)
     {
         Reporte::destroy($id);
