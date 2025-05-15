@@ -21,36 +21,31 @@
     'title' => 'Reporte de maltrato',
     'description' => 'Reporta casos de maltrato animal.',
     'image' => 'ReporteMaltrato.png',
-    'route' => route('reporte.create', 1), // ID del tipo de reporte "Maltrato"
+    'route' => route('reporte.create', 1),
     ],
     [
     'title' => 'Reporte de extravio',
     'description' => 'Reporta casos de extravío de una mascota.',
     'image' => 'ReporteExtravio.png',
-    'route' => route('reporte.create', 2), // ID del tipo de reporte "Extravío"
-    ]
+    'route' => route('reporte.create', 2),
+    ],
     ];
 
-
-    // Si el usuario es administrador, se agregan más reportes
-    if (auth()->check() && auth()->user()->rol === 'admin') {
-    $reportes = array_merge($reportes, [
-    [
+    if (session('perfil') === 'admin') {
+    $reportes[] = [
     'title' => 'Reporte de vacuna',
     'description' => 'Registra la información de vacunas aplicadas a las mascotas.',
     'image' => 'AdminReporteVacuna.png',
-    'route' => route('admin.reporte.vacuna'),
-    ],
-    [
+    'route' => route('reporte.create', 3),
+    ];
+    $reportes[] = [
     'title' => 'Reporte de adopción',
     'description' => 'Informa sobre mascotas disponibles para adopción.',
     'image' => 'AdminReporteAdopcion.png',
-    'route' => route('admin.reporte.adopcion'),
-    ]
-    ]);
+    'route' => route('reporte.create', 4),
+    ];
     }
     @endphp
-
     <div class="form-wrapper-2 flex-grow-1 d-flex">
         <div class="cards-container container py-4">
             <div class="row g-4">

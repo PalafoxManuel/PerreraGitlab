@@ -7,6 +7,7 @@ use App\Models\TipoReporte;
 use App\Models\Mascota;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
+use App\Models\Vacuna;
 
 class ReporteController extends Controller
 {
@@ -18,8 +19,9 @@ class ReporteController extends Controller
 
     public function seleccionarTipo()
     {
-        $tipos = TipoReporte::all()->keyBy('Nombre'); // Esto nos da acceso como $tipos['Maltrato'], etc.
-        return view('reportes.index', compact('tipos'));
+        $tipos = TipoReporte::all()->keyBy('Nombre');
+        $vacunas = Vacuna::all(); // 👈 Agregado
+        return view('reportes.index', compact('tipos', 'vacunas'));
     }
 
 

@@ -58,9 +58,15 @@
         <div class="mb-3">
             <label class="form-label">Nombre de la Vacuna</label>
             <select name="Contenido" class="form-select">
-                @foreach($vacunas as $vacuna)
-                <option value="{{ $vacuna->Nombre }}">{{ $vacuna->Nombre }}</option>
-                @endforeach
+                @if($vacunas->isEmpty())
+                <p>No hay vacunas registradas.</p>
+                @else
+                <ul>
+                    @foreach($vacunas as $vacuna)
+                    <li>{{ $vacuna->Nombre }} - {{ $vacuna->Fabricante }}</li>
+                    @endforeach
+                </ul>
+                @endif
             </select>
         </div>
         <div class="mb-3">
