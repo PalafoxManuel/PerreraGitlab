@@ -3,84 +3,85 @@
 @section('title', 'Crear Reporte')
 
 @section('content')
-<div class="container mt-5">
-    <h2 class="mb-4">Crear Reporte</h2>
+<div class="container">
+    <h1 class="mb-4">
+        Crear Reporte: {{ $tipoSeleccionado->Nombre ?? 'Selecciona un tipo' }}
+    </h1>
 
-    @if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-    @endif
-
-    @if($errors->any())
-    <div class="alert alert-danger">
-        <strong>Se encontraron errores:</strong>
-        <ul>
-            @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
-
-    <form action="{{ route('reporte.store') }}" method="POST">
+    <form action="{{ route('reporte.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
-        {{-- Tipo de Reporte --}}
+        {{-- Tipo de Reporte (oculto y visible) --}}
+        <input type="hidden" name="Id_Tipo_Reporte" value="{{ $tipoSeleccionado->Id_Tipo_Reporte ?? '' }}">
         <div class="mb-3">
-            <label for="Id_Tipo_Reporte" class="form-label">Tipo de Reporte</label>
-            <select name="Id_Tipo_Reporte" id="Id_Tipo_Reporte" class="form-select" required>
-                <option value="">-- Selecciona un tipo --</option>
-                @foreach($tipos as $tipo)
-                <option value="{{ $tipo->Id_Tipo_Reporte }}"
-                    {{ (old('Id_Tipo_Reporte') == $tipo->Id_Tipo_Reporte || (isset($tipoSeleccionado) && $tipoSeleccionado->Id_Tipo_Reporte == $tipo->Id_Tipo_Reporte)) ? 'selected' : '' }}>
-                    {{ $tipo->Nombre }}
-                </option>
-                @endforeach
-            </select>
+            <label class="form-label">Tipo de Reporte</label>
+            <input type="text" class="form-control" value="{{ $tipoSeleccionado->Nombre ?? '' }}" disabled>
         </div>
 
-        {{-- Mascota --}}
+        {{-- Campos comunes --}}
         <div class="mb-3">
-            <label for="Id_Mascota" class="form-label">Mascota (opcional)</label>
-            <select name="Id_Mascota" id="Id_Mascota" class="form-select">
-                <option value="">-- Ninguna --</option>
+            <label class="form-label">Mascota</label>
+            <select name="Id_Mascota" class="form-select">
                 @foreach($mascotas as $mascota)
-                <option value="{{ $mascota->Id_Mascota }}" {{ old('Id_Mascota') == $mascota->Id_Mascota ? 'selected' : '' }}>
-                    {{ $mascota->Nombre }}
-                </option>
+                <option value="{{ $mascota->Id_Mascota }}">{{ $mascota->Nombre }}</option>
                 @endforeach
             </select>
         </div>
 
-        {{-- Usuario --}}
         <div class="mb-3">
-            <label for="Id_Usuario" class="form-label">Usuario (opcional)</label>
-            <select name="Id_Usuario" id="Id_Usuario" class="form-select">
-                <option value="">-- Ninguno --</option>
+            <label class="form-label">Usuario</label>
+            <select name="Id_Usuario" class="form-select">
                 @foreach($usuarios as $usuario)
-                <option value="{{ $usuario->Id_Usuario }}" {{ old('Id_Usuario') == $usuario->Id_Usuario ? 'selected' : '' }}>
-                    {{ $usuario->Nombre }}
-                </option>
+                <option value="{{ $usuario->Id_Usuario }}">{{ $usuario->Nombre }}</option>
                 @endforeach
             </select>
         </div>
 
-        {{-- Contenido --}}
+        {{-- Campos dinámicos según tipo de reporte --}}
+        @if($tipoSeleccionado && $tipoSeleccionado->Nombre === 'Maltrato')
         <div class="mb-3">
-            <label for="Contenido" class="form-label">Contenido (opcional)</label>
-            <textarea name="Contenido" id="Contenido" class="form-control" rows="4">{{ old('Contenido') }}</textarea>
+            <label class="form-label">Descripción del Maltrato</label>
+            <textarea name="Contenido" class="form-control" rows="4" placeholder="Describe el maltrato..."></textarea>
         </div>
+        <div class="mb-3">
+            <label class="form-label">Evidencia (opcional)</label>
+            <input type="file" name="Evidencia" class="form-control">
+        </div>
+
+        @elseif($tipoSeleccionado && $tipoSeleccionado->Nombre === 'Extravío')
+        <div class="mb-3">
+            <label class="form-label">Última vez visto</label>
+            <input type="text" name="Contenido" class="form-control" placeholder="Ej. Parque Central, 5PM...">
+        </div>
+
+        @elseif($tipoSeleccionado && $tipoSeleccionado->Nombre === 'Vacunación')
+        <div class="mb-3">
+            <label class="form-label">Nombre de la Vacuna</label>
+            <select name="Contenido" class="form-select">
+                @foreach($vacunas as $vacuna)
+                <option value="{{ $vacuna->Nombre }}">{{ $vacuna->Nombre }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Fecha de Aplicación</label>
+            <input type="date" name="Fecha_Vacuna" class="form-control">
+        </div>
+
+        @elseif($tipoSeleccionado && $tipoSeleccionado->Nombre === 'Adopción')
+        <div class="mb-3">
+            <label class="form-label">Motivo de Adopción</label>
+            <textarea name="Contenido" class="form-control" rows="4" placeholder="¿Por qué deseas adoptar esta mascota?"></textarea>
+        </div>
+        @endif
 
         {{-- Fecha del Reporte --}}
         <div class="mb-3">
-            <label for="Fecha_Reporte" class="form-label">Fecha del Reporte</label>
-            <input type="date" name="Fecha_Reporte" id="Fecha_Reporte" class="form-control" value="{{ old('Fecha_Reporte', date('Y-m-d')) }}" required>
+            <label class="form-label">Fecha del Reporte</label>
+            <input type="date" name="Fecha_Reporte" class="form-control" required>
         </div>
 
-        {{-- Botón de envío --}}
         <button type="submit" class="btn btn-primary">Guardar Reporte</button>
-        <a href="{{ route('reporte.index') }}" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
 @endsection

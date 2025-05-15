@@ -16,6 +16,13 @@ class ReporteController extends Controller
         return view('reportes.index', compact('reportes'));
     }
 
+    public function seleccionarTipo()
+    {
+        $tipos = TipoReporte::all()->keyBy('Nombre'); // Esto nos da acceso como $tipos['Maltrato'], etc.
+        return view('reportes.index', compact('tipos'));
+    }
+
+
     /**
      * Formulario para crear un nuevo reporte (con tipo opcional).
      */
@@ -28,12 +35,11 @@ class ReporteController extends Controller
         $tipoSeleccionado = null;
 
         if ($idTipo) {
-            $tipoSeleccionado = TipoReporte::find($idTipo);
+            $tipoSeleccionado = TipoReporte::find($idTipo); // Aquí obtiene el tipo
         }
 
         return view('reportes.create', compact('tipos', 'mascotas', 'usuarios', 'tipoSeleccionado'));
     }
-
 
     public function store(Request $request)
     {
