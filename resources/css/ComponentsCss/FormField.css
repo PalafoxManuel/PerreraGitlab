@@ -13,6 +13,22 @@
     margin: 0 auto;
     border: 2px solid #475569;
 }
+
+.form-wrapper-reporte {
+    padding-top: 1em;
+}
+
+.form-container-reporte {
+    background-color: #1e293b; /* slate-800 */
+    color: white;
+    padding: 3rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    width: 1200px;
+    margin: 0 auto;
+    border: 2px solid #475569;
+}
 /* Estilo para las opciones desplegables */
 .form-field-select option {
     color: #ffffff; /* Color del texto de las opciones */
