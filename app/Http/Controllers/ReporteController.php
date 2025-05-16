@@ -17,31 +17,26 @@ class ReporteController extends Controller
         return view('reportes.index', compact('reportes'));
     }
 
-    public function seleccionarTipo()
-    {
-        $tipos = TipoReporte::all()->keyBy('Nombre');
-        $vacunas = Vacuna::all(); // 👈 Agregado
-        return view('reportes.index', compact('tipos', 'vacunas'));
-    }
-
 
     /**
      * Formulario para crear un nuevo reporte (con tipo opcional).
      */
     public function create($idTipo = null)
     {
-        $tipos    = TipoReporte::all();
-        $mascotas = Mascota::all();
-        $usuarios = Usuario::all();
+        $tipos     = TipoReporte::all();
+        $mascotas  = Mascota::all();
+        $usuarios  = Usuario::all();
+        $vacunas   = Vacuna::all(); // 👈 Agregado aquí
 
         $tipoSeleccionado = null;
 
         if ($idTipo) {
-            $tipoSeleccionado = TipoReporte::find($idTipo); // Aquí obtiene el tipo
+            $tipoSeleccionado = TipoReporte::find($idTipo);
         }
 
-        return view('reportes.create', compact('tipos', 'mascotas', 'usuarios', 'tipoSeleccionado'));
+        return view('reportes.create', compact('tipos', 'mascotas', 'usuarios', 'tipoSeleccionado', 'vacunas'));
     }
+
 
     public function store(Request $request)
     {
