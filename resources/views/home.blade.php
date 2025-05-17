@@ -34,6 +34,8 @@
   'Corte de Uñas' => 'CorteUñas.png',
   'Historial' => 'Historial.png',
   'Generar reporte' => 'Reporte.png',
+  'Agregar Administrador' => 'AgregarAdmin.png',
+  'Agregar Vacunación' => 'AgregarVacuna.png',
   ];
 
   // 2) Tus funcionalidades “estáticas”
@@ -79,6 +81,7 @@
 
         {{-- A) Tarjeta fija para admin --}}
         @if(session('perfil')==='admin')
+        {{-- Crear Perrera --}}
         <div class="col-md-4">
           <div class="card h-100 shadow">
             <img src="{{ Vite::asset('resources/images/'.$imageMap['Crear Perrera']) }}"
@@ -89,6 +92,36 @@
                 Da de alta una nueva perrera en el sistema. Solo administradores.
               </p>
               <a href="{{ route('perreras.create') }}" class="btn btn-primary mt-2">Ir</a>
+            </div>
+          </div>
+        </div>
+
+        {{-- Agregar Administrador --}}
+        <div class="col-md-4">
+          <div class="card h-100 shadow">
+            <img src="{{ Vite::asset('resources/images/'.$imageMap['Agregar Administrador']) }}"
+              class="card-img-top" alt="Agregar Administrador">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">Agregar Administrador</h5>
+              <p class="card-text flex-grow-1">
+                Registra un nuevo usuario con perfil de administrador.
+              </p>
+              <a href="{{ route('register') }}" class="btn btn-primary mt-2">Ir</a>
+            </div>
+          </div>
+        </div>
+
+        {{-- Agregar Vacunas --}}
+        <div class="col-md-4">
+          <div class="card h-100 shadow">
+            <img src="{{ Vite::asset('resources/images/'.$imageMap['Agregar Vacunación']) }}"
+              class="card-img-top" alt="Vacunas">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">Agregar Vacunas</h5>
+              <p class="card-text flex-grow-1">
+                Administra las vacunas disponibles en el sistema.
+              </p>
+              <a href="{{route('agregarVacuna') }}" class="btn btn-primary mt-2">Ir</a>
             </div>
           </div>
         </div>

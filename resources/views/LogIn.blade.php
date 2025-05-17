@@ -53,8 +53,6 @@
                 <p class="text-center mt-3">¿No tienes cuenta?
                     <a href="register" class="text-primary">¡Crea una ahora!</a>
                 </p>
-
-                <a href="{{ route('home') }}" class="btn btn-secondary w-100 mt-2">Login Admin</a>
             </form>
         </div>
     </div>

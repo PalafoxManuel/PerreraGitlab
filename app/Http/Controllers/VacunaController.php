@@ -22,9 +22,18 @@ class VacunaController extends Controller
      */
     public function create()
     {
+        if (! session('usuario_id')) {
+            return redirect()->route('login');
+        }
+
+        $isAdmin = session('perfil') === 'admin';
+
+        // Obtener tipos de mascota (puede usarse tanto para admin como para usuario normal)
         $tipos = TipoMascota::all();
-        return view('vacunas.create', compact('tipos'));
+
+        return view('agregar-vacuna', compact('tipos', 'isAdmin'));
     }
+
 
     /**
      * Almacenar una vacuna en la base de datos.

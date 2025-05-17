@@ -57,10 +57,6 @@
                 <label class="form-field-label">Descripción del Maltrato</label>
                 <textarea name="Contenido" class="form-field-textarea" rows="4" placeholder="Describe el maltrato..."></textarea>
             </div>
-            <div class="form-field mb-3">
-                <label class="form-field-label">Evidencia (opcional)</label>
-                <input type="file" name="Evidencia" class="form-field-input">
-            </div>
 
             @elseif($tipoSeleccionado && $tipoSeleccionado->Nombre === 'Extravío')
             <div class="form-field mb-3">
