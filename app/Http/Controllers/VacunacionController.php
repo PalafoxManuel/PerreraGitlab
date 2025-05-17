@@ -5,24 +5,28 @@ namespace App\Http\Controllers;
 use App\Models\Mascota;
 use App\Models\Vacuna;
 use App\Models\Vacunacion;
+use App\Models\Reserva;
+use App\Models\ReservaServicio;
+use App\Models\Servicio;
+use App\Models\Usuario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VacunacionController extends Controller
 {
     /**
-     * Show the form to vacunar una mascota.
+     * Mostrar formulario de vacunación.
      */
     public function index()
     {
-        // Traemos todas las mascotas y vacunas para poblar los <select>
         $mascotas = Mascota::orderBy('Nombre')->get();
         $vacunas  = Vacuna::orderBy('Nombre')->get();
 
-        return view('vacunas', compact('mascotas', 'vacunas'));
+        return view('vacunas.index', compact('mascotas', 'vacunas'));
     }
 
     /**
-     * Almacena la vacunación.
+     * Almacena la vacunación y genera la reserva de servicio.
      */
     public function store(Request $request)
     {
@@ -34,12 +38,38 @@ class VacunacionController extends Controller
             'Dosis'            => 'required|string|max:50',
         ]);
 
-        Vacunacion::create($data);
+        DB::transaction(function() use ($data) {
+            // 1) Datos de cliente / perrera dependiendo de tu sesión
+            $usuario   = Usuario::find(session('usuario_id'));
+            $clienteId = $usuario->Id_Cliente;
+            $perreraId = $usuario->Id_Perrera;
+
+            // 2) Crear la reserva (duración fija 1 día para vacunación)
+            $reserva = Reserva::create([
+                'Fecha_Reserva'  => $data['Fecha_Vacunacion'],
+                'Duracion_Dias'  => 1,
+                'Tipo_Servicio'  => 'Vacunacion',
+                'Estado'         => 'Confirmada',
+                'Id_Cliente'     => $clienteId,
+                'Id_Perrera'     => $perreraId,
+            ]);
+
+            // 3) Vincular la reserva con el servicio “Vacunación”
+            $servicioVac = Servicio::where('Nombre_Servicio', 'Vacunacion')
+                                   ->firstOrFail();
+
+            ReservaServicio::create([
+                'Id_Reserva'  => $reserva->Id_Reserva,
+                'Id_Servicio' => $servicioVac->Id_Servicio,
+                'Id_Mascota'  => $data['Id_Mascota'],
+            ]);
+
+            // 4) Finalmente, guardar la vacunación
+            Vacunacion::create($data);
+        });
 
         return redirect()
             ->route('home')
-            ->with('success', 'Mascota vacunada correctamente.');
+            ->with('success', 'Vacunación registrada y reserva de servicio creada correctamente.');
     }
-
-    // ... Si no vas a usar show/edit/update/destroy puedes omitirlos
 }
