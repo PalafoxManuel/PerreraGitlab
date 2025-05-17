@@ -39,24 +39,38 @@
               required>
           </div>
 
+          {{-- Obtener servicio seleccionado y flag de alojamiento --}}
+          @php
+            $sel = $servicios->firstWhere('Id_Servicio', request('service'));
+            $esAlojamiento = $sel && $sel->Nombre_Servicio === 'Alojamiento';
+          @endphp
+
           {{-- 2) Duración --}}
           <div class="mb-3">
             <label for="Duracion_Dias" class="form-label">Duración (días) *</label>
-            <input
-              type="number"
-              name="Duracion_Dias"
-              id="Duracion_Dias"
-              class="form-control"
-              value="{{ old('Duracion_Dias', 1) }}"
-              min="1"
-              required>
+
+            @if($esAlojamiento)
+              {{-- Si es Alojamiento, muestro input editable --}}
+              <input
+                type="number"
+                name="Duracion_Dias"
+                id="Duracion_Dias"
+                class="form-control"
+                value="{{ old('Duracion_Dias', 1) }}"
+                min="1"
+                required>
+            @else
+              {{-- Para otros servicios, fija en 1 día --}}
+              <input type="hidden" name="Duracion_Dias" value="1">
+              <input
+                type="text"
+                class="form-control"
+                value="1"
+                disabled>
+            @endif
           </div>
 
           {{-- 3) Servicio (solo lectura + hidden) --}}
-          @php
-            // obtenemos el servicio seleccionado por query ?service=
-            $sel = $servicios->firstWhere('Id_Servicio', request('service'));
-          @endphp
           <input type="hidden" name="Id_Servicio" value="{{ $sel->Id_Servicio }}">
           <div class="mb-3">
             <label class="form-label">Servicio *</label>
