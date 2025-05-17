@@ -77,14 +77,31 @@
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle">Reportes</a>
                 <ul class="dropdown-menu">
-                    <li><a href="#"><i class="fas fa-exclamation-triangle me-2"></i>Reporte de maltrato</a></li>
-                    <li><a href="#"><i class="fas fa-search-location me-2"></i>Reporte de extravío</a></li>
+                    <li>
+                        <a href="{{ route('reporte.create', 1) }}">
+                            <i class="fas fa-exclamation-triangle me-2"></i>Reporte de maltrato
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('reporte.create', 2) }}">
+                            <i class="fas fa-search-location me-2"></i>Reporte de extravío
+                        </a>
+                    </li>
                     @if(session('perfil') === 'admin')
-                    <li><a href="#"><i class="fas fa-syringe me-2"></i>Reporte vacuna</a></li>
-                    <li><a href="#"><i class="fas fa-heartbeat me-2"></i>Reporte adopción</a></li>
+                    <li>
+                        <a href="{{ route('reporte.create', 3) }}">
+                            <i class="fas fa-syringe me-2"></i>Reporte vacuna
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('reporte.create', 4) }}">
+                            <i class="fas fa-heartbeat me-2"></i>Reporte adopción
+                        </a>
+                    </li>
                     @endif
                 </ul>
             </li>
+
 
             @if(session('usuario_id'))
             @if(session('perfil') === 'admin')
@@ -152,13 +169,30 @@
 
         <div class="sidebar-title">Reportes</div>
         <ul class="sidebar-section">
-            <li><a href="#"><i class="fas fa-exclamation-triangle me-2"></i>Reporte de maltrato</a></li>
-            <li><a href="#"><i class="fas fa-search-location me-2"></i>Reporte de extravío</a></li>
+            <li>
+                <a href="{{ route('reporte.create', 1) }}">
+                    <i class="fas fa-exclamation-triangle me-2"></i>Reporte de maltrato
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('reporte.create', 2) }}">
+                    <i class="fas fa-search-location me-2"></i>Reporte de extravío
+                </a>
+            </li>
             @if(session('perfil') === 'admin')
-            <li><a href="#"><i class="fas fa-syringe me-2"></i>Reporte vacuna</a></li>
-            <li><a href="#"><i class="fas fa-heartbeat me-2"></i>Reporte adopción</a></li>
+            <li>
+                <a href="{{ route('reporte.create', 3) }}">
+                    <i class="fas fa-syringe me-2"></i>Reporte vacuna
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('reporte.create', 4) }}">
+                    <i class="fas fa-heartbeat me-2"></i>Reporte adopción
+                </a>
+            </li>
             @endif
         </ul>
+
 
         @if(session('usuario_id'))
         @if(session('perfil') === 'admin')
