@@ -64,10 +64,10 @@
                     </li>
                     @if(session('perfil') === 'admin')
                     <li>
-                        <a href="#"><i class="fas fa-plus me-2"></i>Agregar vacuna</a>
+                        <a href="{{ route('agregarVacuna') }}"><i class="fas fa-plus me-2"></i>Agregar vacuna</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fas fa-user-shield me-2"></i>Agregar admin</a>
+                        <a href="{{ route('register')  }}"><i class="fas fa-user-shield me-2"></i>Agregar admin</a>
                     </li>
                     @endif
                 </ul>
@@ -105,7 +105,7 @@
 
             @if(session('usuario_id'))
             @if(session('perfil') === 'admin')
-            <li><a href="{{ route('usuarios.index') }}">Panel Admin</a></li>
+            <!-- <li><a href="{{ route('usuarios.index') }}">Panel Admin</a></li> -->
             @else
             <li><a href="{{ route('usuarios.show', session('usuario_id')) }}">Mi Perfil</a></li>
             @endif
@@ -196,9 +196,9 @@
 
         @if(session('usuario_id'))
         @if(session('perfil') === 'admin')
-        <ul class="sidebar-section">
+        <!-- <ul class="sidebar-section">
             <li><a href="{{ route('usuarios.index') }}"><i class="fas fa-tools me-2"></i>Panel Admin</a></li>
-        </ul>
+        </ul> -->
         @else
         <ul class="sidebar-section">
             <li><a href="{{ route('usuarios.show', session('usuario_id')) }}"><i class="fas fa-user me-2"></i>Mi Perfil</a></li>

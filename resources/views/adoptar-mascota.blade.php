@@ -1,106 +1,87 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Registrar Adopción</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-    rel="stylesheet">
-  <link
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    rel="stylesheet">
-  @vite(['resources/css/app.css','resources/js/app.js'])
-</head>
-<body class="back-container d-flex flex-column min-vh-100">
+@extends('layouts.app')
 
-  @include('Components.Header')
+@section('title', 'Registrar Adopción')
 
-  <div class="container my-5" style="max-width:600px;">
-    <div class="card shadow">
-      <div class="card-body">
-        <h2 class="card-title mb-4 text-center">Registrar Adopción</h2>
+@section('content')
+<div class="form-wrapper-reporte flex-grow-1 d-flex align-items-center justify-content-center py-5">
+  <div class="form-container-reporte text-white p-4 p-md-5 rounded-4 shadow-lg">
+    <h1 class="text-center mb-4 fw-bold">Registrar Adopción</h1>
 
-        @if($errors->any())
-          <div class="alert alert-danger">
-            <ul class="mb-0">
-              @foreach($errors->all() as $e)
-                <li>{{ $e }}</li>
-              @endforeach
-            </ul>
-          </div>
-        @endif
+    {{-- Errores --}}
+    @if($errors->any())
+    <div class="alert alert-danger">
+      <strong>¡Error!</strong> Por favor corrige los siguientes campos:
+      <ul class="mb-0">
+        @foreach($errors->all() as $e)
+        <li>{{ $e }}</li>
+        @endforeach
+      </ul>
+    </div>
+    @endif
 
-        <form method="POST" action="{{ route('adopciones.store') }}">
-          @csrf
+    <form method="POST" action="{{ route('adopciones.store') }}">
+      @csrf
 
-          {{-- Mascota sin dueño --}}
-          <div class="mb-3">
-            <label class="form-label">Mascota *</label>
-            <select name="Id_Mascota" class="form-select" required>
+      <div class="row">
+        {{-- Mascota --}}
+        <div class="col-md-12 mb-3">
+          <div class="form-field">
+            <label class="form-field-label" for="Id_Mascota">Mascota *</label>
+            <select name="Id_Mascota" id="Id_Mascota" class="form-field-select" required>
               <option value="">— Selecciona una mascota —</option>
               @foreach($mascotas as $m)
-                <option
-                  value="{{ $m->Id_Mascota }}"
-                  {{ old('Id_Mascota') == $m->Id_Mascota ? 'selected':'' }}>
-                  {{ $m->Nombre }} ({{ $m->Raza }}, {{ $m->Edad }} años)
-                </option>
+              <option value="{{ $m->Id_Mascota }}" {{ old('Id_Mascota') == $m->Id_Mascota ? 'selected' : '' }}>
+                {{ $m->Nombre }} ({{ $m->Raza }}, {{ $m->Edad }} años)
+              </option>
               @endforeach
             </select>
           </div>
+        </div>
 
-          {{-- Cliente --}}
-          @if($isAdmin)
-            <div class="mb-3">
-              <label class="form-label">Cliente *</label>
-              <select name="Id_Cliente" class="form-select" required>
-                <option value="">— Selecciona un cliente —</option>
-                @foreach($clientes as $c)
-                  <option
-                    value="{{ $c->Id_Cliente }}"
-                    {{ old('Id_Cliente') == $c->Id_Cliente ? 'selected':'' }}>
-                    {{ $c->Nombre_Completo }}
-                  </option>
-                @endforeach
-              </select>
-            </div>
-          @else
-            {{-- usuario normal: Id_Cliente fijo --}}
+        {{-- Cliente --}}
+        <div class="col-md-12 mb-3">
+          <div class="form-field">
+            <label class="form-field-label" for="Id_Cliente">Cliente *</label>
+            @if($isAdmin)
+            <select name="Id_Cliente" id="Id_Cliente" class="form-field-select" required>
+              <option value="">— Selecciona un cliente —</option>
+              @foreach($clientes as $c)
+              <option value="{{ $c->Id_Cliente }}" {{ old('Id_Cliente') == $c->Id_Cliente ? 'selected' : '' }}>
+                {{ $c->Nombre_Completo }}
+              </option>
+              @endforeach
+            </select>
+            @else
+            <input type="text" class="form-field-input" value="{{ session('usuario_nombre') }}" readonly>
             <input type="hidden" name="Id_Cliente" value="{{ $clienteId }}">
-          @endif
-
-          {{-- Fecha --}}
-          <div class="mb-3">
-            <label class="form-label">Fecha de Adopción *</label>
-            <input
-              type="date"
-              name="Fecha_Adopcion"
-              class="form-control"
-              value="{{ old('Fecha_Adopcion', date('Y-m-d')) }}"
-              required>
+            @endif
           </div>
+        </div>
 
-          {{-- Notas --}}
-          <div class="mb-3">
-            <label class="form-label">Notas Adicionales</label>
-            <textarea
-              name="NotasAdicionales"
-              class="form-control"
-              rows="3">{{ old('NotasAdicionales') }}</textarea>
+        {{-- Fecha --}}
+        <div class="col-md-12 mb-3">
+          <div class="form-field">
+            <label for="Fecha_Adopcion" class="form-field-label">Fecha de Adopción *</label>
+            <input type="date" name="Fecha_Adopcion" id="Fecha_Adopcion" class="form-field-input" value="{{ old('Fecha_Adopcion', date('Y-m-d')) }}" required>
           </div>
+        </div>
 
-          <button type="submit" class="btn btn-success w-100">
-            <i class="fas fa-paw me-2"></i>Registrar Adopción
-          </button>
-          <a
-            href="{{ route('home') }}"
-            class="btn btn-secondary w-100 mt-2">
-            Volver
-          </a>
-        </form>
+        {{-- Notas --}}
+        <div class="col-md-12 mb-3">
+          <div class="form-field">
+            <label for="NotasAdicionales" class="form-field-label">Notas Adicionales</label>
+            <textarea name="NotasAdicionales" id="NotasAdicionales" class="form-field-textarea" rows="3">{{ old('NotasAdicionales') }}</textarea>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
-</body>
-</html>
+      <div class="modal-buttons mt-4 d-flex justify-content-between">
+        <a href="{{ route('home') }}" class="cancel-button btn btn-light">Cancelar</a>
+        <button type="submit" class="submit-button btn btn-primary">
+          <i class="fas fa-paw me-2"></i>Registrar Adopción
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+@endsection
