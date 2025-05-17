@@ -7,6 +7,9 @@ use App\Models\Mascota;
 use App\Models\Cliente;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
+use App\Models\Reporte;
+use App\Models\TipoReporte;
+use Illuminate\Support\Facades\DB;
 
 class AdopcionController extends Controller
 {
@@ -41,32 +44,43 @@ class AdopcionController extends Controller
 
         $isAdmin = session('perfil') === 'admin';
 
-        // reglas
+        // reglas de validación
         $rules = [
-            'Id_Mascota'     => 'required|exists:mascota,Id_Mascota',
-            'Fecha_Adopcion' => 'required|date',
-            'NotasAdicionales'=> 'nullable|string',
+            'Id_Mascota'       => 'required|exists:mascota,Id_Mascota',
+            'Fecha_Adopcion'   => 'required|date',
+            'NotasAdicionales' => 'nullable|string',
+            'Id_Cliente'       => 'required|exists:cliente,Id_Cliente',
         ];
-        // cliente: admin elige, usuario fijo
-        if ($isAdmin) {
-            $rules['Id_Cliente'] = 'required|exists:cliente,Id_Cliente';
-        } else {
-            $rules['Id_Cliente'] = 'required|exists:cliente,Id_Cliente';
-        }
 
         $data = $request->validate($rules);
 
-        // guardamos adopción
-        Adopcion::create($data);
+        DB::transaction(function() use($data) {
+            // 1) Guardar adopción
+            $adopcion = Adopcion::create([
+                'Id_Mascota'      => $data['Id_Mascota'],
+                'Id_Cliente'      => $data['Id_Cliente'],
+                'Fecha_Adopcion'  => $data['Fecha_Adopcion'],
+                'NotasAdicionales'=> $data['NotasAdicionales'] ?? null,
+            ]);
 
-        // opcional: marcar mascota como adoptada (asociar usuario)
-        $mascota = Mascota::find($data['Id_Mascota']);
-        $mascota->update([
-            'Id_Usuario' => session('usuario_id'),
-        ]);
+            // 2) Crear reporte de adopción
+            $tipo = TipoReporte::where('Nombre', 'Adopción')->firstOrFail();
+
+            Reporte::create([
+                'Id_Tipo_Reporte' => $tipo->Id_Tipo_Reporte,
+                'Id_Mascota'      => $adopcion->Id_Mascota,
+                'Id_Usuario'      => session('usuario_id'),
+                'Contenido'       => $data['NotasAdicionales'] ?? null,
+                'Fecha_Reporte'   => $data['Fecha_Adopcion'], // o now()
+            ]);
+
+            // 3) Marcar mascota como adoptada
+            Mascota::find($data['Id_Mascota'])
+                ->update(['Id_Usuario' => session('usuario_id')]);
+        });
 
         return redirect()
             ->route('home')
-            ->with('success','Adopción registrada correctamente.');
+            ->with('success','Adopción y reporte creados correctamente.');
     }
 }

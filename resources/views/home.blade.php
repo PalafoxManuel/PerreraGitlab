@@ -41,7 +41,7 @@
   // 2) Tus funcionalidades “estáticas”
   $cards = [
   ['title'=>'Agregar mascota','description'=>'Explora una lista de mascotas adorables que están buscando un hogar amoroso.','route'=>route('mascotas.create')],
-  ['title'=>'Agregar servicio','description'=>'Define un nuevo servicio (baño, corte, vacunación, etc.) y su tarifa.','route'=>route('servicios.create')],
+  //['title'=>'Agregar servicio','description'=>'Define un nuevo servicio (baño, corte, vacunación, etc.) y su tarifa.','route'=>route('servicios.create')],
   ['title'=>'Adoptar','description'=>'Deja temporalmente a tu mascota en buenas manos.','route'=>route('adoptar')],
   ['title'=>'Alojamiento','description'=>'Encuentra alojamiento temporal para tu mascota con cuidadores confiables.','route'=>'#'],
   ['title'=>'Vacunación','description'=>'Consulta servicios de vacunación para mantener la salud de tu mascota al día.','route'=>route('vacunacion')],
