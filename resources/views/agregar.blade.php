@@ -76,10 +76,10 @@
                     <div class="col-md-6">
                         <div class="form-field">
                             <label for="Genero" class="form-field-label">Género</label>
-                            <select name="Genero" id="Genero" class="form-field-select">
-                                <option value="">Seleccione...</option>
-                                <option value="Hembra" {{ old('Genero') == 'M' ? 'selected' : '' }}>Macho</option>
-                                <option value="Macho" {{ old('Genero') == 'H' ? 'selected' : '' }}>Hembra</option>
+                            <select name="Genero" class="form-select">
+                                <option value="">Seleccione</option>
+                                <option value="M" {{ old('Genero') === 'M' ? 'selected' : '' }}>Macho</option>
+                                <option value="H" {{ old('Genero') === 'H' ? 'selected' : '' }}>Hembra</option>
                             </select>
                         </div>
 
