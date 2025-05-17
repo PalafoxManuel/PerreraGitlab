@@ -107,14 +107,28 @@
 
                         <div class="form-field">
                             <label for="Id_Usuario" class="form-field-label">Usuario</label>
-                            <select name="Id_Usuario" id="Id_Usuario" class="form-field-select">
-                                <option value="">Seleccione...</option>
-                                @foreach ($usuarios as $usuario)
-                                <option value="{{ $usuario->Id_Usuario }}" {{ old('Id_Usuario') == $usuario->Id_Usuario ? 'selected' : '' }}>
-                                    {{ $usuario->Nombre_Usuario }}
-                                </option>
-                                @endforeach
-                            </select>
+
+                            @if(session('perfil') === 'admin')
+                                {{-- Admin puede elegir cualquier usuario --}}
+                                <select name="Id_Usuario" id="Id_Usuario" class="form-field-select">
+                                    <option value="">Seleccione...</option>
+                                    @foreach ($usuarios as $usuario)
+                                        <option value="{{ $usuario->Id_Usuario }}"
+                                            {{ old('Id_Usuario') == $usuario->Id_Usuario ? 'selected' : '' }}>
+                                            {{ $usuario->Nombre_Usuario }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            @else
+                                {{-- Usuario normal: solo su nombre, no puede cambiarlo --}}
+                                <input type="text"
+                                       class="form-field-input"
+                                       value="{{ session('usuario_nombre') }}"
+                                       readonly>
+                                <input type="hidden"
+                                       name="Id_Usuario"
+                                       value="{{ session('usuario_id') }}">
+                            @endif
                         </div>
                     </div>
                 </div>

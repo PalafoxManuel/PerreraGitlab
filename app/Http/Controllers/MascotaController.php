@@ -11,6 +11,12 @@ use App\Models\ReservaServicio;
 
 class MascotaController extends Controller
 {
+
+    private function perfilAdmin()
+    {
+        return session('perfil') === 'admin';
+    }
+
     /**
      * Mostrar listado de mascotas.
      */
@@ -115,11 +121,15 @@ class MascotaController extends Controller
 
     public function historial(Request $request)
     {
-        if (! session('usuario_id')) {
+        if (!session('usuario_id')) {
             return redirect()->route('login');
         }
 
-        $mascotas     = Mascota::where('Id_Usuario', session('usuario_id'))->get();
+        // Si es admin, mostrar todas las mascotas
+        $mascotas = $this->perfilAdmin()
+            ? Mascota::all()
+            : Mascota::where('Id_Usuario', session('usuario_id'))->get();
+
         $selected     = null;
         $servicios    = collect();
         $vacunaciones = collect();
