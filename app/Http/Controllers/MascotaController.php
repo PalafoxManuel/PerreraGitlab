@@ -125,7 +125,6 @@ class MascotaController extends Controller
             return redirect()->route('login');
         }
 
-        // Si es admin, mostrar todas las mascotas
         $mascotas = $this->perfilAdmin()
             ? Mascota::all()
             : Mascota::where('Id_Usuario', session('usuario_id'))->get();
@@ -133,6 +132,7 @@ class MascotaController extends Controller
         $selected     = null;
         $servicios    = collect();
         $vacunaciones = collect();
+        $historial    = collect(); // <-- AÑADIDO
 
         if ($request->filled('mascota')) {
             $selected = $mascotas->firstWhere('Id_Mascota', $request->mascota);
@@ -143,6 +143,8 @@ class MascotaController extends Controller
                 $servicios = ReservaServicio::with(['reserva', 'servicio'])
                     ->whereHas('reserva', fn($q) => $q->where('Id_Mascota', $selected->Id_Mascota))
                     ->get();
+
+                $historial = $selected->historialMedico; // <-- AÑADIDO
             }
         }
 
@@ -150,7 +152,8 @@ class MascotaController extends Controller
             'mascotas',
             'selected',
             'servicios',
-            'vacunaciones'
+            'vacunaciones',
+            'historial' // <-- AÑADIDO
         ));
     }
 }

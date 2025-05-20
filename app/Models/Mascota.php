@@ -21,6 +21,10 @@ class Mascota extends Model
         'RescatadoCalle',
         'Id_TipoMascota',
     ];
+    public function historialMedico()
+    {
+        return $this->hasMany(HistorialMedico::class, 'Id_Mascota', 'Id_Mascota');
+    }
 
     public function usuario()
     {
