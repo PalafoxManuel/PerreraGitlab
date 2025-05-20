@@ -11,6 +11,19 @@ use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\ReservaServicioController;
 use App\Http\Controllers\VacunacionController;
 use App\Http\Controllers\VacunaController;
+use App\Http\Controllers\TipoMascotaController;
+
+use App\Models\Mascota;
+use App\Models\Usuario;
+use App\Models\Reserva;
+use App\Models\Vacuna;
+use App\Models\Vacunacion;
+use App\Models\TipoMascota;
+use App\Models\Servicio;
+use App\Models\Perrera;
+
+Route::resource('tipo_mascotas', TipoMascotaController::class)
+     ->only(['index','create','store','edit','update','destroy']);
 
 // Invitados: login + registro
 Route::middleware('guest')->group(function () {
@@ -98,6 +111,19 @@ Route::resource('vacunacion', VacunacionController::class)->names([
      'update'  => 'vacunacion.update',
      'destroy' => 'vacunacion.destroy',
 ]);
+
+Route::get('/admin/panel', function () {
+    return view('panel-admin', [
+        'usuarios'     => Usuario::all(),
+        'mascotas'     => Mascota::with(['usuario','tipo'])->get(),
+        'reservas'     => Reserva::all(),
+        'vacunas'      => Vacuna::with('tipoMascota')->get(),
+        'vacunaciones' => Vacunacion::with(['mascota','vacuna'])->get(),
+        'tiposVacunas' => TipoMascota::all(),
+        'servicios'    => Servicio::all(),
+        'perreras'     => Perrera::all(),
+    ]);
+})->name('panel.admin');
 
 // Raíz → redirige a login
 Route::get('/', fn() => redirect()->route('login'));

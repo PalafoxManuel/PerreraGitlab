@@ -26,4 +26,9 @@ class Vacuna extends Model
     {
         return $this->hasMany(Vacunacion::class, 'Id_Vacuna', 'Id_Vacuna');
     }
+
+    public function tipoMascota()
+    {
+        return $this->belongsTo(TipoMascota::class, 'Id_TipoMascota');
+    }
 }

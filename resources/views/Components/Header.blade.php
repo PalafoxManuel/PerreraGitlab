@@ -105,7 +105,7 @@
 
             @if(session('usuario_id'))
             @if(session('perfil') === 'admin')
-            <!-- <li><a href="{{ route('usuarios.index') }}">Panel Admin</a></li> -->
+            <a href="{{ route('panel.admin') }}">Panel Admin</a>
             @else
             <li><a href="{{ route('usuarios.show', session('usuario_id')) }}">Mi Perfil</a></li>
             @endif
