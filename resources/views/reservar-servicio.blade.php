@@ -71,14 +71,24 @@
       <div class="mb-3 form-field">
         <label for="Id_Vacuna" class="form-field-label">Vacuna *</label>
         <select name="Id_Vacuna" id="Id_Vacuna" class="form-field-select" required>
-          <option value="">— Selecciona una vacuna —</option>
+          <option value="">— Selecciona —</option>
           @foreach($vacunas as $vac)
-          <option data-tipo="{{ $vac->Id_TipoMascota }}" value="{{ $vac->Id_Vacuna }}" {{ old('Id_Vacuna') == $vac->Id_Vacuna ? 'selected' : '' }}>
+          <option
+            data-tipo="{{ $vac->Id_TipoMascota }}"
+            data-sintomas='@json($vac->sintomas->pluck("nombre"))'
+            value="{{ $vac->Id_Vacuna }}"
+            {{ old('Id_Vacuna') == $vac->Id_Vacuna ? 'selected' : '' }}>
             {{ $vac->Nombre }}
           </option>
           @endforeach
         </select>
+
+        <div id="sintomasAdversosCard" class="alert alert-warning mt-3 d-none rounded-3 px-3 py-2" style="background-color: #ffc107;">
+          <strong>Síntomas adversos:</strong>
+          <ul id="sintomasTexto" class="mb-0"></ul>
+        </div>
       </div>
+
 
       <div class="mb-3 form-field">
         <label for="Numero_Lote" class="form-field-label">Número de lote *</label>
@@ -131,12 +141,36 @@
 <script>
   const mascotaSelect = document.querySelector('#Id_Mascota');
   const vacunaSelect = document.querySelector('#Id_Vacuna');
+  const sintomasCard = document.querySelector('#sintomasAdversosCard');
+  const sintomasTexto = document.querySelector('#sintomasTexto');
+
   mascotaSelect?.addEventListener('change', () => {
-    const tipo = mascotaSelect.selectedOptions[0].dataset.tipo;
+    const tipo = mascotaSelect.selectedOptions[0]?.dataset.tipo;
     Array.from(vacunaSelect.options).forEach(opt => {
       opt.hidden = opt.dataset.tipo !== tipo && opt.value !== '';
     });
     vacunaSelect.value = '';
+    sintomasCard.classList.add('d-none');
+  });
+
+  vacunaSelect?.addEventListener('change', () => {
+    const selected = vacunaSelect.selectedOptions[0];
+    const sintomasRaw = selected?.dataset.sintomas;
+
+    try {
+      const sintomas = JSON.parse(sintomasRaw || '[]');
+      if (sintomas.length > 0) {
+        sintomasTexto.innerHTML = sintomas.map(s => `<li>${s}</li>`).join('');
+        sintomasCard.classList.remove('d-none');
+      } else {
+        sintomasTexto.innerHTML = '';
+        sintomasCard.classList.add('d-none');
+      }
+    } catch (e) {
+      console.error('Error al parsear síntomas:', e);
+      sintomasTexto.innerHTML = '';
+      sintomasCard.classList.add('d-none');
+    }
   });
 </script>
 @endsection

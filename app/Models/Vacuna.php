@@ -27,6 +27,11 @@ class Vacuna extends Model
         return $this->hasMany(Vacunacion::class, 'Id_Vacuna', 'Id_Vacuna');
     }
 
+    public function sintomas()
+    {
+        return $this->belongsToMany(TipoSintoma::class, 'vacuna_sintoma_adverso', 'id_vacuna', 'id_sintoma');
+    }
+
     public function tipoMascota()
     {
         return $this->belongsTo(TipoMascota::class, 'Id_TipoMascota');

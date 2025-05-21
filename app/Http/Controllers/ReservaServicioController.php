@@ -29,9 +29,9 @@ class ReservaServicioController extends Controller
         }
 
         $servicios        = Servicio::all();
-        $disponibilidades = DisponibilidadServicio::pluck('Disponible','Id_Servicio')->toArray();
+        $disponibilidades = DisponibilidadServicio::pluck('Disponible', 'Id_Servicio')->toArray();
         $mascotas         = Mascota::where('Id_Usuario', session('usuario_id'))->get();
-        $vacunas          = Vacuna::orderBy('Nombre')->get();    // ← cargar vacunas
+        $vacunas = Vacuna::with('sintomas')->orderBy('Nombre')->get();
 
         return view('reservar-servicio', compact(
             'servicios',
@@ -53,8 +53,10 @@ class ReservaServicioController extends Controller
 
         // validar extras si es vacunación
         $service = Servicio::findOrFail($request->Id_Servicio);
-        if (strtolower($service->Nombre_Servicio) === 'vacunación' ||
-            strtolower($service->Nombre_Servicio) === 'vacunacion') {
+        if (
+            strtolower($service->Nombre_Servicio) === 'vacunación' ||
+            strtolower($service->Nombre_Servicio) === 'vacunacion'
+        ) {
             $rules = array_merge($rules, [
                 'Id_Vacuna'   => 'required|exists:vacuna,Id_Vacuna',
                 'Numero_Lote' => 'required|string|max:50',
@@ -64,7 +66,7 @@ class ReservaServicioController extends Controller
 
         $data = $request->validate($rules);
 
-        DB::transaction(function() use ($data, $service) {
+        DB::transaction(function () use ($data, $service) {
             // cargar cliente y perrera desde el usuario
             $user      = Usuario::findOrFail(session('usuario_id'));
             $clienteId = $user->Id_Cliente;
@@ -88,8 +90,10 @@ class ReservaServicioController extends Controller
             ]);
 
             // 3) Si es vacunación, guardar en vacunacion
-            if (strtolower($service->Nombre_Servicio) === 'vacunación' ||
-                strtolower($service->Nombre_Servicio) === 'vacunacion') {
+            if (
+                strtolower($service->Nombre_Servicio) === 'vacunación' ||
+                strtolower($service->Nombre_Servicio) === 'vacunacion'
+            ) {
                 Vacunacion::create([
                     'Id_Mascota'       => $data['Id_Mascota'],
                     'Id_Vacuna'        => $data['Id_Vacuna'],
@@ -107,8 +111,8 @@ class ReservaServicioController extends Controller
 
     public function show($id)
     {
-        $reservaServicio = ReservaServicio::with(['reserva','servicio','mascota'])
-                              ->findOrFail($id);
+        $reservaServicio = ReservaServicio::with(['reserva', 'servicio', 'mascota'])
+            ->findOrFail($id);
         return view('reserva_servicios.show', compact('reservaServicio'));
     }
 
@@ -121,7 +125,10 @@ class ReservaServicioController extends Controller
 
         // return view('reserva_servicios.edit', compact(...));
         return view('reservar-servicio-edit', compact(
-            'reservaServicio','reservas','servicios','mascotas'
+            'reservaServicio',
+            'reservas',
+            'servicios',
+            'mascotas'
         ));
     }
 
