@@ -13,7 +13,8 @@ class VacunaController extends Controller
      */
     public function index()
     {
-        $vacunas = Vacuna::with('tipo')->get();
+        // $vacunas = Vacuna::with('tipo')->get();
+        $vacunas = Vacuna::with('sintomas')->get();
         return view('vacunas.index', compact('vacunas'));
     }
 

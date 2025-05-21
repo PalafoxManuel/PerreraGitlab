@@ -75,7 +75,7 @@
           @foreach($vacunas as $vac)
           <option
             data-tipo="{{ $vac->Id_TipoMascota }}"
-            data-sintomas='@json($vac->sintomas->pluck("nombre"))'
+            data-sintomas='@json($vac->sintomas)'
             value="{{ $vac->Id_Vacuna }}"
             {{ old('Id_Vacuna') == $vac->Id_Vacuna ? 'selected' : '' }}>
             {{ $vac->Nombre }}
@@ -137,7 +137,23 @@
     </form>
   </div>
 </div>
-
+<!-- Modal para información del síntoma -->
+<div class="modal fade" id="modalSintoma" tabindex="-1" aria-labelledby="modalSintomaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-dark">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalSintomaLabel">Síntoma</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body" id="modalSintomaBody">
+        <!-- Contenido dinámico del síntoma -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
   const mascotaSelect = document.querySelector('#Id_Mascota');
   const vacunaSelect = document.querySelector('#Id_Vacuna');
@@ -160,7 +176,17 @@
     try {
       const sintomas = JSON.parse(sintomasRaw || '[]');
       if (sintomas.length > 0) {
-        sintomasTexto.innerHTML = sintomas.map(s => `<li>${s}</li>`).join('');
+        sintomasTexto.innerHTML = sintomas.map(s => `
+    <li>
+      <button
+        type="button"
+        class="btn btn-link p-0 text-decoration-underline text-dark"
+        data-nombre="${s.nombre}"
+        data-quehacer="${s.que_hacer}">
+        ${s.nombre}
+      </button>
+    </li>
+  `).join('');
         sintomasCard.classList.remove('d-none');
       } else {
         sintomasTexto.innerHTML = '';
@@ -172,5 +198,24 @@
       sintomasCard.classList.add('d-none');
     }
   });
+
+  // Escuchar clicks en los síntomas
+  sintomasTexto.addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-nombre]');
+    if (!btn) return;
+
+    const nombre = btn.dataset.nombre;
+    const queHacer = btn.dataset.quehacer;
+
+    document.querySelector('#modalSintomaLabel').textContent = nombre;
+    document.querySelector('#modalSintomaBody').innerHTML = `
+    <p><strong>¿Qué hacer?</strong></p>
+    <p>${queHacer}</p>
+  `;
+
+    const modal = new bootstrap.Modal(document.getElementById('modalSintoma'));
+    modal.show();
+  });
 </script>
+
 @endsection
