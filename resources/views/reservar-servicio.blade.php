@@ -139,18 +139,13 @@
 </div>
 <!-- Modal para información del síntoma -->
 <div class="modal fade" id="modalSintoma" tabindex="-1" aria-labelledby="modalSintomaLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content text-dark">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalSintomaLabel">Síntoma</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+  <div class="modal-dialog">
+    <div class="modal-content custom-modal-content text-white">
+      <div class="modal-header border-0">
+        <h5 class="modal-title" id="modalSintomaLabel"></h5>
+        <button type="button" class="btn-close btn-close-red" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
-      <div class="modal-body" id="modalSintomaBody">
-        <!-- Contenido dinámico del síntoma -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-      </div>
+      <div class="modal-body" id="modalSintomaBody"></div>
     </div>
   </div>
 </div>
