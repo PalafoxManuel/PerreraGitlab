@@ -12,6 +12,9 @@ use App\Http\Controllers\ReservaServicioController;
 use App\Http\Controllers\VacunacionController;
 use App\Http\Controllers\VacunaController;
 use App\Http\Controllers\TipoMascotaController;
+use App\Http\Controllers\EnfermedadContagiosaController;
+use App\Http\Controllers\TipoEnfermedadController;
+
 
 use App\Models\Mascota;
 use App\Models\Usuario;
@@ -111,6 +114,12 @@ Route::resource('vacunacion', VacunacionController::class)->names([
      'update'  => 'vacunacion.update',
      'destroy' => 'vacunacion.destroy',
 ]);
+Route::get('/enfermedades-contagiosas', [EnfermedadContagiosaController::class, 'index'])
+     ->name('enfermedades.index');
+Route::post('/enfermedades-contagiosas', [EnfermedadContagiosaController::class, 'store'])
+     ->name('enfermedades_contagiosas.store');
+
+Route::resource('tipo_enfermedades', TipoEnfermedadController::class);
 
 Route::get('/admin/panel', function () {
      return view('panel-admin', [

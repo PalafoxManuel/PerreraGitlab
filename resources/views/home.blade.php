@@ -125,6 +125,20 @@
             </div>
           </div>
         </div>
+        {{-- Reporte de Enfermedades Contagiosas --}}
+        <div class="col-md-4">
+          <div class="card h-100 shadow">
+            <img src="{{ Vite::asset('resources/images/EnfermedadesContagiosas.png') }}" class="card-img-top" alt="Enfermedades Contagiosas">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">Enfermedades Contagiosas</h5>
+              <p class="card-text flex-grow-1">
+                Visualiza las mascotas diagnosticadas con enfermedades infecciosas.
+              </p>
+              <a href="{{ route('enfermedades.index') }}" class="btn btn-primary mt-2">Ver</a>
+            </div>
+          </div>
+        </div>
+
         @endif
 
         {{-- B) Todas las tarjetas (estáticas + “Reservar”) --}}
