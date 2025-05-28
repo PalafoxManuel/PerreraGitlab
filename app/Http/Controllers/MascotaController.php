@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Mascota;
 use App\Models\TipoMascota;
 use App\Models\Usuario;
-use Illuminate\Http\Request;
 use App\Models\Vacunacion;
 use App\Models\ReservaServicio;
+use Illuminate\Http\Request;
 
 class MascotaController extends Controller
 {
-
+    /**
+     * Sólo el admin ve todas las mascotas en el historial.
+     */
     private function perfilAdmin()
     {
         return session('perfil') === 'admin';
@@ -31,7 +33,7 @@ class MascotaController extends Controller
      */
     public function create()
     {
-        $tipos    = TipoMascota::all();
+        $tipos = TipoMascota::all();
         $usuarios = Usuario::all();
         return view('agregar', compact('tipos', 'usuarios'));
     }
@@ -42,17 +44,21 @@ class MascotaController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'Nombre'           => 'required|string|max:100',
-            'Raza'             => 'nullable|string|max:100',
-            'Edad'             => 'nullable|integer|min:0',
-            'Genero'           => 'nullable|string|in:M,H',
-            'Color'            => 'nullable|string|max:50',
-            'Peso'             => 'nullable|numeric|min:0',
+            'Nombre' => 'required|string|max:100',
+            'Raza' => 'nullable|string|max:100',
+            'Edad' => 'nullable|integer|min:0',
+            'Genero' => 'nullable|string|in:M,H',
+            'Color' => 'nullable|string|max:50',
+            'Peso' => 'nullable|numeric|min:0',
             'Historial_Medico' => 'nullable|string',
-            'Id_Usuario'       => 'nullable|exists:usuario,Id_Usuario',
-            'RescatadoCalle'   => 'required|boolean',
-            'Id_TipoMascota'   => 'required|exists:tipo_mascotas,Id_TipoMascota',
+            'Id_Usuario' => 'nullable|exists:usuario,Id_Usuario',
+            'RescatadoCalle' => 'required|boolean',
+            'Id_TipoMascota' => 'required|exists:tipo_mascotas,Id_TipoMascota',
+            'Esterilizacion' => 'nullable|boolean',
         ]);
+
+        // Checkbox: si no viene, queda en false (0)
+        $data['Esterilizacion'] = $request->has('Esterilizacion') ? 1 : 0;
 
         Mascota::create($data);
 
@@ -75,8 +81,8 @@ class MascotaController extends Controller
      */
     public function edit($id)
     {
-        $mascota  = Mascota::findOrFail($id);
-        $tipos    = TipoMascota::all();
+        $mascota = Mascota::findOrFail($id);
+        $tipos = TipoMascota::all();
         $usuarios = Usuario::all();
         return view('mascotas.edit', compact('mascota', 'tipos', 'usuarios'));
     }
@@ -87,17 +93,20 @@ class MascotaController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->validate([
-            'Nombre'           => 'required|string|max:100',
-            'Raza'             => 'nullable|string|max:100',
-            'Edad'             => 'nullable|integer|min:0',
-            'Genero'           => 'nullable|string|in:M,H',
-            'Color'            => 'nullable|string|max:50',
-            'Peso'             => 'nullable|numeric|min:0',
+            'Nombre' => 'required|string|max:100',
+            'Raza' => 'nullable|string|max:100',
+            'Edad' => 'nullable|integer|min:0',
+            'Genero' => 'nullable|string|in:M,H',
+            'Color' => 'nullable|string|max:50',
+            'Peso' => 'nullable|numeric|min:0',
             'Historial_Medico' => 'nullable|string',
-            'Id_Usuario'       => 'nullable|exists:usuario,Id_Usuario',
-            'RescatadoCalle'   => 'required|boolean',
-            'Id_TipoMascota'   => 'required|exists:tipo_mascotas,Id_TipoMascota',
+            'Id_Usuario' => 'nullable|exists:usuario,Id_Usuario',
+            'RescatadoCalle' => 'required|boolean',
+            'Id_TipoMascota' => 'required|exists:tipo_mascotas,Id_TipoMascota',
+            'Esterilizacion' => 'nullable|boolean',
         ]);
+
+        $data['Esterilizacion'] = $request->has('Esterilizacion') ? 1 : 0;
 
         $mascota = Mascota::findOrFail($id);
         $mascota->update($data);
@@ -119,6 +128,9 @@ class MascotaController extends Controller
             ->with('success', 'Mascota eliminada correctamente.');
     }
 
+    /**
+     * Historial completo (vacunaciones, servicios, historial médico).
+     */
     public function historial(Request $request)
     {
         if (!session('usuario_id')) {
@@ -129,10 +141,10 @@ class MascotaController extends Controller
             ? Mascota::all()
             : Mascota::where('Id_Usuario', session('usuario_id'))->get();
 
-        $selected     = null;
-        $servicios    = collect();
+        $selected = null;
+        $servicios = collect();
         $vacunaciones = collect();
-        $historial    = collect(); // <-- AÑADIDO
+        $historial = collect();
 
         if ($request->filled('mascota')) {
             $selected = $mascotas->firstWhere('Id_Mascota', $request->mascota);
@@ -144,7 +156,7 @@ class MascotaController extends Controller
                     ->whereHas('reserva', fn($q) => $q->where('Id_Mascota', $selected->Id_Mascota))
                     ->get();
 
-                $historial = $selected->historialMedico; // <-- AÑADIDO
+                $historial = $selected->historialMedico;
             }
         }
 
@@ -153,7 +165,7 @@ class MascotaController extends Controller
             'selected',
             'servicios',
             'vacunaciones',
-            'historial' // <-- AÑADIDO
+            'historial'
         ));
     }
 }

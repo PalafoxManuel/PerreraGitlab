@@ -14,6 +14,7 @@ use App\Http\Controllers\VacunaController;
 use App\Http\Controllers\TipoMascotaController;
 use App\Http\Controllers\EnfermedadContagiosaController;
 use App\Http\Controllers\TipoEnfermedadController;
+use App\Http\Controllers\DesparasitacionController;
 
 
 use App\Models\Mascota;
@@ -133,6 +134,13 @@ Route::get('/admin/panel', function () {
           'perreras'     => Perrera::all(),
      ]);
 })->name('panel.admin');
+
+
+Route::resource('desparasitaciones', DesparasitacionController::class);
+
+
+
+
 
 // Raíz → redirige a login
 Route::get('/', fn() => redirect()->route('login'));

@@ -15,6 +15,7 @@ class HistorialMedico extends Model
         'Fecha',
         'Diagnostico',
         'Tratamiento',
+        'Veterinario',    // ← agrégalo aquí
         'Observaciones',
     ];
 

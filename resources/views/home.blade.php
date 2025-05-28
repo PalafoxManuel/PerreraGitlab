@@ -48,6 +48,7 @@
   ['title'=>'Baño','description'=>'Servicios de baño para mantener a tu mascota limpia y fresca.','route'=>'#'],
   ['title'=>'Corte de Pelo','description'=>'Encuentra profesionales para el corte de pelo de tu mascota.','route'=>'#'],
   ['title'=>'Corte de Uñas','description'=>'Corte de uñas seguro y cómodo para tu mascota.','route'=>'#'],
+  ['title'=>'Desparacitacion','description'=>'Servicio de desparacitacion para garantizar la salud de su mascota','route'=>route('desparasitaciones.create')],
   ['title'=>'Historial','description'=>'Registro detallado de todos los servicios que has utilizado.','route'=>route('mascotas.historial')],
   ['title' => 'Generar reporte', 'description' => 'Reporta maltrato, extravío o necesidades de vacunación de tu mascota.', 'route' => route('reporte.index')],
   ];

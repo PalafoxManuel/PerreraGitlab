@@ -3,12 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Desparasitacion;
+use App\Models\HistorialMedico;
+use App\Models\Vacunacion;
+use App\Models\ReservaServicio;
+use App\Models\Usuario;
+use App\Models\TipoMascota;
 
 class Mascota extends Model
 {
     protected $table = 'mascota';
     protected $primaryKey = 'Id_Mascota';
     public $timestamps = false;
+
     protected $fillable = [
         'Nombre',
         'Raza',
@@ -20,7 +27,15 @@ class Mascota extends Model
         'Id_Usuario',
         'RescatadoCalle',
         'Id_TipoMascota',
+        'Despa',
+        'Esterilizacion',   // ← añadido
     ];
+
+    protected $casts = [
+        'Despa'           => 'boolean',
+        'Esterilizacion'  => 'boolean',   // ← añadido
+    ];
+
     public function historialMedico()
     {
         return $this->hasMany(HistorialMedico::class, 'Id_Mascota', 'Id_Mascota');
@@ -41,18 +56,13 @@ class Mascota extends Model
         return $this->hasMany(Vacunacion::class, 'Id_Mascota', 'Id_Mascota');
     }
 
-    public function adopcion()
-    {
-        return $this->hasOne(Adopcion::class, 'Id_Mascota', 'Id_Mascota');
-    }
-
-    public function reportes()
-    {
-        return $this->hasMany(Reporte::class, 'Id_Mascota', 'Id_Mascota');
-    }
-
     public function reservaServicios()
     {
         return $this->hasMany(ReservaServicio::class, 'Id_Mascota', 'Id_Mascota');
+    }
+
+    public function desparasitaciones()
+    {
+        return $this->hasMany(Desparasitacion::class, 'Id_Mascota', 'Id_Mascota');
     }
 }
