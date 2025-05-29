@@ -122,26 +122,27 @@
             </tr>
           </thead>
           <tbody>
+            {{-- en lugar de foreach($reservasServicio as $rs) --}}
             @foreach($reservas as $r)
             <tr>
-              <td>{{ $r->Id_Reserva }}</td>
-              <td>{{ $r->Fecha_Reserva }}</td>
-              <td>{{ $r->Duracion_Dias }} días</td>
-              <td>{{ $r->Tipo_Servicio }}</td>
-              <td>{{ $r->Estado }}</td>
-              <td>
-                @if($r->Estado !== 'Completada')
-                  <form method="POST"
-                        action="{{ route('reserva.update', $r->Id_Reserva) }}"
+                <td>{{ $r->Id_Reserva }}</td>
+                <td>{{ $r->Fecha_Reserva }}</td>
+                <td>{{ $r->Duracion_Dias }} días</td>
+                <td>{{ $r->Tipo_Servicio }}</td>
+                <td>{{ $r->Estado }}</td>
+                <td>
+                @if($r->Estado === 'Confirmada')
+                    <form method="POST"
+                        action="{{ route('reservas.update', $r->Id_Reserva) }}"
                         class="d-inline">
                     @csrf @method('PATCH')
                     <input type="hidden" name="Estado" value="Completada">
                     <button class="btn btn-sm btn-success">
-                      <i class="fas fa-check"></i>
+                        <i class="fas fa-check"></i>
                     </button>
-                  </form>
+                    </form>
                 @endif
-              </td>
+                </td>
             </tr>
             @endforeach
           </tbody>

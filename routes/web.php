@@ -8,6 +8,7 @@ use App\Http\Controllers\MascotaController;
 use App\Http\Controllers\AdopcionController;
 use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\ReporteController;
+use App\Http\Controllers\ReservaController;
 use App\Http\Controllers\ReservaServicioController;
 use App\Http\Controllers\VacunacionController;
 use App\Http\Controllers\VacunaController;
@@ -81,9 +82,12 @@ Route::post('/reporte', [ReporteController::class, 'store'])->name('reporte.stor
 // Perfil de usuario logueado
 Route::get('/perfil', [UsuarioController::class, 'perfil'])->name('perfil');
 
+Route::resource('reservas', ReservaController::class)
+     ->only(['index','show','edit','update','destroy']);
+
 // CRUD Reserva de Servicios
 Route::resource('reserva_servicios', ReservaServicioController::class)
-     ->only(['create', 'store', 'index', 'show']);
+     ->only(['create','store','index','show','update','destroy']);
 
 // API Disponibilidad de servicio
 Route::get('api/disponibilidad/{servicio}', function ($servicio) {

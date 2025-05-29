@@ -140,18 +140,16 @@ class ReservaServicioController extends Controller
 
     public function update(Request $request, $id)
     {
-        $data = $request->validate([
-            'Id_Reserva' => 'required|exists:reserva,Id_Reserva',
-            'Id_Servicio' => 'required|exists:servicio,Id_Servicio',
-            'Id_Mascota' => 'required|exists:mascota,Id_Mascota',
-        ]);
+        if ($request->has('Estado')) {
+            // 1) Obtener la línea de reserva_servicio
+            $rs = ReservaServicio::findOrFail($id);
+            // 2) Cargar la reserva padre y actualizar su estado
+            $reserva = Reserva::findOrFail($rs->Id_Reserva);
+            $reserva->Estado = $request->input('Estado');
+            $reserva->save();
 
-        $r = ReservaServicio::findOrFail($id);
-        $r->update($data);
-
-        return redirect()
-            ->route('reserva_servicios.index')
-            ->with('success', 'Reserva-Servicio actualizada correctamente.');
+            return back()->with('success', 'Reserva marcada como completada.');
+        }
     }
 
     public function destroy($id)
