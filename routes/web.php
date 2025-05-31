@@ -32,7 +32,7 @@ Route::resource('tipo_mascotas', TipoMascotaController::class)
 
 // Invitados: login + registro
 Route::middleware('guest')->group(function () {
-     Route::get('/login',  [AuthController::class, 'showLoginForm'])->name('login');
+     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
      Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 
      Route::get('/register', [UsuarioController::class, 'create'])->name('register');
@@ -56,7 +56,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Página principal (requiere sesión)
 
 // Páginas públicas
-Route::get('/adoptar',  [AdopcionController::class, 'create'])->name('adoptar');
+Route::get('/adoptar', [AdopcionController::class, 'create'])->name('adoptar');
 Route::post('/adoptar', [AdopcionController::class, 'store'])->name('adopciones.store');
 Route::get('/contacto', fn() => view('contacto'))->name('contacto');
 Route::get('/donaciones', fn() => view('donaciones'))->name('donaciones');
@@ -83,11 +83,11 @@ Route::post('/reporte', [ReporteController::class, 'store'])->name('reporte.stor
 Route::get('/perfil', [UsuarioController::class, 'perfil'])->name('perfil');
 
 Route::resource('reservas', ReservaController::class)
-     ->only(['index','show','edit','update','destroy']);
+     ->only(['index', 'show', 'edit', 'update', 'destroy']);
 
 // CRUD Reserva de Servicios
 Route::resource('reserva_servicios', ReservaServicioController::class)
-     ->only(['create','store','index','show','update','destroy']);
+     ->only(['create', 'store', 'index', 'show', 'update', 'destroy']);
 
 // API Disponibilidad de servicio
 Route::get('api/disponibilidad/{servicio}', function ($servicio) {
@@ -111,31 +111,35 @@ Route::resource('mascotas', MascotaController::class)
 
 // CRUD Vacunación
 Route::resource('vacunacion', VacunacionController::class)->names([
-     'index'   => 'vacunacion',
-     'create'  => 'vacunacion.create',
-     'store'   => 'vacunacion.store',
-     'show'    => 'vacunacion.show',
-     'edit'    => 'vacunacion.edit',
-     'update'  => 'vacunacion.update',
+     'index' => 'vacunacion',
+     'create' => 'vacunacion.create',
+     'store' => 'vacunacion.store',
+     'show' => 'vacunacion.show',
+     'edit' => 'vacunacion.edit',
+     'update' => 'vacunacion.update',
      'destroy' => 'vacunacion.destroy',
 ]);
-Route::get('/enfermedades-contagiosas', [EnfermedadContagiosaController::class, 'index'])
-     ->name('enfermedades.index');
-Route::post('/enfermedades-contagiosas', [EnfermedadContagiosaController::class, 'store'])
-     ->name('enfermedades_contagiosas.store');
+
+Route::prefix('enfermedades-contagiosas')->group(function () {
+     Route::get('/registrar', [EnfermedadContagiosaController::class, 'create'])
+          ->name('enfermedades_contagiosas.create');
+
+     Route::post('/registrar', [EnfermedadContagiosaController::class, 'store'])
+          ->name('enfermedades_contagiosas.store');
+});
 
 Route::resource('tipo_enfermedades', TipoEnfermedadController::class);
 
 Route::get('/admin/panel', function () {
      return view('panel-admin', [
-          'usuarios'     => Usuario::all(),
-          'mascotas'     => Mascota::with(['usuario', 'tipo'])->get(),
-          'reservas'     => Reserva::all(),
-          'vacunas'      => Vacuna::with('tipoMascota')->get(),
+          'usuarios' => Usuario::all(),
+          'mascotas' => Mascota::with(['usuario', 'tipo'])->get(),
+          'reservas' => Reserva::all(),
+          'vacunas' => Vacuna::with('tipoMascota')->get(),
           'vacunaciones' => Vacunacion::with(['mascota', 'vacuna'])->get(),
           'tiposVacunas' => TipoMascota::all(),
-          'servicios'    => Servicio::all(),
-          'perreras'     => Perrera::all(),
+          'servicios' => Servicio::all(),
+          'perreras' => Perrera::all(),
      ]);
 })->name('panel.admin');
 

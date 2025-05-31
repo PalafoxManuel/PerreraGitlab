@@ -2,37 +2,70 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EnfermedadContagiosa;
 use App\Models\Mascota;
-use App\Models\TipoEnfermedad;
+use App\Models\Enfermedad;
+use App\Models\MascotaEnfermedad;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EnfermedadContagiosaController extends Controller
 {
-    // Mostrar formulario para registrar una enfermedad contagiosa
-    public function index()
+    /**
+     * Muestra el formulario para registrar una nueva enfermedad a mascota
+     */
+    public function create()
     {
-        $mascota = Mascota::all();
-        $tipoEnfermedades = TipoEnfermedad::all(); // Enfermedades disponibles
+        // Obtener todas las mascotas y enfermedades para los selects
+        $mascotas = Mascota::orderBy('Nombre')->get();
+        $enfermedades = Enfermedad::orderBy('nombre')->get();
 
         return view('agregar-enfermedad-contagiosa', [
-            'mascota' => $mascota,
-            'enfermedades' => $tipoEnfermedades, // renombrar para que coincida con la vista
+            'mascota' => $mascotas,
+            'enfermedades' => $enfermedades
         ]);
     }
-    // Guardar nueva enfermedad contagiosa
+
+    /**
+     * Almacena un nuevo registro de enfermedad en mascota
+     */
     public function store(Request $request)
     {
+        // Validación de los datos
         $request->validate([
-            'Id_Mascota'     => 'required|exists:mascota,Id_Mascota',
-            'Id_Enfermedad'  => 'required|exists:tipo_enfermedad,id_enfermedad',
+            'Id_Mascota' => 'required|exists:mascota,Id_Mascota',
+            'id_enfermedad' => 'required|exists:tipo_enfermedades,id_enfermedad',
+            'fecha_diagnostico' => 'nullable|date',
+            'observaciones' => 'nullable|string|max:500'
         ]);
 
-        EnfermedadContagiosa::create([
-            'Id_Mascota'    => $request->Id_Mascota,
-            'Id_Enfermedad' => $request->Id_Enfermedad,
-        ]);
+        try {
+            DB::beginTransaction();
 
-        return redirect()->route('home')->with('success', 'Enfermedad contagiosa registrada correctamente.');
+            // Crear el registro en la tabla pivote
+            $registro = MascotaEnfermedad::create([
+                'id_mascota' => $request->Id_Mascota,
+                'id_enfermedad' => $request->id_enfermedad,
+                'fecha_diagnostico' => $request->fecha_diagnostico ?? now(),
+                'observaciones' => $request->observaciones
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('home')
+                ->with('success', 'Enfermedad registrada correctamente a la mascota.');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withInput()->with('error', 'Error al registrar la enfermedad: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Obtener enfermedades por mascota (para posibles futuras peticiones AJAX)
+     */
+    public function getEnfermedadesMascota($idMascota)
+    {
+        $mascota = Mascota::with('enfermedades')->findOrFail($idMascota);
+        return response()->json($mascota->enfermedades);
     }
 }

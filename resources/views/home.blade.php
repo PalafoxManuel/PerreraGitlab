@@ -135,7 +135,7 @@
               <p class="card-text flex-grow-1">
                 Visualiza las mascotas diagnosticadas con enfermedades infecciosas.
               </p>
-              <a href="{{ route('enfermedades.index') }}" class="btn btn-primary mt-2">Ver</a>
+              <a href="{{ route('enfermedades_contagiosas.create') }}" class="btn btn-primary mt-2">Ver</a>
             </div>
           </div>
         </div>
