@@ -68,4 +68,18 @@ class EnfermedadContagiosaController extends Controller
         $mascota = Mascota::with('enfermedades')->findOrFail($idMascota);
         return response()->json($mascota->enfermedades);
     }
+
+    public function eliminarEnfermedadDeMascota($mascotaId, $enfermedadId)
+    {
+        // 1) Buscar la mascota (lanza 404 si no existe)
+        $mascota = Mascota::findOrFail($mascotaId);
+
+        // 2) Detach del registro pivot (mascota_enfermedad)
+        $mascota->enfermedades()->detach($enfermedadId);
+
+        // 3) Redirigir al panel con mensaje de éxito
+        return redirect()
+            ->route('panel.admin')
+            ->with('success', 'Se eliminó la enfermedad de la mascota correctamente.');
+    }
 }

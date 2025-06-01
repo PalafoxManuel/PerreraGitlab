@@ -224,7 +224,7 @@ class UsuarioController extends Controller
         Usuario::destroy($id);
 
         return redirect()
-            ->route('usuarios.index')
+            ->route('panel.admin')
             ->with('success', 'Usuario eliminado correctamente.');
     }
 

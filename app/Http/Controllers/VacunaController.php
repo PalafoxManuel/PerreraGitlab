@@ -96,6 +96,20 @@ class VacunaController extends Controller
             ->with('success', 'Vacuna actualizada correctamente.');
     }
 
+    public function eliminarSintoma($vacunaId, $sintomaId)
+    {
+        // 1) Buscar vacuna (404 si no existe)
+        $vacuna = Vacuna::findOrFail($vacunaId);
+
+        // 2) Detach del sintoma en la tabla pivot
+        $vacuna->sintomas()->detach($sintomaId);
+
+        // 3) Redirigir de vuelta al panel con mensaje
+        return redirect()
+            ->route('panel.admin')
+            ->with('success', 'Síntoma adverso eliminado de la vacuna correctamente.');
+    }
+
     /**
      * Eliminar una vacuna.
      */

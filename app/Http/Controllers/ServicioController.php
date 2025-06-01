@@ -97,7 +97,7 @@ class ServicioController extends Controller
         Servicio::destroy($id);
 
         return redirect()
-            ->route('servicios.index')
+            ->route('panel.admin')
             ->with('success', 'Servicio eliminado correctamente.');
     }
 }

@@ -27,6 +27,7 @@ use App\Models\Vacunacion;
 use App\Models\TipoMascota;
 use App\Models\Servicio;
 use App\Models\Perrera;
+use App\Models\Enfermedad;
 
 Route::resource('tipo_mascotas', TipoMascotaController::class)
      ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
@@ -134,17 +135,34 @@ Route::resource('tipo_enfermedades', TipoEnfermedadController::class);
 Route::patch('/reservas/{reserva}/completar', [ReservaController::class, 'marcarCompletada'])
      ->name('reservas.completar');
 
+Route::delete('/vacuna/{vacuna}/sintoma/{sintoma}', [VacunaController::class, 'eliminarSintoma'])
+    ->name('vacuna.sintoma.destroy');
+
+Route::delete(
+    '/mascota/{mascota}/enfermedad/{enfermedad}',
+    [EnfermedadContagiosaController::class, 'eliminarEnfermedadDeMascota']
+)->name('mascota.enfermedad.destroy');
+
 Route::get('/admin/panel', function () {
-     return view('panel-admin', [
-          'usuarios' => Usuario::all(),
-          'mascotas' => Mascota::with(['usuario', 'tipo'])->get(),
-          'reservas' => Reserva::all(),
-          'vacunas' => Vacuna::with('tipoMascota')->get(),
-          'vacunaciones' => Vacunacion::with(['mascota', 'vacuna'])->get(),
-          'tiposVacunas' => TipoMascota::all(),
-          'servicios' => Servicio::all(),
-          'perreras' => Perrera::all(),
-     ]);
+    return view('panel-admin', [
+        'usuarios'   => Usuario::all(),
+        'mascotas'   => Mascota::with(['usuario','tipo'])->get(),      // tus mascotas “normales”
+        'reservas'   => Reserva::all(),
+        'vacunas'    => Vacuna::with(['tipoMascota','sintomas'])->get(),
+        'vacunaciones' => Vacunacion::with(['mascota','vacuna'])->get(),
+        'tiposVacunas' => Enfermedad::all(),  // si quieres listar todas las enfermedades (contagiosas o no)
+        'servicios'  => Servicio::all(),
+        'perreras'   => Perrera::all(),
+
+        // --- NUEVO: Mascotas que tienen al menos 1 enfermedad contagiosa
+        'mascotasContagiosas' => Mascota::whereHas('enfermedades', function($q) {
+            $q->where('es_contagiosa', 1);
+        })
+        ->with(['enfermedades' => function($q) {
+            $q->where('es_contagiosa', 1);
+        }])
+        ->get(),
+    ]);
 })->name('panel.admin');
 
 

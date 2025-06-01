@@ -91,6 +91,20 @@ class ReservaController extends Controller
             ->with('success', 'Reserva actualizada correctamente.');
     }
 
+    public function marcarCompletada($id)
+    {
+        $reserva = Reserva::findOrFail($id);
+
+        // Cambiamos a “Confirmada” en lugar de “Completada”,
+        // pues el ENUM sólo acepta: Pendiente, Confirmada, Cancelada
+        $reserva->Estado = 'Confirmada';
+        $reserva->save();
+
+        return redirect()
+            ->route('panel.admin')
+            ->with('success', 'Reserva marcada como completada.');
+    }
+
     /**
      * Eliminar una reserva.
      */

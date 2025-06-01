@@ -9,6 +9,7 @@ use App\Models\Vacunacion;
 use App\Models\ReservaServicio;
 use App\Models\Usuario;
 use App\Models\TipoMascota;
+use App\Models\Enfermedad;
 
 class Mascota extends Model
 {
@@ -69,5 +70,16 @@ class Mascota extends Model
     public function desparasitaciones()
     {
         return $this->hasMany(Desparasitacion::class, 'Id_Mascota', 'Id_Mascota');
+    }
+
+    public function enfermedades()
+    {
+        return $this->belongsToMany(
+            Enfermedad::class,
+            'mascota_enfermedad',   // nombre de la tabla pivote
+            'id_mascota',           // FK en pivote que apunta a mascota
+            'id_enfermedad'         // FK en pivote que apunta a tipo_enfermedades
+        )
+        ->withPivot(['fecha_diagnostico', 'observaciones']);
     }
 }

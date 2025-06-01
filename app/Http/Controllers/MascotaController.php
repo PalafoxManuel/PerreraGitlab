@@ -124,7 +124,7 @@ class MascotaController extends Controller
         Mascota::destroy($id);
 
         return redirect()
-            ->route('mascotas.index')
+            ->route('panel.admin')
             ->with('success', 'Mascota eliminada correctamente.');
     }
 
