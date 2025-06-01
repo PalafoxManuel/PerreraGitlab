@@ -130,6 +130,9 @@ Route::prefix('enfermedades-contagiosas')->group(function () {
 
 Route::resource('tipo_enfermedades', TipoEnfermedadController::class);
 
+Route::patch('/reservas/{reserva}/completar', [ReservaController::class, 'marcarCompletada'])
+     ->name('reservas.completar');
+
 Route::get('/admin/panel', function () {
      return view('panel-admin', [
           'usuarios' => Usuario::all(),
