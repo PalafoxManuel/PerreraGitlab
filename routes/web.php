@@ -16,6 +16,7 @@ use App\Http\Controllers\TipoMascotaController;
 use App\Http\Controllers\EnfermedadContagiosaController;
 use App\Http\Controllers\TipoEnfermedadController;
 use App\Http\Controllers\DesparasitacionController;
+use App\Http\Controllers\PesoMascotaController;
 
 
 use App\Models\Mascota;
@@ -150,7 +151,14 @@ Route::get('/admin/panel', function () {
 Route::resource('desparasitaciones', DesparasitacionController::class);
 
 
-
+Route::prefix('peso-mascota')->group(function () {
+     Route::get('/registrar', [PesoMascotaController::class, 'create'])
+          ->name('peso_mascota.create');
+     Route::post('/registrar', [PesoMascotaController::class, 'store'])
+          ->name('peso_mascota.store');
+     Route::get('/historial/{idMascota}', [PesoMascotaController::class, 'historial'])
+          ->name('peso_mascota.historial');
+});
 
 
 // Raíz → redirige a login

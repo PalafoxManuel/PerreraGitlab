@@ -36,19 +36,19 @@
   'Generar reporte' => 'Reporte.png',
   'Agregar Administrador' => 'AgregarAdmin.png',
   'Agregar Vacunación' => 'AgregarVacuna.png',
+  'Reporte de Peso' => 'PesoMascota.png', // Nueva imagen para peso
+  'Desparasitación' => 'Desparasitacion.png' // Nueva imagen para desparasitación
   ];
 
-  // 2) Tus funcionalidades “estáticas”
+  // 2) Tus funcionalidades "estáticas"
   $cards = [
   ['title'=>'Agregar mascota','description'=>'Explora una lista de mascotas adorables que están buscando un hogar amoroso.','route'=>route('mascotas.create')],
-  //['title'=>'Agregar servicio','description'=>'Define un nuevo servicio (baño, corte, vacunación, etc.) y su tarifa.','route'=>route('servicios.create')],
   ['title'=>'Adoptar','description'=>'Deja temporalmente a tu mascota en buenas manos.','route'=>route('adoptar')],
   ['title'=>'Alojamiento','description'=>'Encuentra alojamiento temporal para tu mascota con cuidadores confiables.','route'=>'#'],
   ['title'=>'Vacunación','description'=>'Consulta servicios de vacunación para mantener la salud de tu mascota al día.','route'=>route('vacunacion')],
   ['title'=>'Baño','description'=>'Servicios de baño para mantener a tu mascota limpia y fresca.','route'=>'#'],
   ['title'=>'Corte de Pelo','description'=>'Encuentra profesionales para el corte de pelo de tu mascota.','route'=>'#'],
   ['title'=>'Corte de Uñas','description'=>'Corte de uñas seguro y cómodo para tu mascota.','route'=>'#'],
-  ['title'=>'Desparacitacion','description'=>'Servicio de desparacitacion para garantizar la salud de su mascota','route'=>route('desparasitaciones.create')],
   ['title'=>'Historial','description'=>'Registro detallado de todos los servicios que has utilizado.','route'=>route('mascotas.historial')],
   ['title' => 'Generar reporte', 'description' => 'Reporta maltrato, extravío o necesidades de vacunación de tu mascota.', 'route' => route('reporte.index')],
   ];
@@ -62,7 +62,7 @@
   });
 
   // 4) Recorremos $cards y, si su título normalizado existe en $servByKey,
-  // lo convertimos en “Reservar” con su ruta correcta.
+  // lo convertimos en "Reservar" con su ruta correcta.
   foreach($cards as &$card) {
   $norm = Str::lower(Str::ascii($card['title']));
   if(isset($servByKey[$norm])) {
@@ -126,6 +126,7 @@
             </div>
           </div>
         </div>
+
         {{-- Reporte de Enfermedades Contagiosas --}}
         <div class="col-md-4">
           <div class="card h-100 shadow">
@@ -140,9 +141,37 @@
           </div>
         </div>
 
+        {{-- Reporte de Peso --}}
+        <div class="col-md-4">
+          <div class="card h-100 shadow">
+            <img src="{{ Vite::asset('resources/images/'.$imageMap['Reporte de Peso']) }}" class="card-img-top" alt="Reporte de Peso">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">Reporte de Peso</h5>
+              <p class="card-text flex-grow-1">
+                Registra y visualiza el historial de peso de las mascotas.
+              </p>
+              <a href="{{ route('peso_mascota.create') }}" class="btn btn-primary mt-2">Ir</a>
+            </div>
+          </div>
+        </div>
+
+        {{-- Desparasitación --}}
+        <div class="col-md-4">
+          <div class="card h-100 shadow">
+            <img src="{{ Vite::asset('resources/images/'.$imageMap['Desparasitación']) }}" class="card-img-top" alt="Desparasitación">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">Desparasitación</h5>
+              <p class="card-text flex-grow-1">
+                Registra y gestiona los tratamientos de desparasitación.
+              </p>
+              <a href="{{ route('desparasitaciones.create') }}" class="btn btn-primary mt-2">Ir</a>
+            </div>
+          </div>
+        </div>
+
         @endif
 
-        {{-- B) Todas las tarjetas (estáticas + “Reservar”) --}}
+        {{-- B) Todas las tarjetas (estáticas + "Reservar") --}}
         @foreach($cards as $card)
 
         @if($card['title']==='Agregar servicio' && session('perfil')!=='admin')

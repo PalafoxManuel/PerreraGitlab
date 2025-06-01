@@ -32,13 +32,18 @@ class Mascota extends Model
     ];
 
     protected $casts = [
-        'Despa'           => 'boolean',
-        'Esterilizacion'  => 'boolean',   // ← añadido
+        'Despa' => 'boolean',
+        'Esterilizacion' => 'boolean',   // ← añadido
     ];
 
     public function historialMedico()
     {
         return $this->hasMany(HistorialMedico::class, 'Id_Mascota', 'Id_Mascota');
+    }
+
+    public function pesos()
+    {
+        return $this->hasMany(PesoMascota::class, 'Id_Mascota');
     }
 
     public function usuario()

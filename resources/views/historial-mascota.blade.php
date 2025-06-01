@@ -9,7 +9,7 @@
   <!-- Bootstrap, FontAwesome y tus assets -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  @vite(['resources/css/app.css','resources/js/app.js'])
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
   <style>
     body.back-container {
       background-color: #212121;
@@ -42,16 +42,13 @@
         <div class="row">
           <div class="col-md-6">
             <label for="mascota" class="form-label text-white">Selecciona una mascota</label>
-            <select name="mascota" id="mascota"
-              class="form-select bg-dark text-white"
-              onchange="this.form.submit()">
+            <select name="mascota" id="mascota" class="form-select bg-dark text-white" onchange="this.form.submit()">
               <option value="">— Elige —</option>
               @foreach($mascotas as $m)
-              <option value="{{ $m->Id_Mascota }}"
-                {{ $selected && $selected->Id_Mascota == $m->Id_Mascota ? 'selected' : '' }}>
-                {{ $m->Nombre }} ({{ $m->Raza }})
-              </option>
-              @endforeach
+          <option value="{{ $m->Id_Mascota }}" {{ $selected && $selected->Id_Mascota == $m->Id_Mascota ? 'selected' : '' }}>
+          {{ $m->Nombre }} ({{ $m->Raza }})
+          </option>
+        @endforeach
             </select>
           </div>
         </div>
@@ -59,83 +56,91 @@
 
       @if($selected)
       <div class="row g-4">
-        {{-- Servicios realizados --}}
-        <div class="col-12 col-md-6">
-          <div class="card shadow bg-dark border-0 h-100">
-            <div class="card-header bg-primary text-white">
-              <i class="fas fa-concierge-bell me-2"></i>
-              Servicios realizados: {{ $selected->Nombre }}
-            </div>
-            <div class="card-body p-0 bg-dark">
-              @if($servicios->isEmpty())
-              <p class="m-3 text-light">No hay servicios reservados aún.</p>
-              @else
-              <div class="table-responsive">
-                <table class="table table-dark table-bordered mb-0 responsive-stack">
-                  <thead>
-                    <tr>
-                      <th>Fecha</th>
-                      <th>Servicio</th>
-                      <th>Duración (días)</th>
-                      <th>Estado</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach($servicios as $rs)
-                    <tr>
-                      <td data-label="Fecha">{{ $rs->reserva->Fecha_Reserva }}</td>
-                      <td data-label="Servicio">{{ $rs->servicio->Nombre_Servicio }}</td>
-                      <td data-label="Duración (días)">{{ $rs->reserva->Duracion_Dias }}</td>
-                      <td data-label="Estado">{{ $rs->reserva->Estado }}</td>
-                    </tr>
-                    @endforeach
-                  </tbody>
-                </table>
-              </div>
-              @endif
-            </div>
-          </div>
+      {{-- Servicios realizados --}}
+      <div class="col-12 col-md-6">
+        <div class="card shadow bg-dark border-0 h-100">
+        <div class="card-header bg-primary text-white">
+          <i class="fas fa-concierge-bell me-2"></i>
+          Servicios realizados: {{ $selected->Nombre }}
         </div>
-
-        {{-- Historial médico general --}}
-        <div class="col-12 col-md-6">
-          <div class="card shadow bg-dark border-0 h-100">
-            <div class="card-header bg-warning text-dark">
-              <i class="fas fa-notes-medical me-2"></i>
-              Historial médico (General)
-            </div>
-            <div class="card-body p-0 bg-dark">
-              @if($historial->isEmpty())
-              <p class="m-3 text-light">Aún no hay registros médicos generales.</p>
-              @else
-              <div class="table-responsive">
-                <table class="table table-dark table-bordered mb-0 responsive-stack">
-                  <thead>
-                    <tr>
-                      <th>Fecha</th>
-                      <th>Diagnóstico</th>
-                      <th>Tratamiento</th>
-                      <th>Observaciones</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach($historial as $h)
-                    <tr>
-                      <td data-label="Fecha">{{ \Carbon\Carbon::parse($h->Fecha)->format('Y-m-d') }}</td>
-                      <td data-label="Diagnóstico">{{ $h->Diagnostico }}</td>
-                      <td data-label="Tratamiento">{{ $h->Tratamiento }}</td>
-                      <td data-label="Observaciones">{{ $h->Observaciones ?? '—' }}</td>
-                    </tr>
-                    @endforeach
-                  </tbody>
-                </table>
-              </div>
-              @endif
-            </div>
-          </div>
+        <div class="card-body p-0 bg-dark">
+          @if($servicios->isEmpty())
+        <p class="m-3 text-light">No hay servicios reservados aún.</p>
+      @else
+        <div class="table-responsive">
+        <table class="table table-dark table-bordered mb-0 responsive-stack">
+          <thead>
+          <tr>
+          <th>Fecha</th>
+          <th>Servicio</th>
+          <th>Duración (días)</th>
+          <th>Estado</th>
+          </tr>
+          </thead>
+          <tbody>
+          @foreach($servicios as $rs)
+        <tr>
+        <td data-label="Fecha">{{ $rs->reserva->Fecha_Reserva }}</td>
+        <td data-label="Servicio">{{ $rs->servicio->Nombre_Servicio }}</td>
+        <td data-label="Duración (días)">{{ $rs->reserva->Duracion_Dias }}</td>
+        <td data-label="Estado">{{ $rs->reserva->Estado }}</td>
+        </tr>
+        @endforeach
+          </tbody>
+        </table>
+        </div>
+      @endif
+        </div>
         </div>
       </div>
+
+      {{-- Historial médico general --}}
+      <div class="col-12 col-md-6">
+        <div class="card shadow bg-dark border-0 h-100">
+        <div class="card-header bg-warning text-dark">
+          <i class="fas fa-notes-medical me-2"></i>
+          Historial médico (General)
+        </div>
+        <div class="card-body p-0 bg-dark">
+          @if($historial->isEmpty())
+        <p class="m-3 text-light">Aún no hay registros médicos generales.</p>
+      @else
+        <div class="table-responsive">
+        <table class="table table-dark table-bordered mb-0 responsive-stack">
+          <thead>
+          <tr>
+          <th>Fecha</th>
+          <th>Diagnóstico</th>
+          <th>Tratamiento</th>
+          <th>Veterinario</th>
+          <th>Observaciones</th>
+          </tr>
+          </thead>
+          <tbody>
+          @foreach($historial as $h)
+        <tr>
+          <td data-label="Fecha">{{ \Carbon\Carbon::parse($h->Fecha)->format('Y-m-d') }}</td>
+          <td data-label="Diagnóstico">{{ $h->Diagnostico }}</td>
+          <td data-label="Tratamiento">{{ $h->Tratamiento }}</td>
+          <td data-label="Veterinario">
+          @if($h->Veterinario)
+        {{ $h->Veterinario ?? 'N/A' }}
+        @else
+        N/A
+        @endif
+          </td>
+          <td data-label="Observaciones">{{ $h->Observaciones ?? '—' }}</td>
+        </tr>
+        @endforeach
+          </tbody>
+        </table>
+        </div>
       @endif
+        </div>
+        </div>
+      </div>
+      </div>
+    @endif
 
 
     </div>
