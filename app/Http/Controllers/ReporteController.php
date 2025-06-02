@@ -51,7 +51,7 @@ class ReporteController extends Controller
         Reporte::create($data);
 
         return redirect()
-            ->route('reportes.index')
+            ->route('reporte.index')
             ->with('success', 'Reporte creado correctamente.');
     }
 
