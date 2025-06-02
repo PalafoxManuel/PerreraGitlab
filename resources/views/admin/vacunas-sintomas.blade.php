@@ -9,10 +9,10 @@
       <thead class="table-light">
         <tr>
           <th style="width: 5%;">#</th>
-          <th style="width: 20%;">Vacuna</th>
+          <th style="width: 25%;">Vacuna</th>
           <th style="width: 25%;">Síntoma Adverso</th>
-          <th style="width: 40%;">Qué Hacer</th>
-          <th style="width: 10%;">Acciones</th>
+          <th style="width: 35%;">Qué Hacer</th>
+          <th style="width: 10%;" class="text-center">Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -62,7 +62,7 @@
             @endforeach
 
             {{-- Fila separadora opcional entre grupos de vacunas --}}
-            <tr class="border-0"><td colspan="5"></td></tr>
+            <tr class="border-0"><td colspan="5" class="py-0"></td></tr>
           @endif
         @endforeach
       </tbody>

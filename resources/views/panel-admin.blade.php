@@ -31,6 +31,7 @@
     @include('admin.vacunas')
     @include('admin.vacunaciones')
     @include('admin.reservaciones')
+    @include('admin.pagos')
     @include('admin.perreras')
     @include('admin.servicios')
 

@@ -58,9 +58,9 @@
                 </div>
 
                 <div class="mb-3 form-field">
-                    <label for="fecha_diagnostico" class="form-field-label">Fecha de diagnóstico</label>
-                    <input type="date" name="fecha_diagnostico" id="fecha_diagnostico" class="form-field-input"
-                        value="{{ old('fecha_diagnostico', date('Y-m-d')) }}">
+                    <label for="fecha_diagnostico" class="form-field-label">Fecha de diagnóstico *</label>
+                    <input type="date" name="fecha_diagnostico" id="fecha_diagnostico" class="form-field-input" required
+                        min="2000-01-01" max="{{ date('Y-m-d') }}" value="{{ old('fecha_diagnostico', date('Y-m-d')) }}">
                 </div>
 
                 <div class="mb-3 form-field">

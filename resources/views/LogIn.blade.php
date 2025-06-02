@@ -5,17 +5,12 @@
     <meta charset="UTF-8">
     <title>Iniciar Sesión</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Bootstrap y FontAwesome -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
-    <!-- Estilos y scripts con Vite -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="back-container d-flex flex-column min-vh-100">
-
     <div class="logo-container text-center py-3">
         <img class="logo-img" src="{{ Vite::asset('resources/images/Logo.png') }}" alt="Logo">
         <p class="logo-text-login text-white fs-4 fw-bold">Huellitas Felices</p>
@@ -37,10 +32,11 @@
                         <span class="input-group-text"><i class="fas fa-user"></i></span>
                         <input type="text" name="Nombre_Usuario" id="Nombre_Usuario" class="form-control"
                             placeholder="Usuario" value="{{ old('Nombre_Usuario') }}" required minlength="4"
-                            maxlength="20" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ ]+">
+                            maxlength="20" pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$"
+                            title="Solo letras sin espacios ni números.">
                     </div>
                     <div class="invalid-feedback" id="username-error">
-                        Por favor ingrese un nombre de usuario válido (solo letras, 4-20 caracteres).
+                        Por favor ingrese un nombre de usuario válido (solo letras, sin espacios, 4-20 caracteres).
                     </div>
                 </div>
 
@@ -65,18 +61,16 @@
     </div>
 
     <script>
-        // Validación del lado del cliente
         document.getElementById('loginForm').addEventListener('submit', function (event) {
             let isValid = true;
             const username = document.getElementById('Nombre_Usuario');
             const password = document.getElementById('Contrasena');
 
-            // Resetear mensajes de error
             username.classList.remove('is-invalid');
             password.classList.remove('is-invalid');
 
-            // Validar nombre de usuario (solo letras)
-            const usernameRegex = /^[A-Za-záéíóúÁÉÍÓÚñÑ ]+$/;
+            const usernameRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/;
+
             if (username.value.trim() === '' || username.value.length < 4 ||
                 username.value.length > 20 || !usernameRegex.test(username.value)) {
                 username.classList.add('is-invalid');
@@ -84,12 +78,11 @@
                     username.value.trim() === '' ?
                         'El nombre de usuario es requerido.' :
                         (!usernameRegex.test(username.value) ?
-                            'El nombre de usuario solo puede contener letras.' :
+                            'El nombre de usuario solo puede contener letras sin espacios ni números.' :
                             'El nombre de usuario debe tener entre 4 y 20 caracteres.');
                 isValid = false;
             }
 
-            // Validar contraseña
             if (password.value === '' || password.value.length < 6 || password.value.length > 30) {
                 password.classList.add('is-invalid');
                 document.getElementById('password-error').textContent =
@@ -105,14 +98,13 @@
             }
         });
 
-        // Validación en tiempo real para mejor UX
         document.getElementById('Nombre_Usuario').addEventListener('input', function () {
-            const usernameRegex = /^[A-Za-záéíóúÁÉÍÓÚñÑ ]*$/;
-            if (!usernameRegex.test(this.value)) {
-                this.value = this.value.replace(/[^A-Za-záéíóúÁÉÍÓÚñÑ ]/g, '');
+            const cleaned = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ]/g, '');
+            if (this.value !== cleaned) {
+                this.value = cleaned;
             }
 
-            if (this.value.length >= 4 && this.value.length <= 20 && usernameRegex.test(this.value)) {
+            if (this.value.length >= 4 && this.value.length <= 20) {
                 this.classList.remove('is-invalid');
             }
         });
@@ -123,7 +115,6 @@
             }
         });
     </script>
-
 </body>
 
 </html>

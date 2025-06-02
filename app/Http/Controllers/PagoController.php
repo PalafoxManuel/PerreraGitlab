@@ -90,7 +90,7 @@ class PagoController extends Controller
         Pago::destroy($id);
 
         return redirect()
-            ->route('pagos.index')
+            ->route('panel.admin')
             ->with('success', 'Pago eliminado correctamente.');
     }
 }

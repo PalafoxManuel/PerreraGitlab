@@ -85,7 +85,7 @@
             <div class="card-body">
             <h5 class="card-title">
             {{ $mascota->Nombre }}
-            <small class="text-muted">({{ $mascota->tipo->Nombre ?? 'Sin tipo' }})</small>
+            <small class="text-muted">({{ $mascota->tipo->Nombre_Tipo ?? 'Sin tipo' }})</small>
             </h5>
 
             <div class="row">
