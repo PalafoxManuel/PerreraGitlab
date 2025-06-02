@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <title>Registro de Usuario</title>
@@ -15,6 +16,7 @@
 
   @vite(['resources/css/app.css','resources/js/app.js'])
 </head>
+
 <body class="back-container d-flex flex-column min-vh-100">
 
   <div class="logo-container text-center py-3">
@@ -27,9 +29,11 @@
       <h1 class="text-center mb-4">Registro de Usuario</h1>
 
       @if($errors->any())
-        <div class="alert alert-danger"><ul class="mb-0">
+      <div class="alert alert-danger">
+        <ul class="mb-0">
           @foreach($errors->all() as $e) <li>{{ $e }}</li>@endforeach
-        </ul></div>
+        </ul>
+      </div>
       @endif
 
       <form method="POST" action="{{ route('register.post') }}">
@@ -81,111 +85,93 @@
           <select name="Id_Perrera" class="form-select" required>
             <option value="">— Selecciona una sucursal —</option>
             @foreach($perreras as $p)
-              <option
-                value="{{ $p->Id_Perrera }}"
-                {{ old('Id_Perrera')==$p->Id_Perrera ? 'selected':'' }}>
-                {{ $p->Nombre }}
-              </option>
+            <option
+              value="{{ $p->Id_Perrera }}"
+              {{ old('Id_Perrera')==$p->Id_Perrera ? 'selected':'' }}>
+              {{ $p->Nombre }}
+            </option>
             @endforeach
           </select>
           @error('Id_Perrera')<div class="text-danger mt-1">{{ $message }}</div>@enderror
         </div>
 
         @php
-          // El primer admin puede crearse incluso sin sesión
-          $adminExists = isset($adminExists) ? $adminExists : false;
-          $allowAdmin  = session('perfil')==='admin' || !$adminExists;
+        // El primer admin puede crearse incluso sin sesión
+        $adminExists = isset($adminExists) ? $adminExists : false;
+        $allowAdmin = session('perfil')==='admin' || !$adminExists;
         @endphp
 
         @if($allowAdmin)
-          {{-- Rol --}}
-          <div class="mb-3">
-            <label class="form-label">Rol *</label>
-            <select name="rol" id="rol" class="form-select" required>
-              <option value="usuario" {{ old('rol')=='usuario'?'selected':'' }}>Cliente</option>
-              <option value="admin"   {{ old('rol')=='admin'  ?'selected':'' }}>Administrador</option>
-            </select>
-          </div>
-
-          {{-- Cliente existente (sólo si rol = usuario) --}}
-          <div class="mb-3" id="cliente-section">
-            <label class="form-label">Cliente asociado *</label>
-            <select name="Id_Cliente" class="form-select">
-              <option value="">— Selecciona un cliente —</option>
-              @foreach($clientes as $c)
-                <option
-                  value="{{ $c->Id_Cliente }}"
-                  {{ old('Id_Cliente')==$c->Id_Cliente?'selected':'' }}>
-                  {{ $c->Nombre_Completo }}
-                </option>
-              @endforeach
-            </select>
-            @error('Id_Cliente')<div class="text-danger mt-1">{{ $message }}</div>@enderror
-          </div>
-
-          {{-- Script para mostrar/ocultar cliente-section --}}
-          <script>
-            document.addEventListener('DOMContentLoaded', ()=>{
-              const rol = document.getElementById('rol');
-              const sec = document.getElementById('cliente-section');
-              const toggle = ()=>{
-                if(rol.value==='usuario'){
-                  sec.style.display='block';
-                  sec.querySelector('select').required = true;
-                } else {
-                  sec.style.display='none';
-                  sec.querySelector('select').required = false;
-                  sec.querySelector('select').value = '';
-                }
-              };
-              rol.addEventListener('change', toggle);
-              toggle();
-            });
-          </script>
+        {{-- Rol --}}
+        <div class="mb-3">
+          <label class="form-label">Rol *</label>
+          <select name="rol" id="rol" class="form-select" required>
+            <option value="admin" {{ old('rol')=='admin'  ?'selected':'' }}>Administrador</option>
+          </select>
+        </div>
+        {{-- Script para mostrar/ocultar cliente-section --}}
+        <script>
+          document.addEventListener('DOMContentLoaded', () => {
+            const rol = document.getElementById('rol');
+            const sec = document.getElementById('cliente-section');
+            const toggle = () => {
+              if (rol.value === 'usuario') {
+                sec.style.display = 'block';
+                sec.querySelector('select').required = true;
+              } else {
+                sec.style.display = 'none';
+                sec.querySelector('select').required = false;
+                sec.querySelector('select').value = '';
+              }
+            };
+            rol.addEventListener('change', toggle);
+            toggle();
+          });
+        </script>
         @else
-          {{-- Datos para nuevo cliente --}}
-          <h5 class="mt-4">Tus datos</h5>
-          <div class="mb-3">
-            <label class="form-label">Nombre completo *</label>
-            <input
-              type="text"
-              name="Nombre_Completo"
-              class="form-control"
-              value="{{ old('Nombre_Completo') }}"
-              required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Teléfono</label>
-            <input
-              type="text"
-              name="Numero_Contacto"
-              class="form-control"
-              value="{{ old('Numero_Contacto') }}">
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Correo electrónico</label>
-            <input
-              type="email"
-              name="Correo_Electronico"
-              class="form-control"
-              value="{{ old('Correo_Electronico') }}">
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Calle</label>
-            <input
-              type="text"
-              name="Calle"
-              class="form-control"
-              value="{{ old('Calle') }}">
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Código Postal</label>
-            <input
-              type="text"
-              name="Codigo_Postal"
-              class="form-control"
-              value="{{ old('Codigo_Postal') }}">
-          </div>
+        {{-- Datos para nuevo cliente --}}
+        <h5 class="mt-4">Tus datos</h5>
+        <div class="mb-3">
+          <label class="form-label">Nombre completo *</label>
+          <input
+            type="text"
+            name="Nombre_Completo"
+            class="form-control"
+            value="{{ old('Nombre_Completo') }}"
+            required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Teléfono</label>
+          <input
+            type="text"
+            name="Numero_Contacto"
+            class="form-control"
+            value="{{ old('Numero_Contacto') }}">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Correo electrónico</label>
+          <input
+            type="email"
+            name="Correo_Electronico"
+            class="form-control"
+            value="{{ old('Correo_Electronico') }}">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Calle</label>
+          <input
+            type="text"
+            name="Calle"
+            class="form-control"
+            value="{{ old('Calle') }}">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Código Postal</label>
+          <input
+            type="text"
+            name="Codigo_Postal"
+            class="form-control"
+            value="{{ old('Codigo_Postal') }}">
+        </div>
         @endif
 
         <button type="submit" class="btn btn-primary w-100">Crear cuenta</button>
@@ -198,4 +184,5 @@
     </div>
   </div>
 </body>
+
 </html>
