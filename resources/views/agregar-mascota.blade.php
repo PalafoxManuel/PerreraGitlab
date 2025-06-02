@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Agregar Mascota</title>
@@ -11,6 +12,7 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+
 <body class="bg-light">
 
     {{-- Header (si tienes uno global puedes incluirlo aquí con @include) --}}
@@ -26,14 +28,14 @@
 
         {{-- Errores de validación --}}
         @if ($errors->any())
-            <div class="alert alert-danger">
-                <strong>¡Error!</strong> Por favor corrige los siguientes campos:<br><br>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
+        <div class="alert alert-danger">
+            <strong>¡Error!</strong> Por favor corrige los siguientes campos:<br><br>
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
         @endif
 
         {{-- Formulario --}}
@@ -87,9 +89,9 @@
                 <select name="Id_Usuario" class="form-select">
                     <option value="">Sin asignar</option>
                     @foreach ($usuarios as $usuario)
-                        <option value="{{ $usuario->Id_Usuario }}" {{ old('Id_Usuario') == $usuario->Id_Usuario ? 'selected' : '' }}>
-                            {{ $usuario->Nombre_Usuario }}
-                        </option>
+                    <option value="{{ $usuario->Id_Usuario }}" {{ old('Id_Usuario') == $usuario->Id_Usuario ? 'selected' : '' }}>
+                        {{ $usuario->Nombre_Usuario }}
+                    </option>
                     @endforeach
                 </select>
             </div>
@@ -107,14 +109,16 @@
                 <select name="Id_TipoMascota" class="form-select" required>
                     <option value="">Seleccione un tipo</option>
                     @foreach ($tipos as $tipo)
-                        <option value="{{ $tipo->Id_TipoMascota }}" {{ old('Id_TipoMascota') == $tipo->Id_TipoMascota ? 'selected' : '' }}>
-                            {{ $tipo->Nombre_Tipo }}
-                        </option>
+                    <option value="{{ $tipo->Id_TipoMascota }}" {{ old('Id_TipoMascota') == $tipo->Id_TipoMascota ? 'selected' : '' }}>
+                        {{ $tipo->Nombre_Tipo }}
+                    </option>
                     @endforeach
                 </select>
             </div>
 
-            <button type="submit" class="btn btn-success">Guardar Mascota</button>
+            <button type="submit" class="submit-button btn btn-success">
+                <i class="fas fa-plus-circle me-2"></i>Registrar
+            </button>
             <a href="{{ route('home') }}" class="btn btn-secondary ms-2">Cancelar</a>
         </form>
     </div>
@@ -122,4 +126,5 @@
     {{-- Scripts --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
