@@ -37,10 +37,12 @@
           <div class="input-group">
             <span class="input-group-text"><i class="fas fa-user"></i></span>
             <input type="text" name="Nombre_Usuario" class="form-control" value="{{ old('Nombre_Usuario') }}" required
-              minlength="4" maxlength="20" pattern="^[a-zA-Z0-9_]+$"
-              title="Solo letras, números y guiones bajos. Mínimo 4 caracteres.">
+              minlength="4" maxlength="20" pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$"
+              title="Solo letras sin espacios, números ni caracteres especiales.">
           </div>
         </div>
+
+
 
         <div class="mb-3">
           <label class="form-label">Contraseña *</label>
