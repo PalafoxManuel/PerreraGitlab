@@ -22,53 +22,22 @@
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle">Servicios</a>
                 <ul class="dropdown-menu">
-                    <li>
-                        <a href="{{ route('mascotas.create') }}">
-                            <i class="fas fa-dog me-2"></i>Agregar mascota
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('adoptar') }}">
-                            <i class="fas fa-heart me-2"></i>Adoptar
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('reserva_servicios.create', ['service' => 3]) }}">
-                            <i class="fas fa-home me-2"></i>Alojamiento
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('reserva_servicios.create', ['service' => 5]) }}">
-                            <i class="fas fa-syringe me-2"></i>Vacunación
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('reserva_servicios.create', ['service' => 2]) }}">
-                            <i class="fas fa-shower me-2"></i>Baño
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('reserva_servicios.create', ['service' => 4]) }}">
-                            <i class="fas fa-cut me-2"></i>Corte de Pelo
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('reserva_servicios.create', ['service' => 6]) }}">
-                            <i class="fas fa-paw me-2"></i>Corte de Uñas
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('mascotas.historial') }}">
-                            <i class="fas fa-folder-open me-2"></i>Historial
-                        </a>
-                    </li>
+                    <li><a href="{{ route('mascotas.create') }}"><i class="fas fa-dog me-2"></i>Agregar mascota</a></li>
+                    <li><a href="{{ route('adoptar') }}"><i class="fas fa-heart me-2"></i>Adoptar</a></li>
+                    <li><a href="{{ route('reserva_servicios.create', ['service' => 3]) }}"><i class="fas fa-home me-2"></i>Alojamiento</a></li>
+                    <li><a href="{{ route('reserva_servicios.create', ['service' => 5]) }}"><i class="fas fa-syringe me-2"></i>Vacunación</a></li>
+                    <li><a href="{{ route('reserva_servicios.create', ['service' => 2]) }}"><i class="fas fa-shower me-2"></i>Baño</a></li>
+                    <li><a href="{{ route('reserva_servicios.create', ['service' => 4]) }}"><i class="fas fa-cut me-2"></i>Corte de Pelo</a></li>
+                    <li><a href="{{ route('reserva_servicios.create', ['service' => 6]) }}"><i class="fas fa-paw me-2"></i>Corte de Uñas</a></li>
+                    <li><a href="{{ route('mascotas.historial') }}"><i class="fas fa-folder-open me-2"></i>Historial</a></li>
+
                     @if(session('perfil') === 'admin')
-                    <li>
-                        <a href="{{ route('agregarVacuna') }}"><i class="fas fa-plus me-2"></i>Agregar vacuna</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('register')  }}"><i class="fas fa-user-shield me-2"></i>Agregar admin</a>
-                    </li>
+                    <li><a href="{{ route('agregarVacuna') }}"><i class="fas fa-plus me-2"></i>Agregar vacuna</a></li>
+                    <li><a href="{{ route('register') }}"><i class="fas fa-user-shield me-2"></i>Agregar admin</a></li>
+                    <li><a href="{{ route('enfermedades_contagiosas.create') }}"><i class="fas fa-dna me-2"></i>Registra enfermedad</a></li>
+                    <li><a href="{{ route('peso_mascota.create') }}"><i class="fas fa-weight me-2"></i>Registro de peso</a></li>
+                    <li><a href="{{ route('desparasitaciones.create') }}"><i class="fas fa-bug me-2"></i>Desparasitación</a></li>
+                    <li><a href="{{ route('perreras.create') }}"><i class="fas fa-warehouse me-2"></i>Crear perrera</a></li>
                     @endif
                 </ul>
             </li>
@@ -77,35 +46,19 @@
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle">Reportes</a>
                 <ul class="dropdown-menu">
-                    <li>
-                        <a href="{{ route('reporte.create', 1) }}">
-                            <i class="fas fa-exclamation-triangle me-2"></i>Reporte de maltrato
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('reporte.create', 2) }}">
-                            <i class="fas fa-search-location me-2"></i>Reporte de extravío
-                        </a>
-                    </li>
+                    <li><a href="{{ route('reporte.create', 1) }}"><i class="fas fa-exclamation-triangle me-2"></i>Reporte de maltrato</a></li>
+                    <li><a href="{{ route('reporte.create', 2) }}"><i class="fas fa-search-location me-2"></i>Reporte de extravío</a></li>
                     @if(session('perfil') === 'admin')
-                    <li>
-                        <a href="{{ route('reporte.create', 3) }}">
-                            <i class="fas fa-syringe me-2"></i>Reporte vacuna
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('reporte.create', 4) }}">
-                            <i class="fas fa-heartbeat me-2"></i>Reporte adopción
-                        </a>
-                    </li>
+                    <li><a href="{{ route('reporte.create', 3) }}"><i class="fas fa-syringe me-2"></i>Reporte vacuna</a></li>
+                    <li><a href="{{ route('reporte.create', 4) }}"><i class="fas fa-heartbeat me-2"></i>Reporte adopción</a></li>
                     @endif
                 </ul>
             </li>
 
-
+            <!-- Perfil y autenticación -->
             @if(session('usuario_id'))
             @if(session('perfil') === 'admin')
-            <a href="{{ route('panel.admin') }}">Panel Admin</a>
+            <li><a href="{{ route('panel.admin') }}">Panel Admin</a></li>
             @else
             <li><a href="{{ route('usuarios.show', session('usuario_id')) }}">Mi Perfil</a></li>
             @endif
@@ -125,80 +78,40 @@
     <div class="mobile-sidebar d-md-none" id="mobileSidebar">
         <div class="sidebar-title">Servicios</div>
         <ul class="sidebar-section">
-            <li>
-                <a href="{{ route('mascotas.create') }}">
-                    <i class="fas fa-dog me-2"></i>Agregar mascota
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('adoptar') }}">
-                    <i class="fas fa-heart me-2"></i>Adoptar
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('reserva_servicios.create', ['service' => 3]) }}">
-                    <i class="fas fa-home me-2"></i>Alojamiento
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('reserva_servicios.create', ['service' => 5]) }}">
-                    <i class="fas fa-syringe me-2"></i>Vacunación
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('reserva_servicios.create', ['service' => 2]) }}">
-                    <i class="fas fa-shower me-2"></i>Baño
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('reserva_servicios.create', ['service' => 4]) }}">
-                    <i class="fas fa-cut me-2"></i>Corte de Pelo
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('reserva_servicios.create', ['service' => 6]) }}">
-                    <i class="fas fa-paw me-2"></i>Corte de Uñas
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fas fa-folder-open me-2"></i>Historial
-                </a>
-            </li>
+            <li><a href="{{ route('mascotas.create') }}"><i class="fas fa-dog me-2"></i>Agregar mascota</a></li>
+            <li><a href="{{ route('adoptar') }}"><i class="fas fa-heart me-2"></i>Adoptar</a></li>
+            <li><a href="{{ route('reserva_servicios.create', ['service' => 3]) }}"><i class="fas fa-home me-2"></i>Alojamiento</a></li>
+            <li><a href="{{ route('reserva_servicios.create', ['service' => 5]) }}"><i class="fas fa-syringe me-2"></i>Vacunación</a></li>
+            <li><a href="{{ route('reserva_servicios.create', ['service' => 2]) }}"><i class="fas fa-shower me-2"></i>Baño</a></li>
+            <li><a href="{{ route('reserva_servicios.create', ['service' => 4]) }}"><i class="fas fa-cut me-2"></i>Corte de Pelo</a></li>
+            <li><a href="{{ route('reserva_servicios.create', ['service' => 6]) }}"><i class="fas fa-paw me-2"></i>Corte de Uñas</a></li>
+            <li><a href="{{ route('mascotas.historial') }}"><i class="fas fa-folder-open me-2"></i>Historial</a></li>
+
+            @if(session('perfil') === 'admin')
+            <li><a href="{{ route('agregarVacuna') }}"><i class="fas fa-plus me-2"></i>Agregar vacuna</a></li>
+            <li><a href="{{ route('register') }}"><i class="fas fa-user-shield me-2"></i>Agregar admin</a></li>
+            <li><a href="{{ route('enfermedades_contagiosas.create') }}"><i class="fas fa-dna me-2"></i>Registra enfermedad</a></li>
+            <li><a href="{{ route('peso_mascota.create') }}"><i class="fas fa-weight me-2"></i>Registro de peso</a></li>
+            <li><a href="{{ route('desparasitaciones.create') }}"><i class="fas fa-bug me-2"></i>Desparasitación</a></li>
+            <li><a href="{{ route('perreras.create') }}"><i class="fas fa-warehouse me-2"></i>Crear perrera</a></li>
+            @endif
         </ul>
 
         <div class="sidebar-title">Reportes</div>
         <ul class="sidebar-section">
-            <li>
-                <a href="{{ route('reporte.create', 1) }}">
-                    <i class="fas fa-exclamation-triangle me-2"></i>Reporte de maltrato
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('reporte.create', 2) }}">
-                    <i class="fas fa-search-location me-2"></i>Reporte de extravío
-                </a>
-            </li>
+            <li><a href="{{ route('reporte.create', 1) }}"><i class="fas fa-exclamation-triangle me-2"></i>Reporte de maltrato</a></li>
+            <li><a href="{{ route('reporte.create', 2) }}"><i class="fas fa-search-location me-2"></i>Reporte de extravío</a></li>
             @if(session('perfil') === 'admin')
-            <li>
-                <a href="{{ route('reporte.create', 3) }}">
-                    <i class="fas fa-syringe me-2"></i>Reporte vacuna
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('reporte.create', 4) }}">
-                    <i class="fas fa-heartbeat me-2"></i>Reporte adopción
-                </a>
-            </li>
+            <li><a href="{{ route('reporte.create', 3) }}"><i class="fas fa-syringe me-2"></i>Reporte vacuna</a></li>
+            <li><a href="{{ route('reporte.create', 4) }}"><i class="fas fa-heartbeat me-2"></i>Reporte adopción</a></li>
             @endif
         </ul>
 
-
         @if(session('usuario_id'))
         @if(session('perfil') === 'admin')
-        <!-- <ul class="sidebar-section">
-            <li><a href="{{ route('usuarios.index') }}"><i class="fas fa-tools me-2"></i>Panel Admin</a></li>
-        </ul> -->
+        <ul class="sidebar-section">
+            <li><a href="{{ route('panel.admin') }}"><i class="fas fa-tools me-2"></i>Panel Admin</a></li>
+        </ul>
         @else
         <ul class="sidebar-section">
             <li><a href="{{ route('usuarios.show', session('usuario_id')) }}"><i class="fas fa-user me-2"></i>Mi Perfil</a></li>

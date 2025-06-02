@@ -127,12 +127,12 @@
           </div>
         </div>
 
-        {{-- Reporte de Enfermedades Contagiosas --}}
+        {{-- Registro de Enfermedades Contagiosas --}}
         <div class="col-md-4">
           <div class="card h-100 shadow">
             <img src="{{ Vite::asset('resources/images/EnfermedadesContagiosas.png') }}" class="card-img-top" alt="Enfermedades Contagiosas">
             <div class="card-body d-flex flex-column">
-              <h5 class="card-title">Reporte enfermedades</h5>
+              <h5 class="card-title">Registro de enfermedades</h5>
               <p class="card-text flex-grow-1">
                 Ingresa mascotas con enfermedades que puedan ser o no ser Contagiosas.
               </p>
@@ -141,12 +141,12 @@
           </div>
         </div>
 
-        {{-- Reporte de Peso --}}
+        {{-- Registro de Peso --}}
         <div class="col-md-4">
           <div class="card h-100 shadow">
             <img src="{{ Vite::asset('resources/images/'.$imageMap['Reporte de Peso']) }}" class="card-img-top" alt="Reporte de Peso">
             <div class="card-body d-flex flex-column">
-              <h5 class="card-title">Reporte de Peso</h5>
+              <h5 class="card-title">Registro de Peso</h5>
               <p class="card-text flex-grow-1">
                 Registra y visualiza el historial de peso de las mascotas.
               </p>
