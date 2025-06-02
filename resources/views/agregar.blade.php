@@ -28,13 +28,16 @@
                     <div class="form-field">
                         <label for="Nombre" class="form-field-label">Nombre</label>
                         <input type="text" name="Nombre" id="Nombre" class="form-field-input"
-                            value="{{ old('Nombre') }}" required>
+                            value="{{ old('Nombre') }}"
+                            pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ]{2,30}$"
+                            title="Solo letras, mínimo 2 y máximo 30 caracteres"
+                            required>
                     </div>
                 </div>
                 <div class="col-md-6 mb-3">
                     <div class="form-field">
                         <label for="Genero" class="form-field-label">Género</label>
-                        <select name="Genero" id="Genero" class="form-field-select">
+                        <select name="Genero" id="Genero" class="form-field-select" required>
                             <option value="">Seleccione</option>
                             <option value="M" {{ old('Genero') === 'M' ? 'selected' : '' }}>Macho</option>
                             <option value="H" {{ old('Genero') === 'H' ? 'selected' : '' }}>Hembra</option>
@@ -59,8 +62,9 @@
                 <div class="col-md-6 mb-3">
                     <div class="form-field">
                         <label for="Peso" class="form-field-label">Peso (kg)</label>
-                        <input type="number" step="0.1" name="Peso" id="Peso" class="form-field-input" min="0"
-                            value="{{ old('Peso') }}">
+                        <input type="number" step="0.1" name="Peso" id="Peso" class="form-field-input"
+                            min="0.1" max="120" title="Debe ser mayor a 0 y menor o igual a 120"
+                            value="{{ old('Peso') }}" required>
                     </div>
                 </div>
 
@@ -68,14 +72,18 @@
                 <div class="col-md-6 mb-3">
                     <div class="form-field">
                         <label for="Raza" class="form-field-label">Raza</label>
-                        <input type="text" name="Raza" id="Raza" class="form-field-input" value="{{ old('Raza') }}">
+                        <input type="text" name="Raza" id="Raza" class="form-field-input"
+                            pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ ]{2,30}$"
+                            title="Solo letras y espacios, entre 2 y 30 caracteres"
+                            value="{{ old('Raza') }}" required>
                     </div>
                 </div>
                 <div class="col-md-6 mb-3">
                     <div class="form-field">
                         <label for="Historial_Medico" class="form-field-label">Historial Médico</label>
                         <textarea name="Historial_Medico" id="Historial_Medico" class="form-field-textarea"
-                            rows="3">{{ old('Historial_Medico') }}</textarea>
+                            rows="3" maxlength="255"
+                            placeholder="Describa brevemente el estado médico">{{ old('Historial_Medico') }}</textarea>
                     </div>
                 </div>
 
@@ -83,8 +91,9 @@
                 <div class="col-md-6 mb-3">
                     <div class="form-field">
                         <label for="Edad" class="form-field-label">Edad</label>
-                        <input type="number" name="Edad" id="Edad" class="form-field-input" min="0"
-                            value="{{ old('Edad') }}">
+                        <input type="number" name="Edad" id="Edad" class="form-field-input"
+                            min="0" max="30" title="Máximo 30 años"
+                            value="{{ old('Edad') }}" required>
                     </div>
                 </div>
                 <div class="col-md-6 mb-3">
@@ -92,12 +101,12 @@
                         <label class="form-field-label d-block mb-1">¿Rescatado de la calle?</label>
                         <div class="form-check form-check-inline">
                             <input type="radio" name="RescatadoCalle" id="rescatado_si" value="1"
-                                class="form-check-input" {{ old('RescatadoCalle') == '1' ? 'checked' : '' }}>
+                                class="form-check-input" {{ old('RescatadoCalle') == '1' ? 'checked' : '' }} required>
                             <label for="rescatado_si" class="form-check-label">Sí</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input type="radio" name="RescatadoCalle" id="rescatado_no" value="0"
-                                class="form-check-input" {{ old('RescatadoCalle') == '0' ? 'checked' : '' }}>
+                                class="form-check-input" {{ old('RescatadoCalle') == '0' ? 'checked' : '' }} required>
                             <label for="rescatado_no" class="form-check-label">No</label>
                         </div>
                     </div>
@@ -107,14 +116,17 @@
                 <div class="col-md-6 mb-3">
                     <div class="form-field">
                         <label for="Color" class="form-field-label">Color</label>
-                        <input type="text" name="Color" id="Color" class="form-field-input" value="{{ old('Color') }}">
+                        <input type="text" name="Color" id="Color" class="form-field-input"
+                            pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ ]{2,20}$"
+                            title="Solo letras y espacios, entre 2 y 20 caracteres"
+                            value="{{ old('Color') }}" required>
                     </div>
                 </div>
                 <div class="col-md-6 mb-3">
                     <div class="form-field">
                         <label for="Id_Usuario" class="form-field-label">Usuario</label>
                         @if(session('perfil') === 'admin')
-                        <select name="Id_Usuario" id="Id_Usuario" class="form-field-select">
+                        <select name="Id_Usuario" id="Id_Usuario" class="form-field-select" required>
                             <option value="">Seleccione...</option>
                             @foreach ($usuarios as $usuario)
                             <option value="{{ $usuario->Id_Usuario }}" {{ old('Id_Usuario') == $usuario->Id_Usuario ? 'selected' : '' }}>
@@ -128,7 +140,7 @@
                         @endif
                     </div>
                 </div>
-            </div> {{-- end .row --}}
+            </div>
 
             {{-- Fila esterilización --}}
             <div class="row mb-3">
@@ -146,12 +158,9 @@
 
             <div class="modal-buttons mt-4 d-flex justify-content-between">
                 <a href="{{ route('home') }}" class="cancel-button btn btn-light">Cancelar</a>
-                <button type="submit" class="submit-button btn btn-success">
-                    <i class="fas fa-plus-circle me-2"></i>Guardas mascota
-                </button>
+                <button type="submit" class="submit-button btn btn-primary">Guardar Mascota</button>
             </div>
         </form>
-
     </div>
 </div>
 @endsection
