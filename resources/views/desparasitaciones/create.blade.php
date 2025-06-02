@@ -1,83 +1,108 @@
 @extends('layouts.app')
 
-@section('content')
-  <div class="container">
-    <h1>Nueva Desparasitación</h1>
+@section('title', 'Nueva Desparasitación')
 
+@section('content')
+<div class="form-wrapper-reporte flex-grow-1 d-flex align-items-center justify-content-center py-5">
+  <div class="form-container-reporte text-white p-4 p-md-5 rounded-4 shadow-lg">
+    <h1 class="text-center mb-4 fw-bold">Nueva Desparasitación</h1>
+
+    {{-- Errores --}}
     @if ($errors->any())
     <div class="alert alert-danger">
-    <ul>
-      @foreach ($errors->all() as $err)
-      <li>{{ $err }}</li>
-    @endforeach
-    </ul>
+      <strong>¡Error!</strong> Por favor corrige los siguientes campos:
+      <ul class="mb-0">
+        @foreach ($errors->all() as $err)
+        <li>{{ $err }}</li>
+        @endforeach
+      </ul>
     </div>
     @endif
 
     <form action="{{ route('desparasitaciones.store') }}" method="POST">
-    @csrf
+      @csrf
 
-    {{-- Selección de mascota --}}
-    <div class="mb-3">
-      <label for="Id_Mascota" class="form-label">Mascota</label>
-      <select name="Id_Mascota" id="Id_Mascota" class="form-select" required>
-      <option value="">-- Selecciona --</option>
-      @foreach ($mascotas as $m)
-      <option value="{{ $m->Id_Mascota }}" {{ old('Id_Mascota') == $m->Id_Mascota ? 'selected' : '' }}>
-      {{ $m->Nombre }}
-      </option>
-    @endforeach
-      </select>
-    </div>
+      <div class="row">
+        {{-- Mascota --}}
+        <div class="col-md-12 mb-3">
+          <div class="form-field">
+            <label for="Id_Mascota" class="form-field-label">Mascota *</label>
+            <select name="Id_Mascota" id="Id_Mascota" class="form-field-select" required>
+              <option value="">— Selecciona —</option>
+              @foreach ($mascotas as $m)
+              <option value="{{ $m->Id_Mascota }}" {{ old('Id_Mascota') == $m->Id_Mascota ? 'selected' : '' }}>
+                {{ $m->Nombre }}
+              </option>
+              @endforeach
+            </select>
+          </div>
+        </div>
 
-    {{-- Fecha aplicada --}}
-    <div class="mb-3">
-      <label for="Fecha_Desparasitado" class="form-label">Fecha de Desparasitación</label>
-      <input type="date" name="Fecha_Desparasitado" id="Fecha_Desparasitado" class="form-control" required
-      value="{{ old('Fecha_Desparasitado') }}">
-    </div>
+        {{-- Fecha de desparasitación --}}
+        <div class="col-md-12 mb-3">
+          <div class="form-field">
+            <label for="Fecha_Desparasitado" class="form-field-label">Fecha de Desparasitación *</label>
+            <input type="date" name="Fecha_Desparasitado" id="Fecha_Desparasitado" class="form-field-input" required
+              value="{{ old('Fecha_Desparasitado') }}">
+          </div>
+        </div>
 
-    {{-- Próxima dosis --}}
-    <div class="mb-3">
-      <label for="Fecha_Proxima" class="form-label">Próxima Fecha</label>
-      <input type="date" name="Fecha_Proxima" id="Fecha_Proxima" class="form-control"
-      value="{{ old('Fecha_Proxima') }}">
-    </div>
+        {{-- Próxima dosis --}}
+        <div class="col-md-12 mb-3">
+          <div class="form-field">
+            <label for="Fecha_Proxima" class="form-field-label">Próxima Fecha</label>
+            <input type="date" name="Fecha_Proxima" id="Fecha_Proxima" class="form-field-input"
+              value="{{ old('Fecha_Proxima') }}">
+          </div>
+        </div>
 
-    <hr>
+        {{-- Diagnóstico --}}
+        <div class="col-md-12 mb-3">
+          <div class="form-field">
+            <label for="Diagnostico" class="form-field-label">Diagnóstico</label>
+            <input type="text" name="Diagnostico" id="Diagnostico" class="form-field-input"
+              value="{{ old('Diagnostico', 'Control de desparasitación') }}">
+          </div>
+        </div>
 
-    {{-- → Campos para historial médico ← --}}
-    <div class="mb-3">
-      <label for="Diagnostico" class="form-label">Diagnóstico</label>
-      <input type="text" name="Diagnostico" id="Diagnostico" class="form-control"
-      value="{{ old('Diagnostico', 'Control de desparasitación') }}">
-    </div>
+        {{-- Tratamiento --}}
+        <div class="col-md-12 mb-3">
+          <div class="form-field">
+            <label for="Tratamiento" class="form-field-label">Tratamiento</label>
+            <input type="text" name="Tratamiento" id="Tratamiento" class="form-field-input"
+              value="{{ old('Tratamiento', 'Desparasitación interna/externa') }}">
+          </div>
+        </div>
 
-    <div class="mb-3">
-      <label for="Tratamiento" class="form-label">Tratamiento</label>
-      <input type="text" name="Tratamiento" id="Tratamiento" class="form-control"
-      value="{{ old('Tratamiento', 'Desparasitación interna/externa') }}">
-    </div>
+        {{-- Veterinario --}}
+        <div class="col-md-12 mb-3">
+          <div class="form-field">
+            <label for="Veterinario" class="form-field-label">Veterinario *</label>
+            <input type="text" name="Veterinario" id="Veterinario" class="form-field-input"
+              value="{{ old('Veterinario') }}" required>
+            @error('Veterinario')
+            <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
+          </div>
+        </div>
 
-    {{-- resources/views/desparasitaciones/create.blade.php --}}
-    <div class="mb-3">
-      <label for="Veterinario" class="form-label">Veterinario</label>
-      <input type="text" name="Veterinario" id="Veterinario" class="form-control" value="{{ old('Veterinario') }}"
-      required>
-      @error('Veterinario')
-      <div class="text-danger">{{ $message }}</div>
-    @enderror
-    </div>
+        {{-- Observaciones --}}
+        <div class="col-md-12 mb-3">
+          <div class="form-field">
+            <label for="Observaciones" class="form-field-label">Observaciones</label>
+            <textarea name="Observaciones" id="Observaciones" class="form-field-textarea"
+              rows="3">{{ old('Observaciones', '') }}</textarea>
+          </div>
+        </div>
+      </div>
 
-
-    <div class="mb-3">
-      <label for="Observaciones" class="form-label">Observaciones</label>
-      <textarea name="Observaciones" id="Observaciones" class="form-control"
-      rows="3">{{ old('Observaciones', '') }}</textarea>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Guardar</button>
-    <a href="{{ route('home') }}" class="btn btn-secondary">Cancelar</a>
+      <div class="modal-buttons mt-4 d-flex justify-content-between">
+        <a href="{{ route('home') }}" class="cancel-button btn btn-light">Cancelar</a>
+        <button type="submit" class="submit-button btn btn-success">
+          <i class="fas fa-dna me-2"></i>Guardar Desparasitación
+        </button>
+      </div>
     </form>
   </div>
+</div>
 @endsection
