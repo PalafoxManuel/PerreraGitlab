@@ -77,7 +77,7 @@
 
       <div class="modal-buttons mt-4 d-flex justify-content-between">
         <a href="{{ route('home') }}" class="cancel-button btn btn-light">Cancelar</a>
-        <button type="submit" class="submit-button btn btn-primary">
+        <button type="submit" class="submit-button btn btn-success">
           <i class="fas fa-paw me-2"></i>Registrar Adopción
         </button>
       </div>
