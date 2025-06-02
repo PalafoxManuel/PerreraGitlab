@@ -118,7 +118,7 @@ class VacunaController extends Controller
         Vacuna::destroy($id);
 
         return redirect()
-            ->route('vacunas.index')
+            ->route('panel.admin')
             ->with('success', 'Vacuna eliminada correctamente.');
     }
 }

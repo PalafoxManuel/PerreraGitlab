@@ -141,7 +141,7 @@ class PerreraController extends Controller
         Perrera::destroy($id);
 
         return redirect()
-            ->route('home')
+            ->route('panel.admin')
             ->with('success', 'Perrera eliminada correctamente.');
     }
 }

@@ -72,4 +72,16 @@ class VacunacionController extends Controller
             ->route('home')
             ->with('success', 'Vacunación registrada y reserva de servicio creada correctamente.');
     }
+
+    public function destroy($id)
+    {
+        // 1) Intentamos eliminar la vacunación por su ID
+        Vacunacion::destroy($id);
+
+        // 2) Redirigimos de vuelta al panel o a la ruta que corresponda,
+        //    mostrando un mensaje flash de “elimnado exitoso”.
+        return redirect()
+            ->route('panel.admin')
+            ->with('success', 'Vacunación eliminada correctamente.');
+    }
 }

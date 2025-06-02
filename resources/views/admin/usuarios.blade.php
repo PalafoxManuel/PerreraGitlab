@@ -7,31 +7,34 @@
     <table class="table table-striped mb-0">
       <thead class="table-light">
         <tr>
-          <th>ID</th>
-          <th>Usuario</th>
-          <th>Email</th>
-          <th>Rol</th>
-          <th>Acciones</th>
+          <th style="width: 10%;">ID</th>
+          <th style="width: 30%;">Usuario</th>
+          <th style="width: 30%;">Email</th>
+          <th style="width: 20%;">Rol</th>
+          <th style="width: 10%;" class="text-center">Acciones</th>
         </tr>
       </thead>
       <tbody>
         @foreach($usuarios as $u)
-        <tr>
-          <td>{{ $u->Id_Usuario }}</td>
-          <td>{{ $u->Nombre_Usuario }}</td>
-          <td>{{ $u->Correo_Electronico ?? '—' }}</td>
-          <td>{{ ucfirst($u->rol) }}</td>
-          <td>
-            <form method="POST"
-                  action="{{ route('usuarios.destroy', $u->Id_Usuario) }}"
-                  class="d-inline">
-              @csrf @method('DELETE')
-              <button class="btn btn-sm btn-danger">
-                <i class="fas fa-trash"></i>
-              </button>
-            </form>
-          </td>
-        </tr>
+          <tr>
+            <td class="align-middle">{{ $u->Id_Usuario }}</td>
+            <td class="align-middle">{{ $u->Nombre_Usuario }}</td>
+            <td class="align-middle">{{ $u->Correo_Electronico ?? '—' }}</td>
+            <td class="align-middle">{{ ucfirst($u->rol) }}</td>
+            <td class="align-middle text-center">
+              <form
+                method="POST"
+                action="{{ route('usuarios.destroy', $u->Id_Usuario) }}"
+                class="d-inline"
+                onsubmit="return confirm('¿Eliminar este usuario?');">
+                @csrf
+                @method('DELETE')
+                <button class="btn btn-sm btn-danger" title="Eliminar Usuario">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </form>
+            </td>
+          </tr>
         @endforeach
       </tbody>
     </table>

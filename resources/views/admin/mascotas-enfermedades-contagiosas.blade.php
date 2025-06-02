@@ -11,9 +11,9 @@
           <th style="width: 5%;">#</th>
           <th style="width: 20%;">Mascota</th>
           <th style="width: 20%;">Dueño</th>
-          <th style="width: 20%;">Enfermedad</th>
+          <th style="width: 25%;">Enfermedad</th>
           <th style="width: 20%;">Fecha Diagnóstico</th>
-          <th style="width: 15%;">Acciones</th>
+          <th style="width: 10%;" class="text-center">Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -71,7 +71,7 @@
           @endforeach
 
           {{-- Separador visual entre mascotas --}}
-          <tr class="border-0"><td colspan="6"></td></tr>
+          <tr class="border-0"><td colspan="6" class="py-0"></td></tr>
         @empty
           <tr>
             <td colspan="6" class="text-center py-3">

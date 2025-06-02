@@ -7,35 +7,38 @@
     <table class="table table-striped mb-0">
       <thead class="table-light">
         <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Raza</th>
-          <th>Edad</th>
-          <th>Dueño</th>
-          <th>Tipo</th>
-          <th>Acciones</th>
+          <th style="width: 8%;">ID</th>
+          <th style="width: 24%;">Nombre</th>
+          <th style="width: 24%;">Raza</th>
+          <th style="width: 10%;">Edad</th>
+          <th style="width: 18%;">Dueño</th>
+          <th style="width: 11%;">Tipo</th>
+          <th style="width: 5%;" class="text-center">Acciones</th>
         </tr>
       </thead>
       <tbody>
         @foreach($mascotas as $m)
-        <tr>
-          <td>{{ $m->Id_Mascota }}</td>
-          <td>{{ $m->Nombre }}</td>
-          <td>{{ $m->Raza }}</td>
-          <td>{{ $m->Edad }}</td>
-          <td>{{ $m->usuario->Nombre_Usuario ?? '—' }}</td>
-          <td>{{ $m->tipo->Nombre_Tipo ?? '—' }}</td>
-          <td>
-            <form method="POST"
-                  action="{{ route('mascotas.destroy', $m->Id_Mascota) }}"
-                  class="d-inline">
-              @csrf @method('DELETE')
-              <button class="btn btn-sm btn-danger">
-                <i class="fas fa-trash"></i>
-              </button>
-            </form>
-          </td>
-        </tr>
+          <tr>
+            <td class="align-middle">{{ $m->Id_Mascota }}</td>
+            <td class="align-middle">{{ $m->Nombre }}</td>
+            <td class="align-middle">{{ $m->Raza }}</td>
+            <td class="align-middle">{{ $m->Edad }}</td>
+            <td class="align-middle">{{ $m->usuario->Nombre_Usuario ?? '—' }}</td>
+            <td class="align-middle">{{ $m->tipo->Nombre_Tipo ?? '—' }}</td>
+            <td class="align-middle text-center">
+              <form
+                method="POST"
+                action="{{ route('mascotas.destroy', $m->Id_Mascota) }}"
+                class="d-inline"
+                onsubmit="return confirm('¿Eliminar esta mascota?');">
+                @csrf
+                @method('DELETE')
+                <button class="btn btn-sm btn-danger" title="Eliminar Mascota">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </form>
+            </td>
+          </tr>
         @endforeach
       </tbody>
     </table>
