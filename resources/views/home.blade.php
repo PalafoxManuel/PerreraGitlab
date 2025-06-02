@@ -36,8 +36,8 @@
   'Generar reporte' => 'Reporte.png',
   'Agregar Administrador' => 'AgregarAdmin.png',
   'Agregar Vacunación' => 'AgregarVacuna.png',
-  'Reporte de Peso' => 'PesoMascota.png', // Nueva imagen para peso
-  'Desparasitación' => 'Desparasitacion.png' // Nueva imagen para desparasitación
+  'Reporte de Peso' => 'PesoMascota.png',
+  'Desparasitación' => 'Desparasitacion.png'
   ];
 
   // 2) Tus funcionalidades "estáticas"

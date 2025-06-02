@@ -21,7 +21,7 @@
     {{-- Encabezado (puedes incluir el header aquí si lo tienes) --}}
     @include('Components.Header')
 
-    <main class="flex-grow-1 py-4">
+    <main class="back-container flex-grow-1 py-4">
         <div class="container">
             @yield('content')
         </div>
