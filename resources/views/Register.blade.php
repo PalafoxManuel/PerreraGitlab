@@ -115,11 +115,18 @@
         minlength="3" maxlength="60">
       </div>
 
-      <div class="mb-3">
-        <label class="form-label">Teléfono</label>
-        <input type="text" name="Numero_Contacto" class="form-control" value="{{ old('Numero_Contacto') }}"
-        pattern="^\d{10}$" title="Debe contener exactamente 10 dígitos.">
-      </div>
+    <div class="mb-3">
+    <label class="form-label">Teléfono</label>
+    <input type="tel"
+            name="Numero_Contacto"
+            class="form-control"
+            value="{{ old('Numero_Contacto') }}"
+            maxlength="10"                {{-- ← tope duro de 10  --}}
+            inputmode="numeric"           {{-- teclado numérico en móviles --}}
+            pattern="^\d{10}$"            {{-- exactamente 10 dígitos --}}
+            oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)"
+            title="Debe contener exactamente 10 dígitos.">
+    </div>
 
       <div class="mb-3">
         <label class="form-label">Correo electrónico</label>
