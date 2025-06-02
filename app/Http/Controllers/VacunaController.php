@@ -52,7 +52,7 @@ class VacunaController extends Controller
         Vacuna::create($data);
 
         return redirect()
-            ->route('vacunas.index')
+            ->route('home')
             ->with('success', 'Vacuna creada correctamente.');
     }
 
