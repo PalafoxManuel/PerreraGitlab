@@ -24,18 +24,23 @@
       @php
       $sel = $servicios->firstWhere('Id_Servicio', request('service'));
       $esAlojamiento = $sel && $sel->Nombre_Servicio === 'Alojamiento';
+      $today = \Carbon\Carbon::today()->format('Y-m-d');
+      $maxReserva = \Carbon\Carbon::today()->addMonth()->format('Y-m-d');
       @endphp
 
       <div class="row">
         <div class="col-md-6 mb-3 form-field">
           <label for="Fecha_Reserva" class="form-field-label">Fecha de Reserva *</label>
-          <input type="date" name="Fecha_Reserva" id="Fecha_Reserva" class="form-field-input" value="{{ old('Fecha_Reserva', date('Y-m-d')) }}" required>
+          <input type="date" name="Fecha_Reserva" id="Fecha_Reserva" class="form-field-input"
+            value="{{ old('Fecha_Reserva', $today) }}"
+            min="{{ $today }}" max="{{ $maxReserva }}" required>
         </div>
 
         <div class="col-md-6 mb-3 form-field">
           <label for="Duracion_Dias" class="form-field-label">Duración (días) *</label>
           @if($esAlojamiento)
-          <input type="number" name="Duracion_Dias" id="Duracion_Dias" class="form-field-input" value="{{ old('Duracion_Dias', 1) }}" min="1" required>
+          <input type="number" name="Duracion_Dias" id="Duracion_Dias" class="form-field-input"
+            value="{{ old('Duracion_Dias', 1) }}" min="1" max="365" required>
           @else
           <input type="hidden" name="Duracion_Dias" value="1">
           <input type="text" class="form-field-input" value="1" disabled>
