@@ -50,14 +50,14 @@
                         </select>
                     </div>
                 </div>
-
+                <!-- 
                 {{-- Síntomas Adversos --}}
                 <div class="col-md-12 mb-3">
                     <div class="form-field">
                         <label for="Sintomas_Adversos" class="form-field-label">Síntomas Adversos</label>
                         <textarea name="Sintomas_Adversos" id="Sintomas_Adversos" class="form-field-textarea" rows="3" required>{{ old('Sintomas_Adversos') }}</textarea>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <div class="modal-buttons mt-4 d-flex justify-content-between">
