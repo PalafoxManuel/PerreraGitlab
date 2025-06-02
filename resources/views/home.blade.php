@@ -132,9 +132,9 @@
           <div class="card h-100 shadow">
             <img src="{{ Vite::asset('resources/images/EnfermedadesContagiosas.png') }}" class="card-img-top" alt="Enfermedades Contagiosas">
             <div class="card-body d-flex flex-column">
-              <h5 class="card-title">Enfermedades Contagiosas</h5>
+              <h5 class="card-title">Reporte enfermedades</h5>
               <p class="card-text flex-grow-1">
-                Visualiza las mascotas diagnosticadas con enfermedades infecciosas.
+                Ingresa mascotas con enfermedades que puedan ser o no ser Contagiosas.
               </p>
               <a href="{{ route('enfermedades_contagiosas.create') }}" class="btn btn-primary mt-2">Ver</a>
             </div>

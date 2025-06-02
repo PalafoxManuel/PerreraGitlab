@@ -123,3 +123,8 @@
 .btn-close-red:hover {
     filter: brightness(1.2);
 }
+.small-kg {
+    font-size: 0.85rem;
+    color: #dee2e6;
+    font-size: large;
+}
