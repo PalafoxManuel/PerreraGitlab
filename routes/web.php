@@ -17,6 +17,7 @@ use App\Http\Controllers\EnfermedadContagiosaController;
 use App\Http\Controllers\TipoEnfermedadController;
 use App\Http\Controllers\DesparasitacionController;
 use App\Http\Controllers\PesoMascotaController;
+use App\Http\Controllers\PagoController;
 
 
 use App\Models\Mascota;
@@ -28,6 +29,7 @@ use App\Models\TipoMascota;
 use App\Models\Servicio;
 use App\Models\Perrera;
 use App\Models\Enfermedad;
+use App\Models\Pago;
 
 Route::resource('tipo_mascotas', TipoMascotaController::class)
      ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
@@ -51,6 +53,8 @@ Route::post('/agregarVacuna', [VacunaController::class, 'store'])->name('vacunas
 // (opcional) Formulario directo para crear admin
 Route::get('/usuarios/create/admin', [UsuarioController::class, 'createAdmin'])->name('usuarios.create.admin');
 
+Route::resource('pagos', PagoController::class)
+     ->only(['index','show','destroy']);
 
 // Logout
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -153,6 +157,7 @@ Route::get('/admin/panel', function () {
         'tiposVacunas' => Enfermedad::all(),  // si quieres listar todas las enfermedades (contagiosas o no)
         'servicios'  => Servicio::all(),
         'perreras'   => Perrera::all(),
+        'pagos'      => Pago::with('reserva')->get(),
 
         // --- NUEVO: Mascotas que tienen al menos 1 enfermedad contagiosa
         'mascotasContagiosas' => Mascota::whereHas('enfermedades', function($q) {
