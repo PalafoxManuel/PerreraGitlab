@@ -76,7 +76,7 @@ Route::resource('servicios', ServicioController::class)
      ->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']);
 
 // Reportes
-Route::get('/reporte', [ReporteController::class, 'index'])->name('reporte.index');
+Route::get('/reporte', [ReporteController::class, 'index'])->name('reportes.index');
 Route::get('/reportes', [ReporteController::class, 'seleccionarTipo'])->name('reportes.seleccionar');
 Route::get('/reporte/crear/{tipo?}', [ReporteController::class, 'create'])->name('reporte.create');
 Route::post('/reporte', [ReporteController::class, 'store'])->name('reporte.store');

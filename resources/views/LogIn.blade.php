@@ -26,25 +26,32 @@
             <h1 class="text-center mb-4">¡Bienvenido!</h1>
 
             @if ($errors->has('login'))
-            <div class="alert alert-danger text-center">{{ $errors->first('login') }}</div>
+                <div class="alert alert-danger text-center">{{ $errors->first('login') }}</div>
             @endif
 
-            <form method="POST" action="{{ route('login') }}">
+            <form id="loginForm" method="POST" action="{{ route('login') }}" novalidate>
                 @csrf
 
                 <div class="mb-3">
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-user"></i></span>
-                        <input type="text" name="Nombre_Usuario" class="form-control"
-                            placeholder="Usuario" value="{{ old('Nombre_Usuario') }}" required>
+                        <input type="text" name="Nombre_Usuario" id="Nombre_Usuario" class="form-control"
+                            placeholder="Usuario" value="{{ old('Nombre_Usuario') }}" required minlength="4"
+                            maxlength="20" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ ]+">
+                    </div>
+                    <div class="invalid-feedback" id="username-error">
+                        Por favor ingrese un nombre de usuario válido (solo letras, 4-20 caracteres).
                     </div>
                 </div>
 
                 <div class="mb-3">
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                        <input type="password" name="Contrasena" class="form-control"
-                            placeholder="Contraseña" required>
+                        <input type="password" name="Contrasena" id="Contrasena" class="form-control"
+                            placeholder="Contraseña" required minlength="6" maxlength="30">
+                    </div>
+                    <div class="invalid-feedback" id="password-error">
+                        La contraseña debe tener entre 6 y 30 caracteres.
                     </div>
                 </div>
 
@@ -56,6 +63,66 @@
             </form>
         </div>
     </div>
+
+    <script>
+        // Validación del lado del cliente
+        document.getElementById('loginForm').addEventListener('submit', function (event) {
+            let isValid = true;
+            const username = document.getElementById('Nombre_Usuario');
+            const password = document.getElementById('Contrasena');
+
+            // Resetear mensajes de error
+            username.classList.remove('is-invalid');
+            password.classList.remove('is-invalid');
+
+            // Validar nombre de usuario (solo letras)
+            const usernameRegex = /^[A-Za-záéíóúÁÉÍÓÚñÑ ]+$/;
+            if (username.value.trim() === '' || username.value.length < 4 ||
+                username.value.length > 20 || !usernameRegex.test(username.value)) {
+                username.classList.add('is-invalid');
+                document.getElementById('username-error').textContent =
+                    username.value.trim() === '' ?
+                        'El nombre de usuario es requerido.' :
+                        (!usernameRegex.test(username.value) ?
+                            'El nombre de usuario solo puede contener letras.' :
+                            'El nombre de usuario debe tener entre 4 y 20 caracteres.');
+                isValid = false;
+            }
+
+            // Validar contraseña
+            if (password.value === '' || password.value.length < 6 || password.value.length > 30) {
+                password.classList.add('is-invalid');
+                document.getElementById('password-error').textContent =
+                    password.value === '' ?
+                        'La contraseña es requerida.' :
+                        'La contraseña debe tener entre 6 y 30 caracteres.';
+                isValid = false;
+            }
+
+            if (!isValid) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        });
+
+        // Validación en tiempo real para mejor UX
+        document.getElementById('Nombre_Usuario').addEventListener('input', function () {
+            const usernameRegex = /^[A-Za-záéíóúÁÉÍÓÚñÑ ]*$/;
+            if (!usernameRegex.test(this.value)) {
+                this.value = this.value.replace(/[^A-Za-záéíóúÁÉÍÓÚñÑ ]/g, '');
+            }
+
+            if (this.value.length >= 4 && this.value.length <= 20 && usernameRegex.test(this.value)) {
+                this.classList.remove('is-invalid');
+            }
+        });
+
+        document.getElementById('Contrasena').addEventListener('input', function () {
+            if (this.value.length >= 6 && this.value.length <= 30) {
+                this.classList.remove('is-invalid');
+            }
+        });
+    </script>
 
 </body>
 
