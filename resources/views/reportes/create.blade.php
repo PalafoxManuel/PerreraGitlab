@@ -3,6 +3,13 @@
 @section('title', 'Crear Reporte')
 
 @section('content')
+@php
+use Carbon\Carbon;
+$maxDate = Carbon::today()->format('Y-m-d');
+$minDate = Carbon::today()->subMonth()->format('Y-m-d');
+$today = $maxDate;
+@endphp
+
 <div class="form-wrapper-reporte flex-grow-1 d-flex align-items-center justify-content-center py-5">
     <div class="form-container-reporte text-white p-4 p-md-5 rounded-4 shadow-lg">
 
@@ -75,7 +82,8 @@
             </div>
             <div class="form-field mb-3">
                 <label class="form-field-label">Fecha de Aplicación</label>
-                <input type="date" name="Fecha_Vacuna" class="form-field-input">
+                <input type="date" name="Fecha_Vacuna" class="form-field-input"
+                    min="{{ $minDate }}" max="{{ $maxDate }}" value="{{ $today }}">
             </div>
 
             @elseif($tipoSeleccionado && $tipoSeleccionado->Nombre === 'Adopción')
@@ -88,7 +96,8 @@
             {{-- Fecha del Reporte --}}
             <div class="form-field mb-3">
                 <label class="form-field-label">Fecha del Reporte</label>
-                <input type="date" name="Fecha_Reporte" class="form-field-input" required>
+                <input type="date" name="Fecha_Reporte" class="form-field-input"
+                    required min="{{ $minDate }}" max="{{ $maxDate }}" value="{{ $today }}">
             </div>
 
             <div class="modal-buttons mt-4 d-flex justify-content-between">

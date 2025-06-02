@@ -136,7 +136,7 @@
               <p class="card-text flex-grow-1">
                 Ingresa mascotas con enfermedades que puedan ser o no ser Contagiosas.
               </p>
-              <a href="{{ route('enfermedades_contagiosas.create') }}" class="btn btn-primary mt-2">Ver</a>
+              <a href="{{ route('enfermedades_contagiosas.create') }}" class="btn btn-primary mt-2">Ir</a>
             </div>
           </div>
         </div>
