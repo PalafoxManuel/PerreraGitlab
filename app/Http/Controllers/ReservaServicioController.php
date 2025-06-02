@@ -44,72 +44,81 @@ class ReservaServicioController extends Controller
 
     public function store(Request $request)
     {
+        // ─────────────────────────── VALIDACIONES ───────────────────────────
         $rules = [
             'Fecha_Reserva' => 'required|date',
             'Duracion_Dias' => 'required|integer|min:1',
-            'Id_Servicio' => 'required|exists:servicio,Id_Servicio',
-            'Id_Mascota' => 'required|exists:mascota,Id_Mascota',
-            'Metodo_Pago' => 'required|string',
+            'Id_Servicio'   => 'required|exists:servicio,Id_Servicio',
+            'Id_Mascota'    => 'required|exists:mascota,Id_Mascota',
+            'Metodo_Pago'   => 'required|string',
+            'Monto'         => 'required|numeric|min:0',   // ← necesario para registrar el pago
         ];
 
         $service = Servicio::findOrFail($request->Id_Servicio);
         if (in_array(strtolower($service->Nombre_Servicio), ['vacunación', 'vacunacion'])) {
             $rules = array_merge($rules, [
-                'Id_Vacuna' => 'required|exists:vacuna,Id_Vacuna',
-                'Numero_Lote' => 'required|string|max:50',
-                'Dosis' => 'required|string|max:50',
+                'Id_Vacuna'    => 'required|exists:vacuna,Id_Vacuna',
+                'Numero_Lote'  => 'required|string|max:50',
+                'Dosis'        => 'required|string|max:50',
             ]);
         }
 
         $data = $request->validate($rules);
 
+        // ─────────────────────────── TRANSACCIÓN ───────────────────────────
         DB::transaction(function () use ($data, $service) {
-            // usuario, cliente y perrera
-            $user = Usuario::findOrFail(session('usuario_id'));
-            $clienteId = $user->Id_Cliente;
-            $perreraId = $user->Id_Perrera;
+            // datos de usuario/cliente/perrera
+            $user       = Usuario::findOrFail(session('usuario_id'));
+            $clienteId  = $user->Id_Cliente;
+            $perreraId  = $user->Id_Perrera;
 
-            // 1) Crear reserva
+            // 1) RESERVA
             $reserva = Reserva::create([
                 'Fecha_Reserva' => $data['Fecha_Reserva'],
                 'Duracion_Dias' => $data['Duracion_Dias'],
                 'Tipo_Servicio' => $service->Nombre_Servicio,
-                'Estado' => 'Confirmada',
-                'Id_Cliente' => $clienteId,
-                'Id_Perrera' => $perreraId,
+                'Estado'        => 'Confirmada',
+                'Id_Cliente'    => $clienteId,
+                'Id_Perrera'    => $perreraId,
             ]);
 
-            // 2) Línea en reserva_servicio
+            // 2) RESERVA_SERVICIO
             ReservaServicio::create([
-                'Id_Reserva' => $reserva->Id_Reserva,
+                'Id_Reserva'  => $reserva->Id_Reserva,
                 'Id_Servicio' => $data['Id_Servicio'],
-                'Id_Mascota' => $data['Id_Mascota'],
+                'Id_Mascota'  => $data['Id_Mascota'],
             ]);
 
-            // 3) Si es vacunación, guardar en vacunacion …
+            // 3) VACUNACIÓN (solo si aplica)
             if (in_array(strtolower($service->Nombre_Servicio), ['vacunación', 'vacunacion'])) {
-                $vacunacion = Vacunacion::create([
-                    'Id_Mascota' => $data['Id_Mascota'],
-                    'Id_Vacuna' => $data['Id_Vacuna'],
-                    'Fecha_Vacunacion' => $data['Fecha_Reserva'],
-                    'Numero_Lote' => $data['Numero_Lote'],
-                    'Dosis' => $data['Dosis'],
+                Vacunacion::create([
+                    'Id_Mascota'        => $data['Id_Mascota'],
+                    'Id_Vacuna'         => $data['Id_Vacuna'],
+                    'Fecha_Vacunacion'  => $data['Fecha_Reserva'],
+                    'Numero_Lote'       => $data['Numero_Lote'],
+                    'Dosis'             => $data['Dosis'],
                 ]);
 
-                // … y registrar en historial_medico
                 $vacuna = Vacuna::find($data['Id_Vacuna']);
-
                 HistorialMedico::create([
-                    'Id_Mascota' => $data['Id_Mascota'],
-                    'Fecha' => $data['Fecha_Reserva'],
-                    'Diagnostico' => 'Vacunación: ' . ($vacuna->Nombre ?? 'Vacuna'),
-                    'Tratamiento' => 'Lote ' . $data['Numero_Lote'] . ' | Dosis ' . $data['Dosis'],
-                    'Veterinario' => 'Dr. Alejandro Fernández',  // ← nombre fijo
+                    'Id_Mascota'    => $data['Id_Mascota'],
+                    'Fecha'         => $data['Fecha_Reserva'],
+                    'Diagnostico'   => 'Vacunación: ' . ($vacuna->Nombre ?? 'Vacuna'),
+                    'Tratamiento'   => 'Lote ' . $data['Numero_Lote'] . ' | Dosis ' . $data['Dosis'],
+                    'Veterinario'   => 'Dr. Alejandro Fernández',
                     'Observaciones' => null,
                 ]);
             }
+
+            // 4) PAGO (nuevo paso)
+            Pago::create([
+                'Monto'       => $data['Monto'],
+                'Metodo_Pago' => $data['Metodo_Pago'],
+                'Id_Reserva'  => $reserva->Id_Reserva,
+            ]);
         });
 
+        // ─────────────────────────── REDIRECCIÓN ───────────────────────────
         return redirect()
             ->route('home')
             ->with('success', 'Reserva creada y, si aplica, vacunación + registro en historial médico guardados.');
