@@ -62,7 +62,15 @@
         <div class="col-md-12 mb-3">
           <div class="form-field">
             <label for="Fecha_Adopcion" class="form-field-label">Fecha de Adopción *</label>
-            <input type="date" name="Fecha_Adopcion" id="Fecha_Adopcion" class="form-field-input" value="{{ old('Fecha_Adopcion', date('Y-m-d')) }}" required>
+            <input
+              type="date"
+              name="Fecha_Adopcion"
+              id="Fecha_Adopcion"
+              class="form-field-input"
+              value="{{ old('Fecha_Adopcion', date('Y-m-d')) }}"
+              required
+              min="{{ \Carbon\Carbon::now()->subMonth()->format('Y-m-d') }}"
+              max="{{ date('Y-m-d') }}">
           </div>
         </div>
 
