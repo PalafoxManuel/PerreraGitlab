@@ -5,16 +5,9 @@
   <meta charset="UTF-8">
   <title>Registro de Usuario</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Bootstrap y FontAwesome -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-    rel="stylesheet">
-  <link
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    rel="stylesheet">
-
-  @vite(['resources/css/app.css','resources/js/app.js'])
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="back-container d-flex flex-column min-vh-100">
@@ -30,149 +23,118 @@
 
       @if($errors->any())
       <div class="alert alert-danger">
-        <ul class="mb-0">
-          @foreach($errors->all() as $e) <li>{{ $e }}</li>@endforeach
-        </ul>
+      <ul class="mb-0">
+        @foreach($errors->all() as $e) <li>{{ $e }}</li>@endforeach
+      </ul>
       </div>
-      @endif
+    @endif
 
       <form method="POST" action="{{ route('register.post') }}">
         @csrf
 
-        {{-- Usuario --}}
         <div class="mb-3">
           <label class="form-label">Nombre de Usuario *</label>
           <div class="input-group">
             <span class="input-group-text"><i class="fas fa-user"></i></span>
-            <input
-              type="text"
-              name="Nombre_Usuario"
-              class="form-control"
-              value="{{ old('Nombre_Usuario') }}"
-              required>
+            <input type="text" name="Nombre_Usuario" class="form-control" value="{{ old('Nombre_Usuario') }}" required
+              minlength="4" maxlength="20" pattern="^[a-zA-Z0-9_]+$"
+              title="Solo letras, números y guiones bajos. Mínimo 4 caracteres.">
           </div>
         </div>
 
-        {{-- Contraseña --}}
         <div class="mb-3">
           <label class="form-label">Contraseña *</label>
           <div class="input-group">
             <span class="input-group-text"><i class="fas fa-lock"></i></span>
-            <input
-              type="password"
-              name="Contrasena"
-              class="form-control"
-              required>
+            <input type="password" name="Contrasena" class="form-control" required minlength="6"
+              pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"
+              title="Debe tener al menos 6 caracteres, una letra y un número.">
           </div>
         </div>
 
-        {{-- Confirmar Contraseña --}}
         <div class="mb-3">
           <label class="form-label">Confirmar Contraseña *</label>
           <div class="input-group">
             <span class="input-group-text"><i class="fas fa-lock"></i></span>
-            <input
-              type="password"
-              name="Contrasena_confirmation"
-              class="form-control"
-              required>
+            <input type="password" name="Contrasena_confirmation" class="form-control" required>
           </div>
         </div>
 
-        {{-- Siempre: selección de Sucursal (Id_Perrera) --}}
         <div class="mb-3">
           <label class="form-label">Sucursal *</label>
           <select name="Id_Perrera" class="form-select" required>
             <option value="">— Selecciona una sucursal —</option>
             @foreach($perreras as $p)
-            <option
-              value="{{ $p->Id_Perrera }}"
-              {{ old('Id_Perrera')==$p->Id_Perrera ? 'selected':'' }}>
-              {{ $p->Nombre }}
-            </option>
-            @endforeach
+        <option value="{{ $p->Id_Perrera }}" {{ old('Id_Perrera') == $p->Id_Perrera ? 'selected' : '' }}>
+          {{ $p->Nombre }}
+        </option>
+      @endforeach
           </select>
           @error('Id_Perrera')<div class="text-danger mt-1">{{ $message }}</div>@enderror
         </div>
 
         @php
-        // El primer admin puede crearse incluso sin sesión
-        $adminExists = isset($adminExists) ? $adminExists : false;
-        $allowAdmin = session('perfil')==='admin' || !$adminExists;
-        @endphp
+      $adminExists = isset($adminExists) ? $adminExists : false;
+      $allowAdmin = session('perfil') === 'admin' || !$adminExists;
+    @endphp
 
         @if($allowAdmin)
-        {{-- Rol --}}
-        <div class="mb-3">
-          <label class="form-label">Rol *</label>
-          <select name="rol" id="rol" class="form-select" required>
-            <option value="admin" {{ old('rol')=='admin'  ?'selected':'' }}>Administrador</option>
-          </select>
-        </div>
-        {{-- Script para mostrar/ocultar cliente-section --}}
-        <script>
-          document.addEventListener('DOMContentLoaded', () => {
-            const rol = document.getElementById('rol');
-            const sec = document.getElementById('cliente-section');
-            const toggle = () => {
-              if (rol.value === 'usuario') {
-                sec.style.display = 'block';
-                sec.querySelector('select').required = true;
-              } else {
-                sec.style.display = 'none';
-                sec.querySelector('select').required = false;
-                sec.querySelector('select').value = '';
-              }
-            };
-            rol.addEventListener('change', toggle);
-            toggle();
-          });
-        </script>
-        @else
-        {{-- Datos para nuevo cliente --}}
-        <h5 class="mt-4">Tus datos</h5>
-        <div class="mb-3">
-          <label class="form-label">Nombre completo *</label>
-          <input
-            type="text"
-            name="Nombre_Completo"
-            class="form-control"
-            value="{{ old('Nombre_Completo') }}"
-            required>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Teléfono</label>
-          <input
-            type="text"
-            name="Numero_Contacto"
-            class="form-control"
-            value="{{ old('Numero_Contacto') }}">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Correo electrónico</label>
-          <input
-            type="email"
-            name="Correo_Electronico"
-            class="form-control"
-            value="{{ old('Correo_Electronico') }}">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Calle</label>
-          <input
-            type="text"
-            name="Calle"
-            class="form-control"
-            value="{{ old('Calle') }}">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Código Postal</label>
-          <input
-            type="text"
-            name="Codigo_Postal"
-            class="form-control"
-            value="{{ old('Codigo_Postal') }}">
-        </div>
-        @endif
+      <div class="mb-3">
+        <label class="form-label">Rol *</label>
+        <select name="rol" id="rol" class="form-select" required>
+        <option value="admin" {{ old('rol') == 'admin' ? 'selected' : '' }}>Administrador</option>
+        </select>
+      </div>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+        const rol = document.getElementById('rol');
+        const sec = document.getElementById('cliente-section');
+        const toggle = () => {
+          if (rol.value === 'usuario') {
+          sec.style.display = 'block';
+          sec.querySelector('select').required = true;
+          } else {
+          sec.style.display = 'none';
+          sec.querySelector('select').required = false;
+          sec.querySelector('select').value = '';
+          }
+        };
+        rol.addEventListener('change', toggle);
+        toggle();
+        });
+      </script>
+    @else
+      <h5 class="mt-4">Tus datos</h5>
+
+      <div class="mb-3">
+        <label class="form-label">Nombre completo *</label>
+        <input type="text" name="Nombre_Completo" class="form-control" value="{{ old('Nombre_Completo') }}" required
+        minlength="3" maxlength="60">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Teléfono</label>
+        <input type="text" name="Numero_Contacto" class="form-control" value="{{ old('Numero_Contacto') }}"
+        pattern="^\d{10}$" title="Debe contener exactamente 10 dígitos.">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Correo electrónico</label>
+        <input type="email" name="Correo_Electronico" class="form-control" value="{{ old('Correo_Electronico') }}">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Calle</label>
+        <input type="text" name="Calle" class="form-control" value="{{ old('Calle') }}" maxlength="100">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Código Postal</label>
+        <input type="text" name="Codigo_Postal" class="form-control" value="{{ old('Codigo_Postal') }}"
+        pattern="^\d{5}$" title="Debe contener exactamente 5 dígitos.">
+      </div>
+    @endif
 
         <button type="submit" class="btn btn-primary w-100">Crear cuenta</button>
 
